@@ -71,6 +71,63 @@ a:hover { color: var(--bk-teal); }
 }
 .widget.PageList li, .widget.LinkList li { border: 0 !important; }
 
+/* ---------- 카테고리 메뉴 (bk-nav.js 가 삽입) ---------- */
+#bk-nav {
+  background: rgba(255, 255, 255, .92);
+  border-bottom: 1px solid var(--bk-line);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+#bk-nav .bk-nav-in {
+  max-width: 968px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 10px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#bk-nav .bk-nav-a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  min-width: 74px;
+  padding: 7px 14px 6px;
+  border-radius: 12px;
+  text-decoration: none !important;
+  border-bottom: 2.5px solid transparent;
+  transition: .12s;
+  white-space: nowrap;
+}
+#bk-nav .bk-nav-a .k {
+  font-family: var(--bk-display);
+  font-size: 16.5px;
+  color: var(--bk-ink);
+  line-height: 1.25;
+}
+#bk-nav .bk-nav-a .e {
+  font-family: "Quicksand", var(--bk-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: var(--bk-muted);
+  text-transform: uppercase;
+}
+#bk-nav .bk-nav-a:hover { background: var(--bk-teal-soft); }
+#bk-nav .bk-nav-a:hover .k { color: var(--bk-teal-dark); }
+#bk-nav .bk-nav-a.on { border-bottom-color: var(--bk-coral); }
+#bk-nav .bk-nav-a.on .k { color: var(--bk-teal-dark); }
+#bk-nav .bk-nav-a.on .e { color: var(--bk-coral); }
+@media (max-width: 640px) {
+  #bk-nav .bk-nav-in { justify-content: flex-start; }
+  #bk-nav .bk-nav-a { min-width: 64px; padding: 6px 10px 5px; }
+  #bk-nav .bk-nav-a .k { font-size: 15px; }
+}
+
 /* ---------- 홈 글 목록 → 카드 ---------- */
 .blog-posts .post-outer-container, .blog-posts .post-outer {
   background: #fff !important;
