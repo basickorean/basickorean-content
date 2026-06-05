@@ -1,0 +1,199 @@
+/* ==========================================================================
+   Basic Korean — 블로그 전체 브랜드 스킨 (bk-theme.css)
+   Blogger 기본 테마(Contempo) 위에 덮어쓰는 스킨.
+   강의 페이지(bk.css)와 같은 팔레트: 틸 #3fa796 · 코랄 #e0726e · Jua/Quicksand.
+   설치: 테마 head 의 bk.css 줄 아래에 이 파일 링크 1줄 추가 (README 참고)
+   ========================================================================== */
+
+:root {
+  --bk-bg: #ffffff;
+  --bk-bg2: #f3f7f6;
+  --bk-line: #e4eae8;
+  --bk-ink: #242a28;
+  --bk-muted: #7b847f;
+  --bk-teal: #3fa796;
+  --bk-teal-dark: #2c8273;
+  --bk-teal-soft: #e2f1ee;
+  --bk-coral: #e0726e;
+  --bk-coral-soft: #fdeeed;
+  --bk-display: "Jua", "Noto Sans KR", sans-serif;
+  --bk-sans: "Noto Sans KR", -apple-system, "Helvetica Neue", sans-serif;
+}
+
+/* ---------- 전체 바탕 · 기본 글꼴 ---------- */
+body {
+  font-family: var(--bk-sans) !important;
+  color: var(--bk-ink) !important;
+  background:
+    radial-gradient(900px 520px at 82% -8%, rgba(63, 167, 150, .08), transparent 60%),
+    radial-gradient(760px 480px at -8% 108%, rgba(224, 114, 110, .08), transparent 60%),
+    var(--bk-bg) !important;
+}
+.page_body, .bg-photo, .bg-photo-overlay { background: transparent !important; }
+a { color: var(--bk-teal-dark); }
+a:hover { color: var(--bk-teal); }
+
+/* ---------- 상단 헤더 ---------- */
+.centered-top-container, .centered-top-placeholder {
+  background: rgba(255, 255, 255, .85) !important;
+  border-bottom: 1px solid var(--bk-line);
+  backdrop-filter: blur(8px);
+}
+.widget.Header .title, .widget.Header h1, .blog-name .title {
+  font-family: "Quicksand", var(--bk-sans) !important;
+  font-weight: 700 !important;
+  letter-spacing: .06em;
+  color: var(--bk-ink) !important;
+  text-transform: uppercase;
+}
+.widget.Header .title a { color: var(--bk-ink) !important; }
+.widget.Header .subtitle, .blog-name .subtitle {
+  font-family: var(--bk-sans) !important;
+  color: var(--bk-muted) !important;
+  font-size: 14px;
+}
+/* 헤더 링크 목록 (Youtube/Instagram 등) — 알약 버튼 */
+.widget.PageList a, .widget.LinkList a {
+  display: inline-block;
+  border: 1px solid var(--bk-line);
+  background: #fff;
+  color: var(--bk-teal-dark) !important;
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: .12s;
+}
+.widget.PageList a:hover, .widget.LinkList a:hover {
+  border-color: var(--bk-teal);
+  background: var(--bk-teal-soft);
+}
+.widget.PageList li, .widget.LinkList li { border: 0 !important; }
+
+/* ---------- 홈 글 목록 → 카드 ---------- */
+.blog-posts .post-outer-container, .blog-posts .post-outer {
+  background: #fff !important;
+  border: 1px solid var(--bk-line) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 18px rgba(63, 167, 150, .06) !important;
+  overflow: hidden;
+  transition: transform .12s, border-color .12s;
+}
+.blog-posts .post-outer-container:hover { border-color: var(--bk-teal) !important; transform: translateY(-2px); }
+.post-title, .post-title.entry-title, h3.post-title {
+  font-family: var(--bk-display) !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+}
+.post-title a { color: var(--bk-ink) !important; text-decoration: none !important; }
+.post-title a:hover { color: var(--bk-teal-dark) !important; }
+.snippet-item, .post-snippet { color: var(--bk-muted) !important; font-size: 14.5px; line-height: 1.7; }
+.snippet-thumbnail img { border-radius: 12px; }
+
+/* 날짜/작성자 줄 정리 */
+.post-header .byline { color: var(--bk-muted) !important; font-size: 12.5px; }
+.byline.post-author, .byline.post-share-buttons { display: none !important; } /* 작성자·공유 메뉴 숨김 */
+
+/* Read more 버튼 */
+.jump-link, .jump-link.flat-button {
+  border: 0 !important;
+}
+.jump-link a, a.jump-link {
+  display: inline-block;
+  background: var(--bk-teal) !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 13.5px !important;
+  border-radius: 999px !important;
+  padding: 8px 18px !important;
+  text-decoration: none !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+.jump-link a:hover, a.jump-link:hover { filter: brightness(1.06); }
+
+/* 글 더보기 (페이지네이션) */
+#blog-pager a, .blog-pager a {
+  border: 1px solid var(--bk-line) !important;
+  background: #fff !important;
+  color: var(--bk-teal-dark) !important;
+  border-radius: 999px !important;
+  padding: 9px 20px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+#blog-pager a:hover, .blog-pager a:hover { border-color: var(--bk-teal) !important; background: var(--bk-teal-soft) !important; }
+
+/* ---------- 개별 글 화면 ---------- */
+.post-body, .post-body.entry-content { font-family: var(--bk-sans); color: var(--bk-ink); }
+.post-outer-container .post-title { font-size: 28px; }
+
+/* ---------- 사이드바 ---------- */
+.sidebar-container {
+  background: #fbfdfc !important;
+  border-left: 1px solid var(--bk-line);
+}
+.sidebar-container .widget .title, .sidebar-container .widget h2, .sidebar-container .widget h3.title {
+  font-family: var(--bk-display) !important;
+  font-weight: 400 !important;
+  color: var(--bk-teal-dark) !important;
+  font-size: 18px !important;
+  border-left: 3px solid var(--bk-coral);
+  padding-left: 10px;
+}
+/* 연도별 보관함 숨김 */
+.widget.BlogArchive { display: none !important; }
+/* 'Powered by Blogger' / 신고 줄은 그대로 두기 (정책) */
+
+/* 인기 게시물 */
+.widget.PopularPosts .item-title a { color: var(--bk-ink) !important; font-weight: 700; }
+.widget.PopularPosts .item-title a:hover { color: var(--bk-teal-dark) !important; }
+.widget.PopularPosts .item-snippet { color: var(--bk-muted) !important; font-size: 13px; }
+.widget.PopularPosts img { border-radius: 10px; }
+
+/* 라벨 → 칩 */
+.widget.Label li, .widget.Label li.list-label-widget-content {
+  display: inline-block !important;
+  border: 0 !important;
+  margin: 3px 4px 3px 0 !important;
+  padding: 0 !important;
+}
+.widget.Label a {
+  display: inline-block;
+  border: 1px solid var(--bk-line);
+  background: #fff;
+  color: var(--bk-ink) !important;
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 13.5px;
+  text-decoration: none !important;
+  transition: .12s;
+}
+.widget.Label a:hover { border-color: var(--bk-coral); color: var(--bk-coral) !important; background: var(--bk-coral-soft); }
+.widget.Label .label-count { color: var(--bk-muted); font-size: 11.5px; }
+
+/* 프로필 */
+.widget.Profile .profile-name-link { color: var(--bk-teal-dark) !important; font-weight: 700; }
+.widget.Profile img { border-radius: 50%; }
+
+/* ---------- 검색창 ---------- */
+.searchBox input, .search input.search-input {
+  font-family: var(--bk-sans) !important;
+  border-radius: 999px !important;
+  border: 1.5px solid var(--bk-line) !important;
+}
+.searchBox input:focus, .search input.search-input:focus { border-color: var(--bk-teal) !important; }
+
+/* ---------- 푸터 ---------- */
+.centered-bottom, footer.footer {
+  background: var(--bk-bg2) !important;
+  border-top: 1px solid var(--bk-line);
+  color: var(--bk-muted) !important;
+}
+
+/* ---------- 모바일 보정 ---------- */
+@media (max-width: 640px) {
+  .blog-posts .post-outer-container { border-radius: 14px !important; }
+  .post-outer-container .post-title { font-size: 22px; }
+}
