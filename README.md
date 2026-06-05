@@ -59,8 +59,12 @@ Blogger → 테마 → HTML 편집 → `</head>` 바로 위에 아래 5줄 삽�
 ```
 npm i @babel/standalone        # 최초 1회
 node scripts/build.js          # src/bk.jsx → assets/bk.js
+node scripts/bloggersafe.js    # post.html 특수문자 이스케이프 (Blogger 변형 방지 — 필수!)
 node scripts/preview.js        # post.html → preview.html 재생성
 ```
+
+※ post.html 의 특수문자(따옴표·이모지·화살표 등)는 Blogger 편집기가 HTML 엔티티로
+바꿔버리므로, 반드시 `bloggersafe.js` 를 거친(\uXXXX 형태) 상태로 붙여넣어야 합니다.
 
 ## 발행 워크플로
 

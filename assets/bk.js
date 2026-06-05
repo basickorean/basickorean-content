@@ -789,7 +789,7 @@
     }, t.langA), /*#__PURE__*/React.createElement("button", {
       className: lang === "en" ? "on" : "",
       onClick: () => setLang("en")
-    }, t.langB)), /*#__PURE__*/React.createElement("button", {
+    }, t.langB)), L.showPdf && /*#__PURE__*/React.createElement("button", {
       className: "printbtn",
       onClick: () => window.print(),
       title: U.pdf

@@ -22,15 +22,15 @@
     if (!v || !h.decompose(v[v.length - 1])) return null;
     var stem = h.stemOf(v), last = h.decompose(stem[stem.length - 1]), head = stem.slice(0, -1);
     if (last.jong === 0) return head + h.compose(last.cho, last.jung, h.JONG.N) + " 채로";        /* 받침 X: +ㄴ */
-    if (last.jong === h.JONG.L) return head + h.compose(last.cho, last.jung, h.JONG.N) + " 채로"; /* ㄹ→ㄴ */
+    if (last.jong === h.JONG.L) return head + h.compose(last.cho, last.jung, h.JONG.N) + " 채로"; /* ㄹ\u2192ㄴ */
     return stem + "은 채로";                                                                       /* 받침 O: +은 */
   }
   function batchimRule(verb, lang) {
     var h = H();
-    var stem = h.stemOf(verb.trim()); var last = h.decompose(stem[stem.length - 1]); if (!last) return "—";
-    if (last.jong === 0) return lang === "ko" ? "받침 없음 → ㄴ" : "no 받침 → ㄴ";
-    if (last.jong === h.JONG.L) return lang === "ko" ? "ㄹ 받침 → ㄹ탈락+ㄴ" : "ㄹ → drop ㄹ +ㄴ";
-    return lang === "ko" ? "받침 있음 → 은" : "has 받침 → 은";
+    var stem = h.stemOf(verb.trim()); var last = h.decompose(stem[stem.length - 1]); if (!last) return "\u2014";
+    if (last.jong === 0) return lang === "ko" ? "받침 없음 \u2192 ㄴ" : "no 받침 \u2192 ㄴ";
+    if (last.jong === h.JONG.L) return lang === "ko" ? "ㄹ 받침 \u2192 ㄹ탈락+ㄴ" : "ㄹ \u2192 drop ㄹ +ㄴ";
+    return lang === "ko" ? "받침 있음 \u2192 은" : "has 받침 \u2192 은";
   }
   /* ---- 나만의 문장 검사 (-ㄴ/은 채로 형태만 확인) ---- */
   function checkChaero(s) {
@@ -38,11 +38,11 @@
     var m = (s || "").match(/([가-힣]+)\s*채로?/);
     if (!m) return { st: "none" };
     var w = m[1];
-    if (w.slice(-1) === "는") return { st: "almost", form: w + " 채로" };          /* 입는 채로 ✗ */
+    if (w.slice(-1) === "는") return { st: "almost", form: w + " 채로" };          /* 입는 채로 \u2717 */
     if (w.slice(-1) === "은") {
       var prev = w.length >= 2 ? h.decompose(w[w.length - 2]) : null;
-      if (prev && prev.jong === h.JONG.SS) return { st: "almost", form: w + " 채로" }; /* 했은 채로 ✗ */
-      if (prev && prev.jong === h.JONG.L) return { st: "almost", form: w + " 채로" };  /* 열은 채로 ✗ */
+      if (prev && prev.jong === h.JONG.SS) return { st: "almost", form: w + " 채로" }; /* 했은 채로 \u2717 */
+      if (prev && prev.jong === h.JONG.L) return { st: "almost", form: w + " 채로" };  /* 열은 채로 \u2717 */
       return { st: "ok", form: w + " 채로" };
     }
     var d = h.decompose(w[w.length - 1]);
@@ -51,32 +51,32 @@
   }
 
   /* ---- 결합정보 / 복습 테이블 (원형 어간=틸, 다=회색, 어미=코랄, 합성 글자=mix) ---- */
-  var CONJ_KO = '<table class="conjtable"><thead><tr><th>받침 <span class="pk">O</span></th><th>받침 <span class="pk">X</span></th><th>받침 <span class="pk">ㄹ</span></th></tr></thead><tbody><tr><td class="end">-은 채로</td><td class="end">-ㄴ 채로</td><td class="end"><small>ㄹ탈락</small>-ㄴ 채로</td></tr><tr><td class="eg"><span class="stem">먹</span><span class="gray">다</span> + <span class="add">은 채로</span><br>→ <span class="res"><span class="stem">먹</span>은 채로</span></td><td class="eg"><span class="stem">서</span><span class="gray">다</span> + <span class="add">ㄴ 채로</span><br>→ <span class="res"><span class="mix">선</span> 채로</span></td><td class="eg"><span class="stem">만들</span><span class="gray">다</span> + <span class="add">ㄴ 채로</span><br>→ <span class="res"><span class="stem">만</span><span class="mix">든</span> 채로</span></td></tr></tbody></table>';
+  var CONJ_KO = '<table class="conjtable"><thead><tr><th>받침 <span class="pk">O</span></th><th>받침 <span class="pk">X</span></th><th>받침 <span class="pk">ㄹ</span></th></tr></thead><tbody><tr><td class="end">-은 채로</td><td class="end">-ㄴ 채로</td><td class="end"><small>ㄹ탈락</small>-ㄴ 채로</td></tr><tr><td class="eg"><span class="stem">먹</span><span class="gray">다</span> + <span class="add">은 채로</span><br>\u2192 <span class="res"><span class="stem">먹</span>은 채로</span></td><td class="eg"><span class="stem">서</span><span class="gray">다</span> + <span class="add">ㄴ 채로</span><br>\u2192 <span class="res"><span class="mix">선</span> 채로</span></td><td class="eg"><span class="stem">만들</span><span class="gray">다</span> + <span class="add">ㄴ 채로</span><br>\u2192 <span class="res"><span class="stem">만</span><span class="mix">든</span> 채로</span></td></tr></tbody></table>';
   var CONJ_EN = CONJ_KO.split("받침 <span").join("Final consonant <span").split("<small>ㄹ탈락</small>").join("<small>drop ㄹ</small>");
   var REV_KO = '<table class="revtable"><thead><tr><th>받침 O</th><th>받침 X</th><th>받침 ㄹ (ㄹ탈락)</th></tr></thead><tbody><tr><td><span class="f">-은 채로</span><span class="e">먹은 채로</span></td><td><span class="f">-ㄴ 채로</span><span class="e">켠 채로</span></td><td><span class="f">-ㄴ 채로</span><span class="e">만든 채로</span></td></tr></tbody></table>';
   var REV_EN = '<table class="revtable"><thead><tr><th>Final consonant O</th><th>Final consonant X</th><th>Final consonant ㄹ (drop ㄹ)</th></tr></thead><tbody><tr><td><span class="f">-은 채로</span><span class="e">먹은 채로</span></td><td><span class="f">-ㄴ 채로</span><span class="e">켠 채로</span></td><td><span class="f">-ㄴ 채로</span><span class="e">만든 채로</span></td></tr></tbody></table>';
 
   /* ---- 공식 퀴즈 (Korean Grammar Quiz 203 PDF) ---- */
   var PART1 = [
-    { base: "사다", gloss: { ko: "v. 사다 · 받침 X", en: "v. buy · no 받침" }, options: ["사은 채로", "산 채로", "삳 채로"], answer: 1, nuance: "bx", explain: { ko: "사다 + ㄴ 채로 → 산 채로.", en: "사다 + ㄴ 채로 → 산 채로." } },
-    { base: "울다", gloss: { ko: "v. 울다 · ㄹ받침", en: "v. cry · ㄹ stem" }, options: ["울은 채로", "운 채로", "우는 채로"], answer: 1, nuance: "bl", explain: { ko: "울다 (ㄹ탈락) + ㄴ 채로 → 운 채로.", en: "울다 (drop ㄹ) + ㄴ 채로 → 운 채로." } },
-    { base: "듣다", gloss: { ko: "v. 듣다 · ㄷ불규칙", en: "v. listen · ㄷ-irregular" }, options: ["듣은 채로", "들은 채로", "든 채로"], answer: 1, nuance: "ir", explain: { ko: "ㄷ불규칙: 듣 → 들, + 은 채로 → 들은 채로.", en: "ㄷ-irregular: 듣 → 들, + 은 채로 → 들은 채로." } },
-    { base: "눕다", gloss: { ko: "v. 눕다 · ㅂ불규칙", en: "v. lie down · ㅂ-irregular" }, options: ["눕은 채로", "누운 채로", "눈 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅂ불규칙: 눕 → 누우, + ㄴ 채로 → 누운 채로.", en: "ㅂ-irregular: 눕 → 누우, + ㄴ 채로 → 누운 채로." } },
-    { base: "젓다", gloss: { ko: "v. 젓다 · ㅅ불규칙", en: "v. stir · ㅅ-irregular" }, options: ["젓은 채로", "저은 채로", "전 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅅ불규칙: ㅅ 탈락, 젓 → 저, + 은 채로 → 저은 채로.", en: "ㅅ-irregular: ㅅ drops, 젓 → 저, + 은 채로 → 저은 채로." } }
+    { base: "사다", gloss: { ko: "v. 사다 \u00B7 받침 X", en: "v. buy \u00B7 no 받침" }, options: ["사은 채로", "산 채로", "삳 채로"], answer: 1, nuance: "bx", explain: { ko: "사다 + ㄴ 채로 \u2192 산 채로.", en: "사다 + ㄴ 채로 \u2192 산 채로." } },
+    { base: "울다", gloss: { ko: "v. 울다 \u00B7 ㄹ받침", en: "v. cry \u00B7 ㄹ stem" }, options: ["울은 채로", "운 채로", "우는 채로"], answer: 1, nuance: "bl", explain: { ko: "울다 (ㄹ탈락) + ㄴ 채로 \u2192 운 채로.", en: "울다 (drop ㄹ) + ㄴ 채로 \u2192 운 채로." } },
+    { base: "듣다", gloss: { ko: "v. 듣다 \u00B7 ㄷ불규칙", en: "v. listen \u00B7 ㄷ-irregular" }, options: ["듣은 채로", "들은 채로", "든 채로"], answer: 1, nuance: "ir", explain: { ko: "ㄷ불규칙: 듣 \u2192 들, + 은 채로 \u2192 들은 채로.", en: "ㄷ-irregular: 듣 \u2192 들, + 은 채로 \u2192 들은 채로." } },
+    { base: "눕다", gloss: { ko: "v. 눕다 \u00B7 ㅂ불규칙", en: "v. lie down \u00B7 ㅂ-irregular" }, options: ["눕은 채로", "누운 채로", "눈 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅂ불규칙: 눕 \u2192 누우, + ㄴ 채로 \u2192 누운 채로.", en: "ㅂ-irregular: 눕 \u2192 누우, + ㄴ 채로 \u2192 누운 채로." } },
+    { base: "젓다", gloss: { ko: "v. 젓다 \u00B7 ㅅ불규칙", en: "v. stir \u00B7 ㅅ-irregular" }, options: ["젓은 채로", "저은 채로", "전 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅅ불규칙: ㅅ 탈락, 젓 \u2192 저, + 은 채로 \u2192 저은 채로.", en: "ㅅ-irregular: ㅅ drops, 젓 \u2192 저, + 은 채로 \u2192 저은 채로." } }
   ];
   var PART2 = [
-    { sent: ["옷을 ", " 바다에 들어갔어요."], base: "입다", en: "I went into the sea with my clothes on.", options: ["입는 채로", "입은 채로", "이븐 채로"], answer: 1, nuance: "bo", explain: { ko: "입다 + 은 채로 → 입은 채로.", en: "입다 (has 받침) + 은 채로 → 입은 채로." } },
-    { sent: ["머리가 복잡할 땐 눈을 ", " 가만히 있어 보세요."], base: "감다", en: "When your mind feels cluttered, try staying still with your eyes closed.", options: ["감는 채로", "감은 채로", "간 채로"], answer: 1, nuance: "bo", explain: { ko: "감다 + 은 채로 → 감은 채로.", en: "감다 (has 받침) + 은 채로 → 감은 채로." } },
-    { sent: ["칫솔을 입에 ", " 돌아다니지 마세요."], base: "물다", en: "Don't walk around with your toothbrush in your mouth.", options: ["물은 채로", "문 채로", "무는 채로"], answer: 1, nuance: "bl", explain: { ko: "물다 (ㄹ탈락) + ㄴ 채로 → 문 채로.", en: "물다 (drop ㄹ) + ㄴ 채로 → 문 채로." } },
-    { sent: ["이어폰을 ", " 친구의 이야기를 들었어요."], base: "끼다", en: "I listened to my friend while wearing earphones.", options: ["끼은 채로", "낀 채로", "껴 채로"], answer: 1, nuance: "bx", explain: { ko: "끼다 + ㄴ 채로 → 낀 채로.", en: "끼다 (no 받침) + ㄴ 채로 → 낀 채로." } },
-    { sent: ["웃음을 ", " 헤어진 연인에게 인사했어요."], base: "짓다", en: "I greeted my ex with a smile on my face.", options: ["짓은 채로", "지은 채로", "진 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅅ불규칙: 짓 → 지, + 은 채로 → 지은 채로.", en: "ㅅ-irregular: 짓 → 지, + 은 채로 → 지은 채로." } }
+    { sent: ["옷을 ", " 바다에 들어갔어요."], base: "입다", en: "I went into the sea with my clothes on.", options: ["입는 채로", "입은 채로", "이븐 채로"], answer: 1, nuance: "bo", explain: { ko: "입다 + 은 채로 \u2192 입은 채로.", en: "입다 (has 받침) + 은 채로 \u2192 입은 채로." } },
+    { sent: ["머리가 복잡할 땐 눈을 ", " 가만히 있어 보세요."], base: "감다", en: "When your mind feels cluttered, try staying still with your eyes closed.", options: ["감는 채로", "감은 채로", "간 채로"], answer: 1, nuance: "bo", explain: { ko: "감다 + 은 채로 \u2192 감은 채로.", en: "감다 (has 받침) + 은 채로 \u2192 감은 채로." } },
+    { sent: ["칫솔을 입에 ", " 돌아다니지 마세요."], base: "물다", en: "Don't walk around with your toothbrush in your mouth.", options: ["물은 채로", "문 채로", "무는 채로"], answer: 1, nuance: "bl", explain: { ko: "물다 (ㄹ탈락) + ㄴ 채로 \u2192 문 채로.", en: "물다 (drop ㄹ) + ㄴ 채로 \u2192 문 채로." } },
+    { sent: ["이어폰을 ", " 친구의 이야기를 들었어요."], base: "끼다", en: "I listened to my friend while wearing earphones.", options: ["끼은 채로", "낀 채로", "껴 채로"], answer: 1, nuance: "bx", explain: { ko: "끼다 + ㄴ 채로 \u2192 낀 채로.", en: "끼다 (no 받침) + ㄴ 채로 \u2192 낀 채로." } },
+    { sent: ["웃음을 ", " 헤어진 연인에게 인사했어요."], base: "짓다", en: "I greeted my ex with a smile on my face.", options: ["짓은 채로", "지은 채로", "진 채로"], answer: 1, nuance: "ir", explain: { ko: "ㅅ불규칙: 짓 \u2192 지, + 은 채로 \u2192 지은 채로.", en: "ㅅ-irregular: 짓 \u2192 지, + 은 채로 \u2192 지은 채로." } }
   ];
 
   window.BK_LESSON = {
     id: "G203",
     videoId: "bRV39vjqpzI",
     logoUrl: "https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@main/assets/bklogo.jpg",
-    toolUrl: "",   /* TODO: 활용 도구 Blogger 페이지 URL — 채우면 배너가 나타남 */
+    toolUrl: "",   /* TODO: 활용 도구 Blogger 페이지 URL \u2014 채우면 배너가 나타남 */
     heroHTML: '<span class="pos">V</span><span class="morph">-ㄴ 채로/은 채로</span>',
     tables: { conj: { ko: CONJ_KO, en: CONJ_EN }, rev: { ko: REV_KO, en: REV_EN } },
     quiz: { part1: PART1, part2: PART2 },
@@ -86,42 +86,42 @@
     prules: {
       yon:  { ko: { name: "연음 (Linking)", sub: "받침이 다음 모음 자리로 옮겨 가서 발음돼요." },
               en: { name: "Linking (연음)", sub: "The final consonant moves over to the next vowel." } },
-      doen: { ko: { name: "된소리되기 (Tensification)", sub: "받침소리 [ㄱ·ㄷ·ㅂ] 뒤의 ㄱ·ㄷ·ㅂ·ㅅ·ㅈ는 된소리로 발음돼요." },
-              en: { name: "Tensification (된소리되기)", sub: "After [ㄱ·ㄷ·ㅂ], plain consonants become tense (ㄲ·ㄸ·ㅃ·ㅆ·ㅉ)." } },
+      doen: { ko: { name: "된소리되기 (Tensification)", sub: "받침소리 [ㄱ\u00B7ㄷ\u00B7ㅂ] 뒤의 ㄱ\u00B7ㄷ\u00B7ㅂ\u00B7ㅅ\u00B7ㅈ는 된소리로 발음돼요." },
+              en: { name: "Tensification (된소리되기)", sub: "After [ㄱ\u00B7ㄷ\u00B7ㅂ], plain consonants become tense (ㄲ\u00B7ㄸ\u00B7ㅃ\u00B7ㅆ\u00B7ㅉ)." } },
       mix:  { ko: { name: "연음 + 된소리되기", sub: "두 규칙이 한 단어 안에서 함께 적용돼요." },
               en: { name: "Linking + Tensification", sub: "Both rules apply within one word." } }
     },
     next: [
       /* TODO: 포스트/페이지 발행 후 href 를 실제 URL로 바꾸고 주석을 해제하세요.
       { href: "G204-포스트-URL",
-        nk: { ko: "다음 강의 · 한국어 문법 204", en: "NEXT · KOREAN GRAMMAR 204" },
+        nk: { ko: "다음 강의 \u00B7 한국어 문법 204", en: "NEXT \u00B7 KOREAN GRAMMAR 204" },
         npHTML: '<span class="v">V/A</span><span class="m">-았더라면/었더라면/했더라면</span>',
-        ng: { ko: "과거를 반대로 가정 — 후회와 다행", en: "Supposing the opposite of the past — regret & relief" },
-        na: { ko: "강의 보기 →", en: "Open lesson →" } },
+        ng: { ko: "과거를 반대로 가정 \u2014 후회와 다행", en: "Supposing the opposite of the past \u2014 regret & relief" },
+        na: { ko: "강의 보기 \u2192", en: "Open lesson \u2192" } },
       { href: "활용도구-페이지-URL", newTab: true,
         nk: { ko: "무료 도구", en: "FREE TOOL" },
         npHTML: '<span class="v">한국어</span> <span class="m">활용 도구</span>',
         ng: { ko: "동사 하나로 12가지 활용형을 한 번에", en: "Type one verb, see 12 forms at once" },
-        na: { ko: "활용해 보기 →", en: "Try it →" } }
+        na: { ko: "활용해 보기 \u2192", en: "Try it \u2192" } }
       */
     ],
 
     ct: {
       ko: {
         langA: "한글", langB: "EN",
-        kicker: "한국어 문법 203 · Korean Grammar",
-        heroEx: "“텔레비전을 켠 채로 잠들었어요.”",
-        heroSub: "— 어떤 행동을 한 상태 그대로 유지한 채 다른 행동을 할 때",
+        kicker: "한국어 문법 203 \u00B7 Korean Grammar",
+        heroEx: "\u201C텔레비전을 켠 채로 잠들었어요.\u201D",
+        heroSub: "\u2014 어떤 행동을 한 상태 그대로 유지한 채 다른 행동을 할 때",
         concept_l: "개념", concept_h: "상태를 유지한 채 다른 행동",
-        prereq: "사전 지식: 동사 어간과 받침 구분 — 받침이 무엇인지 알면 충분해요.",
+        prereq: "사전 지식: 동사 어간과 받침 구분 \u2014 받침이 무엇인지 알면 충분해요.",
         concept_p1: [
           ["어떤 행동을 한 ", { b: "상태 그대로 유지한 채" }, ", 다른 행동이 일어날 때 사용."],
           ["줄여서 ", { b: "-(으)ㄴ 채" }, "로도 사용."]
         ],
-        flow: [["👟", "행동 / 상태", "어떤 행동을 함"], ["⏸️", "그대로 유지", "그 상태가 이어짐"], ["🚶", "다른 행동", "그 상태에서 다른 행동"]],
+        flow: [["\uD83D\uDC5F", "행동 / 상태", "어떤 행동을 함"], ["\u23F8\uFE0F", "그대로 유지", "그 상태가 이어짐"], ["\uD83D\uDEB6", "다른 행동", "그 상태에서 다른 행동"]],
         dlg_l: "대화 속에서 보기", dlg_h: "대화로 개념 이해하기",
         dialogs: [
-          { tag: "받침 O · 신은 채로", cls: "bo", intro: "먼저 받침이 있는 동사 ‘신다’ 예문이에요.",
+          { tag: "받침 O \u00B7 신은 채로", cls: "bo", intro: "먼저 받침이 있는 동사 \u2018신다\u2019 예문이에요.",
             lines: [
               { who: "나나", ko: ["호주나 미국에서는 신발을 신고 집에 들어가도 괜찮죠?"], t: 124 },
               { who: "미소", ko: ["네. 그런데 한국에서는 신발을 ", { b: "신은 채로" }, " 집에 들어가면 안 돼요."], t: 131 },
@@ -133,8 +133,8 @@
               { k: "상태 유지", cls: "keep", v: ["벗지 않고 ", { b: "신은 상태 그대로" }, "."] },
               { k: "다른 행동", cls: "next", v: ["그 상태로 ", { b: "집에 들어가요" }, "."] }
             ],
-            take: ["→ 동사 어간에 ", { b: "받침이 있으면" }, ", 그 상태를 유지한 채 다른 행동을 할 때 ", { b: "-은 채로" }, "를 써요."] },
-          { tag: "받침 X · 켠 채로", cls: "bx", intro: "이번에는 받침이 없는 동사 ‘켜다’ 예문이에요.",
+            take: ["\u2192 동사 어간에 ", { b: "받침이 있으면" }, ", 그 상태를 유지한 채 다른 행동을 할 때 ", { b: "-은 채로" }, "를 써요."] },
+          { tag: "받침 X \u00B7 켠 채로", cls: "bx", intro: "이번에는 받침이 없는 동사 \u2018켜다\u2019 예문이에요.",
             lines: [
               { who: "나나", ko: ["어제 밤에 늦게까지 텔레비전을 봤어요?"], t: 218 },
               { who: "미소", ko: ["네. 텔레비전을 ", { b: "켠 채로" }, " 잠들었더라고요."], t: 222 },
@@ -146,17 +146,17 @@
               { k: "상태 유지", cls: "keep", v: ["끄지 않고 ", { b: "켜둔 상태 그대로" }, "."] },
               { k: "다른 행동", cls: "next", v: ["그 상태로 ", { b: "잠들었어요" }, "."] }
             ],
-            take: ["→ 동사 어간에 ", { b: "받침이 없으면" }, " ", { b: "-ㄴ 채로" }, "를 써요. (켜다 → 켠 채로)"] }
+            take: ["\u2192 동사 어간에 ", { b: "받침이 없으면" }, " ", { b: "-ㄴ 채로" }, "를 써요. (켜다 \u2192 켠 채로)"] }
         ],
         conj_l: "결합정보", conj_h: "",
         conj_combine: "동사 뒤에 사용합니다.",
         builder_l: "활용 만들기", builder_h: "직접 활용해 보기",
-        builder_hint: "동사를 고르거나 입력하면 ‘-(으)ㄴ 채로’ 활용형이 실시간으로 만들어져요.",
-        builder_invalid: "‘다’로 끝나는 동사를 입력하세요 (예: 켜다).",
-        builder_note: "※ 받침 없음 → ㄴ · 받침 있음 → 은 · ㄹ → ㄹ탈락 + ㄴ.",
+        builder_hint: "동사를 고르거나 입력하면 \u2018-(으)ㄴ 채로\u2019 활용형이 실시간으로 만들어져요.",
+        builder_invalid: "\u2018다\u2019로 끝나는 동사를 입력하세요 (예: 켜다).",
+        builder_note: "\u203B 받침 없음 \u2192 ㄴ \u00B7 받침 있음 \u2192 은 \u00B7 ㄹ \u2192 ㄹ탈락 + ㄴ.",
         b_base: "기본형", b_stem: "어간", b_result: "활용형",
         tool_text: ["모든 활용형을 한 번에 보고 싶나요? ", "활용 도구 열기"],
-        sent_l: "연습 · Practice", sent_h: "문장으로 활용하기",
+        sent_l: "연습 \u00B7 Practice", sent_h: "문장으로 활용하기",
         sent_hint: "먼저 소리 내어 문장을 완성해 보고, 카드를 눌러 정답을 확인하세요.",
         sent_tap: "탭해서 정답 보기",
         sent_items: [
@@ -164,40 +164,40 @@
           { q: ["너무 피곤해서 지하철에서 ", { b: "(서다)" }, " 깜빡 졸았어요."], a: ["너무 피곤해서 지하철에서 ", { b: "선 채로" }, " 깜빡 졸았어요."], br: "서다 + ㄴ 채로", t: 409 },
           { q: ["어젯밤에 창문을 ", { b: "(열다)" }, " 잠들어서 감기에 걸렸어요."], a: ["어젯밤에 창문을 ", { b: "연 채로" }, " 잠들어서 감기에 걸렸어요."], br: "열다 (ㄹ탈락) + ㄴ 채로", t: 456 }
         ],
-        dlgp_l: "대화 연습 · 발음", dlgp_h: "실전 대화로 연습하기",
+        dlgp_l: "대화 연습 \u00B7 발음", dlgp_h: "실전 대화로 연습하기",
         dlgp_intro: "발음을 신경 쓰면서 듣고, 따라 읽어 보세요.",
         dlgp_toggle: ["발음 보기", "발음 숨기기"],
         dlgp_lines: [
-          { who: "나나", t: 482, seg: ["미소 씨, 어제 밤새웠어요? 밤새 방에 ", { tx: "불이", pr: "부리", ru: "yon", nt: "받침 ㄹ + 이 → [부리]" }, " 켜져 ", { tx: "있던데요", pr: "읻떤데요", ru: "doen", nt: "받침 ㅆ[ㄷ] + ㄷ → 된소리 [읻떤]" }, "."] },
-          { who: "미소", t: 489, seg: ["아, 아니요. ", { tx: "불을", pr: "부를", ru: "yon", nt: "받침 ㄹ + 을 → [부를]" }, " ", { tx: "켠 채로", b: 1 }, " ", { tx: "잠들었더라고요", pr: "잠드럳떠라고요", ru: "mix", nt: "들+었 연음 [드러], 었+더 된소리 [떠]" }, "."] },
-          { who: "미소", t: 494, seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ → [ㅉ]" }, "하다가 그냥 잠든 것 ", { tx: "같아요", pr: "가타요", ru: "yon", nt: "받침 ㅌ + 아 → [타]" }, "."] },
-          { who: "나나", t: 498, seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ → [ㅉ]" }, "는 다 ", { tx: "했어요", pr: "해써요", ru: "yon", nt: "받침 ㅆ + 어 → [써]" }, "?"] },
-          { who: "미소", t: 502, seg: ["아니요. ", { tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ → [ㅉ]" }, "는커녕 ", { tx: "불을", pr: "부를", ru: "yon", nt: "받침 ㄹ + 을 → [부를]" }, " ", { tx: "켜 놓은 채로", b: 1 }, " 자서 그런지 머리도 띵하고 눈도 아파요."] }
+          { who: "나나", t: 482, seg: ["미소 씨, 어제 밤새웠어요? 밤새 방에 ", { tx: "불이", pr: "부리", ru: "yon", nt: "받침 ㄹ + 이 \u2192 [부리]" }, " 켜져 ", { tx: "있던데요", pr: "읻떤데요", ru: "doen", nt: "받침 ㅆ[ㄷ] + ㄷ \u2192 된소리 [읻떤]" }, "."] },
+          { who: "미소", t: 489, seg: ["아, 아니요. ", { tx: "불을", pr: "부를", ru: "yon", nt: "받침 ㄹ + 을 \u2192 [부를]" }, " ", { tx: "켠 채로", b: 1 }, " ", { tx: "잠들었더라고요", pr: "잠드럳떠라고요", ru: "mix", nt: "들+었 연음 [드러], 었+더 된소리 [떠]" }, "."] },
+          { who: "미소", t: 494, seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ \u2192 [ㅉ]" }, "하다가 그냥 잠든 것 ", { tx: "같아요", pr: "가타요", ru: "yon", nt: "받침 ㅌ + 아 \u2192 [타]" }, "."] },
+          { who: "나나", t: 498, seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ \u2192 [ㅉ]" }, "는 다 ", { tx: "했어요", pr: "해써요", ru: "yon", nt: "받침 ㅆ + 어 \u2192 [써]" }, "?"] },
+          { who: "미소", t: 502, seg: ["아니요. ", { tx: "숙제", pr: "숙쩨", ru: "doen", nt: "받침 ㄱ + ㅈ \u2192 [ㅉ]" }, "는커녕 ", { tx: "불을", pr: "부를", ru: "yon", nt: "받침 ㄹ + 을 \u2192 [부를]" }, " ", { tx: "켜 놓은 채로", b: 1 }, " 자서 그런지 머리도 띵하고 눈도 아파요."] }
         ],
-        dlgp_note: [{ b: "켠 채로" }, " (켜다 + ㄴ 채로) · ", { b: "켜 놓은 채로" }, " (켜다 + 어 놓은 채로) — 일부러 그 상태로 둔 느낌이 더 강해요."],
+        dlgp_note: [{ b: "켠 채로" }, " (켜다 + ㄴ 채로) \u00B7 ", { b: "켜 놓은 채로" }, " (켜다 + 어 놓은 채로) \u2014 일부러 그 상태로 둔 느낌이 더 강해요."],
         quiz_l: "퀴즈", quiz_h: "퀴즈로 확인하기",
-        quiz_intro: ["’-ㄴ 채로/은 채로’ 공식 퀴즈예요. 보기를 눌러 정답을 확인하세요. ", "(출처: Basic Korean — Korean Grammar Quiz 203)"],
+        quiz_intro: ["\u2019-ㄴ 채로/은 채로\u2019 공식 퀴즈예요. 보기를 눌러 정답을 확인하세요. ", "(출처: Basic Korean \u2014 Korean Grammar Quiz 203)"],
         qpart1: "문제 1) 알맞은 활용형을 고르세요", qpart2: "문제 2) 문장을 완성하세요",
         retry: "다시 풀기",
         ms_l: "이제 여러분 차례", ms_h: "나만의 문장 만들기",
         ms_hint: "'-ㄴ/은 채로'를 넣어 나만의 문장을 만들어 보세요. 직접 쓰면 더 오래 기억돼요!",
         ms_ph: "예: 신발을 신은 채로 들어갔어요.",
         ms_btn: "확인하기",
-        ms_ok: ["문법 형태 OK! '", "'를 잘 만들었어요. (이 검사는 활용 형태만 확인해요 — 문장 전체는 소리 내어 읽으며 점검해 보세요!)"],
-        ms_almost: ["거의 다 왔어요 — '", "' 부분의 활용을 확인해 보세요. (받침 O → 은 채로 · 받침 X/ㄹ → ㄴ 채로)"],
+        ms_ok: ["문법 형태 OK! '", "'를 잘 만들었어요. (이 검사는 활용 형태만 확인해요 \u2014 문장 전체는 소리 내어 읽으며 점검해 보세요!)"],
+        ms_almost: ["거의 다 왔어요 \u2014 '", "' 부분의 활용을 확인해 보세요. (받침 O \u2192 은 채로 \u00B7 받침 X/ㄹ \u2192 ㄴ 채로)"],
         ms_none: "문장에 '-ㄴ/은 채로'가 아직 없어요. 예: 텔레비전을 켠 채로 잠들었어요.",
         review_l: "복습", review_h: "오늘 배운 것",
         review: [
-          [{ b: "동사-(으)ㄴ 채로" }, " — 어떤 행동을 한 ", { b: "상태 그대로 유지한 채" }, ", 다른 행동이 일어날 때 사용."]
+          [{ b: "동사-(으)ㄴ 채로" }, " \u2014 어떤 행동을 한 ", { b: "상태 그대로 유지한 채" }, ", 다른 행동이 일어날 때 사용."]
         ],
         next_l: "다음 학습",
         video_l: "영상", video_h: "강의 영상으로 복습",
-        footer_sub: "한국어 문법 203 · V-ㄴ 채로/은 채로"
+        footer_sub: "한국어 문법 203 \u00B7 V-ㄴ 채로/은 채로"
       },
       en: {
         langA: "한글", langB: "EN",
         kicker: "Korean Grammar 203",
-        heroEx: "“텔레비전을 켠 채로 잠들었어요.”",
+        heroEx: "\u201C텔레비전을 켠 채로 잠들었어요.\u201D",
         heroSub: "I fell asleep with the television (still) on.",
         concept_l: "Concept", concept_h: "Doing something while a state is kept",
         prereq: "Good to know first: verb stems and 받침 (final consonants).",
@@ -205,10 +205,10 @@
           ["Used when ", { b: "another action happens" }, " while the ", { b: "state of an action is kept" }, "."],
           ["Can be shortened to ", { b: "-(으)ㄴ 채" }, "."]
         ],
-        flow: [["👟", "Action / state", "you do something"], ["⏸️", "Kept as is", "that state continues"], ["🚶", "Another action", "done in that state"]],
+        flow: [["\uD83D\uDC5F", "Action / state", "you do something"], ["\u23F8\uFE0F", "Kept as is", "that state continues"], ["\uD83D\uDEB6", "Another action", "done in that state"]],
         dlg_l: "In Dialogue", dlg_h: "Understanding it through conversation",
         dialogs: [
-          { tag: "받침 O · 신은 채로", cls: "bo", intro: "First, the verb 신다 (to wear shoes), which has a final consonant.",
+          { tag: "받침 O \u00B7 신은 채로", cls: "bo", intro: "First, the verb 신다 (to wear shoes), which has a final consonant.",
             lines: [
               { who: "Nana", ko: ["호주나 미국에서는 신발을 신고 집에 들어가도 괜찮죠?"], en: "In Australia or the US it's fine to go inside with your shoes on, right?", t: 124 },
               { who: "Miso", ko: ["네. 그런데 한국에서는 신발을 ", { b: "신은 채로" }, " 집에 들어가면 안 돼요."], en: "Yes. But in Korea you shouldn't enter the house with your shoes on.", t: 131 },
@@ -217,30 +217,30 @@
             form: ["신은 채로", "=", "신다 (has 받침)", "+", "-은 채로"],
             steps: [
               { k: "The action", cls: "act", v: ["You ", { b: "put your shoes on" }, "."] },
-              { k: "State kept", cls: "keep", v: ["Not taken off — ", { b: "still on" }, "."] },
+              { k: "State kept", cls: "keep", v: ["Not taken off \u2014 ", { b: "still on" }, "."] },
               { k: "Another action", cls: "next", v: ["You ", { b: "enter the house" }, " in that state."] }
             ],
-            take: ["→ If the verb stem ", { b: "has a final consonant" }, ", use ", { b: "-은 채로" }, " to keep that state while doing something else."] },
-          { tag: "받침 X · 켠 채로", cls: "bx", intro: "Now the verb 켜다 (to turn on), which has no final consonant.",
+            take: ["\u2192 If the verb stem ", { b: "has a final consonant" }, ", use ", { b: "-은 채로" }, " to keep that state while doing something else."] },
+          { tag: "받침 X \u00B7 켠 채로", cls: "bx", intro: "Now the verb 켜다 (to turn on), which has no final consonant.",
             lines: [
               { who: "Nana", ko: ["어제 밤에 늦게까지 텔레비전을 봤어요?"], en: "Did you watch TV late last night?", t: 218 },
-              { who: "Miso", ko: ["네. 텔레비전을 ", { b: "켠 채로" }, " 잠들었더라고요."], en: "Yes — I fell asleep with the TV on.", t: 222 },
+              { who: "Miso", ko: ["네. 텔레비전을 ", { b: "켠 채로" }, " 잠들었더라고요."], en: "Yes \u2014 I fell asleep with the TV on.", t: 222 },
               { who: "Nana", ko: ["아, 그래서 아침까지 텔레비전 소리가 들렸군요."], en: "Oh, that's why I could hear the TV until morning.", t: 228 }
             ],
             form: ["켠 채로", "=", "켜다 (no 받침)", "+", "-ㄴ 채로"],
             steps: [
               { k: "The action", cls: "act", v: ["You ", { b: "turned on the TV" }, "."] },
-              { k: "State kept", cls: "keep", v: ["Not turned off — ", { b: "still on" }, "."] },
+              { k: "State kept", cls: "keep", v: ["Not turned off \u2014 ", { b: "still on" }, "."] },
               { k: "Another action", cls: "next", v: ["You ", { b: "fell asleep" }, " in that state."] }
             ],
-            take: ["→ If the verb stem ", { b: "has no final consonant" }, ", use ", { b: "-ㄴ 채로" }, ". (켜다 → 켠 채로)"] }
+            take: ["\u2192 If the verb stem ", { b: "has no final consonant" }, ", use ", { b: "-ㄴ 채로" }, ". (켜다 \u2192 켠 채로)"] }
         ],
         conj_l: "Conjugation", conj_h: "",
         conj_combine: "Used after verbs.",
         builder_l: "Builder", builder_h: "Conjugate it yourself",
-        builder_hint: "Pick or type a verb and the ‘-(으)ㄴ 채로’ form updates live.",
+        builder_hint: "Pick or type a verb and the \u2018-(으)ㄴ 채로\u2019 form updates live.",
         builder_invalid: "Enter a Korean verb ending in 다 (e.g. 켜다).",
-        builder_note: "※ no 받침 → ㄴ · has 받침 → 은 · ㄹ → drop ㄹ + ㄴ.",
+        builder_note: "\u203B no 받침 \u2192 ㄴ \u00B7 has 받침 \u2192 은 \u00B7 ㄹ \u2192 drop ㄹ + ㄴ.",
         b_base: "Dictionary", b_stem: "Stem", b_result: "Result",
         tool_text: ["Want to see every form at once? ", "Open the Conjugator"],
         sent_l: "Practice", sent_h: "Use it in sentences",
@@ -251,40 +251,40 @@
           { q: ["너무 피곤해서 지하철에서 ", { b: "(서다)" }, " 깜빡 졸았어요."], a: ["너무 피곤해서 지하철에서 ", { b: "선 채로" }, " 깜빡 졸았어요."], br: "서다 + ㄴ 채로", tr: "I was so tired I dozed off standing on the subway.", t: 409 },
           { q: ["어젯밤에 창문을 ", { b: "(열다)" }, " 잠들어서 감기에 걸렸어요."], a: ["어젯밤에 창문을 ", { b: "연 채로" }, " 잠들어서 감기에 걸렸어요."], br: "열다 (ㄹ탈락) + ㄴ 채로", tr: "I fell asleep with the window open and caught a cold.", t: 456 }
         ],
-        dlgp_l: "Dialogue Practice · Pronunciation", dlgp_h: "Practice with a real dialogue",
+        dlgp_l: "Dialogue Practice \u00B7 Pronunciation", dlgp_h: "Practice with a real dialogue",
         dlgp_intro: "Listen and read along, paying attention to the pronunciation.",
         dlgp_toggle: ["Show pronunciation", "Hide pronunciation"],
         dlgp_lines: [
           { who: "Nana", t: 482, en: "Miso, did you stay up all night? The light was on in your room all night.",
-            seg: ["미소 씨, 어제 밤새웠어요? 밤새 방에 ", { tx: "불이", pr: "부리", ru: "yon", nt: "final ㄹ + 이 → [부리]" }, " 켜져 ", { tx: "있던데요", pr: "읻떤데요", ru: "doen", nt: "final ㅆ[ㄷ] + ㄷ → tense [읻떤]" }, "."] },
+            seg: ["미소 씨, 어제 밤새웠어요? 밤새 방에 ", { tx: "불이", pr: "부리", ru: "yon", nt: "final ㄹ + 이 \u2192 [부리]" }, " 켜져 ", { tx: "있던데요", pr: "읻떤데요", ru: "doen", nt: "final ㅆ[ㄷ] + ㄷ \u2192 tense [읻떤]" }, "."] },
           { who: "Miso", t: 489, en: "Oh, no. I fell asleep with the light on.",
-            seg: ["아, 아니요. ", { tx: "불을", pr: "부를", ru: "yon", nt: "final ㄹ + 을 → [부를]" }, " ", { tx: "켠 채로", b: 1 }, " ", { tx: "잠들었더라고요", pr: "잠드럳떠라고요", ru: "mix", nt: "들+었 links → [드러], 었+더 tensifies → [떠]" }, "."] },
+            seg: ["아, 아니요. ", { tx: "불을", pr: "부를", ru: "yon", nt: "final ㄹ + 을 \u2192 [부를]" }, " ", { tx: "켠 채로", b: 1 }, " ", { tx: "잠들었더라고요", pr: "잠드럳떠라고요", ru: "mix", nt: "들+었 links \u2192 [드러], 었+더 tensifies \u2192 [떠]" }, "."] },
           { who: "Miso", t: 494, en: "I think I just fell asleep while doing my homework.",
-            seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ → [ㅉ]" }, "하다가 그냥 잠든 것 ", { tx: "같아요", pr: "가타요", ru: "yon", nt: "final ㅌ + 아 → [타]" }, "."] },
+            seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ \u2192 [ㅉ]" }, "하다가 그냥 잠든 것 ", { tx: "같아요", pr: "가타요", ru: "yon", nt: "final ㅌ + 아 \u2192 [타]" }, "."] },
           { who: "Nana", t: 498, en: "Did you finish your homework?",
-            seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ → [ㅉ]" }, "는 다 ", { tx: "했어요", pr: "해써요", ru: "yon", nt: "final ㅆ + 어 → [써]" }, "?"] },
-          { who: "Miso", t: 502, en: "No. Let alone homework — I slept with the light left on, so my head feels heavy and my eyes hurt.",
-            seg: ["아니요. ", { tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ → [ㅉ]" }, "는커녕 ", { tx: "불을", pr: "부를", ru: "yon", nt: "final ㄹ + 을 → [부를]" }, " ", { tx: "켜 놓은 채로", b: 1 }, " 자서 그런지 머리도 띵하고 눈도 아파요."] }
+            seg: [{ tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ \u2192 [ㅉ]" }, "는 다 ", { tx: "했어요", pr: "해써요", ru: "yon", nt: "final ㅆ + 어 \u2192 [써]" }, "?"] },
+          { who: "Miso", t: 502, en: "No. Let alone homework \u2014 I slept with the light left on, so my head feels heavy and my eyes hurt.",
+            seg: ["아니요. ", { tx: "숙제", pr: "숙쩨", ru: "doen", nt: "final ㄱ + ㅈ \u2192 [ㅉ]" }, "는커녕 ", { tx: "불을", pr: "부를", ru: "yon", nt: "final ㄹ + 을 \u2192 [부를]" }, " ", { tx: "켜 놓은 채로", b: 1 }, " 자서 그런지 머리도 띵하고 눈도 아파요."] }
         ],
-        dlgp_note: [{ b: "켠 채로" }, " (켜다 + ㄴ 채로) · ", { b: "켜 놓은 채로" }, " (켜다 + 어 놓은 채로) — feels more deliberate, 'left on'."],
+        dlgp_note: [{ b: "켠 채로" }, " (켜다 + ㄴ 채로) \u00B7 ", { b: "켜 놓은 채로" }, " (켜다 + 어 놓은 채로) \u2014 feels more deliberate, 'left on'."],
         quiz_l: "Quiz", quiz_h: "Check yourself with a quiz",
-        quiz_intro: ["The official ‘-ㄴ 채로/은 채로’ quiz. Tap an option to check your answer. ", "(Source: Basic Korean — Korean Grammar Quiz 203)"],
+        quiz_intro: ["The official \u2018-ㄴ 채로/은 채로\u2019 quiz. Tap an option to check your answer. ", "(Source: Basic Korean \u2014 Korean Grammar Quiz 203)"],
         qpart1: "Q1) Choose the correct form", qpart2: "Q2) Complete the sentence",
         retry: "Try again",
         ms_l: "Your turn", ms_h: "Make your own sentence",
         ms_hint: "Write your own sentence using '-ㄴ/은 채로'. Producing it yourself locks it in!",
         ms_ph: "e.g. 신발을 신은 채로 들어갔어요.",
         ms_btn: "Check",
-        ms_ok: ["Pattern looks right: '", "'! (This only checks the grammar form — read the full sentence aloud to double-check.)"],
-        ms_almost: ["Almost — check the conjugation in '", "'. (받침 O → 은 채로 · no 받침/ㄹ → ㄴ 채로)"],
+        ms_ok: ["Pattern looks right: '", "'! (This only checks the grammar form \u2014 read the full sentence aloud to double-check.)"],
+        ms_almost: ["Almost \u2014 check the conjugation in '", "'. (받침 O \u2192 은 채로 \u00B7 no 받침/ㄹ \u2192 ㄴ 채로)"],
         ms_none: "Your sentence doesn't include '-ㄴ/은 채로' yet. e.g. 텔레비전을 켠 채로 잠들었어요.",
         review_l: "Review", review_h: "What we learned",
         review: [
-          [{ b: "Verb-(으)ㄴ 채로" }, " — used when ", { b: "another action happens" }, " while the ", { b: "state of an action is kept" }, "."]
+          [{ b: "Verb-(으)ㄴ 채로" }, " \u2014 used when ", { b: "another action happens" }, " while the ", { b: "state of an action is kept" }, "."]
         ],
         next_l: "Keep learning",
         video_l: "Video", video_h: "Review with the lecture video",
-        footer_sub: "Korean Grammar 203 · V-ㄴ 채로/은 채로"
+        footer_sub: "Korean Grammar 203 \u00B7 V-ㄴ 채로/은 채로"
       }
     }
   };

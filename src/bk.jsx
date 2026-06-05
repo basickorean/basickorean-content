@@ -406,7 +406,7 @@
                 <button className={lang === "ko" ? "on" : ""} onClick={() => setLang("ko")}>{t.langA}</button>
                 <button className={lang === "en" ? "on" : ""} onClick={() => setLang("en")}>{t.langB}</button>
               </div>
-              <button className="printbtn" onClick={() => window.print()} title={U.pdf}>📄 PDF</button>
+              {L.showPdf && <button className="printbtn" onClick={() => window.print()} title={U.pdf}>📄 PDF</button>}
             </div>
           </div></div>
         )}
