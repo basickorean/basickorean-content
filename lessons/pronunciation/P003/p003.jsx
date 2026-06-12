@@ -689,18 +689,16 @@
               {PAIRS.map((p,i)=>(
                 <div className="pairrow" key={i}>
                   <div className="paircell">
-                    <div className="pairhead">{t.plainL}</div>
-                    <div className="pairsyl">{p.a}</div>
+                    <button className="pairsyl" onClick={()=>speakKo(p.a, ()=>setClip(p.t))}>{p.a} ▶</button>
                     <div className="pairtip">{t.tipA}</div>
-                    <button className="pairex" onClick={()=>speakKo(p.wa)}>{p.wa}<span className="pxp">▶</span></button>
-                    <button className="pairex" onClick={()=>speakKo(p.ea)}>{p.ea}<span className="pxp">▶</span></button>
+                    <button className="pairex" onClick={()=>speakKo(p.wa)}>{p.wa} ▶</button>
+                    <button className="pairex" onClick={()=>speakKo(p.ea)}>{p.ea} ▶</button>
                   </div>
                   <div className="paircell tensecell">
-                    <div className="pairhead">{t.tenseL}</div>
-                    <div className="pairsyl">{p.b}</div>
+                    <button className="pairsyl tense" onClick={()=>speakKo(p.b, ()=>setClip(p.t))}>{p.b} ▶</button>
                     <div className="pairtip">{t.tipB}</div>
-                    <button className="pairex" onClick={()=>speakKo(p.wb)}>{p.wb}<span className="pxp">▶</span></button>
-                    <button className="pairex" onClick={()=>speakKo(p.eb)}>{p.eb}<span className="pxp">▶</span></button>
+                    <button className="pairex" onClick={()=>speakKo(p.wb)}>{p.wb} ▶</button>
+                    <button className="pairex" onClick={()=>speakKo(p.eb)}>{p.eb} ▶</button>
                   </div>
                   <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
                 </div>
