@@ -368,3 +368,18 @@ body.bk-home .blog-posts::before {
   line-height: 1.35;
   text-decoration: none !important;
 }
+
+/* ---------- 헤더 로고 — 제목 왼쪽에 원형 로고 (CSS 삽입, 헤더 가젯엔 이미지 없음) ---------- */
+.widget.Header .title, .blog-name .title {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 12px;
+}
+.widget.Header .title::before, .blog-name .title::before {
+  content: "";
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex: none;
+  background: url("https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@main/assets/bklogo.jpg") center/cover no-repeat;
+}
