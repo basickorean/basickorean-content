@@ -570,9 +570,8 @@ body.bk-homeready .blog-posts::before { content: none; }
   color: var(--bk-ink) !important;
 }
 
-/* 태그라인: 제목에 바짝 붙이고 SNS와는 간격 */
-.widget.Header .title, .blog-name .title { margin-bottom: 0 !important; }
+/* 태그라인: 제목 아래 기본 위치 */
 .widget.Header .subtitle, .blog-name .subtitle {
   text-align: center !important;
-  margin: -3px auto 14px;
+  margin: 2px auto 14px;
 }
