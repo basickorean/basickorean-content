@@ -235,7 +235,7 @@
     });
     return (
       <div className="dlg">
-        <button className="ptoggle" onClick={() => setShow((v) => !v)}>{show ? "🐾 " + t.dlgp_toggle[1] : "🐱 " + t.dlgp_toggle[0]}</button>
+        <button className="ptoggle" onClick={() => setShow((v) => !v)}>{show ? "🐾 " + t.dlgp_toggle[1] : "🔍 " + t.dlgp_toggle[0]}</button>
         <p className="intro">{t.dlgp_intro}</p>
         {t.dlgp_lines.map((ln, i) => (
           <div className="bubble" key={i}>
