@@ -188,10 +188,8 @@
       const isDrop = d.type==="drop";
       const bcol = isDrop ? "var(--pink)" : "var(--orange)";
       const bsoft = isDrop ? "#fbeaf0" : "var(--orange-soft)";
-      /* 받침1 말풍선 색: 이동형=틸(유지), 드롭형=코랄(ㅎ 탈락 후 받침1이 이동) */
-      const b1col = isDrop ? "var(--orange)" : "var(--teal)";
-      const b1soft = isDrop ? "var(--orange-soft)" : "var(--teal-soft)";
-      const b1txt = isDrop ? "var(--orange)" : "var(--teal-dark)";
+      /* 받침1 = 항상 틸 (드롭형에서도 — 2026-06-12 결정) */
+      const b1col = "var(--teal)", b1soft = "var(--teal-soft)", b1txt = "var(--teal-dark)";
       const res2 = d.res2lab ? d.res2lab[lang] : T.b2;                 /* [써] 위 라벨 등 커스텀 */
       const bw2r = d.res2lab ? (lang==="ko"?116:96) : bw1;
       return (
@@ -287,9 +285,9 @@
       res:[{ch:"업", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55}]}, {ch:"써", parts:[{c:"coral",x1:0.5},{c:"ink",x0:0.5}]}] };
     /* 많이(예외② ㅎ 탈락 후 연음): 많(ㄴ 코랄 + ㅎ 핑크 탈락) + 이 → [마니] */
     const EX_MANI = { id:"mani", type:"drop", dbl:true, resTop1:true, t:285, dropX:108, dropY:158,
-      s1:{ch:"많", parts:[{c:"ink",y1:0.55},{c:"coral",y0:0.55,x1:0.5},{c:"pink",y0:0.55,x0:0.5,cls:"ax-drop"}]},
+      s1:{ch:"많", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55,x1:0.5},{c:"pink",y0:0.55,x0:0.5,cls:"ax-drop"}]},
       s2:{ch:"이", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"마"}, {ch:"니", parts:[{c:"coral",x1:0.56},{c:"ink",x0:0.56}]}] };
+      res:[{ch:"마"}, {ch:"니", parts:[{c:"teal",x1:0.56},{c:"ink",x0:0.56}]}] };
 
     /* ===== 받침 드래그 게임 — 받침을 직접 ‘ㅇ’ 자리로 옮겨 보기 ===== */
     /* HTML용 자모 부분 색칠 (완성형 N겹 + clip — bk-jamo.js와 같은 방식·보정값) */

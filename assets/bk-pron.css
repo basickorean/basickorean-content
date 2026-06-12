@@ -73,6 +73,7 @@
 .bkp-root .ax-cot-b{font-family:var(--display);fill:var(--blue);}
 .bkp-root .av-arrow, .bkp-root .ax-arrow, .bkp-root .av-head, .bkp-root .ax-head, .bkp-root .ax-arrow2, .bkp-root .ax-head2{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
 .bkp-root .ax-arrow, .bkp-root .ax-head, .bkp-root .ax-arrow2, .bkp-root .ax-head2{stroke-width:4;}
+.bkp-root .ax-arrow2, .bkp-root .ax-head2{stroke:var(--teal);}
 .bkp-root .av-callout{opacity:0;}
 .bkp-root .av-cot{font-family:var(--display);fill:var(--orange);}
 @keyframes avfade{to{opacity:1;}}
