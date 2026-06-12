@@ -180,9 +180,10 @@
       const wrapRef=useRef(null);
       const inView=useInView(wrapRef);
       const T = lang==="ko"
-        ? {batchim:"겹받침", moeum:"모음", listen:"발음 듣기", replay:"다시 보기"}
-        : {batchim:"double final", moeum:"vowel", listen:"Listen", replay:"Replay"};
+        ? {batchim:"겹받침", b1:"받침1", b2:"받침2", moeum:"모음", listen:"발음 듣기", replay:"다시 보기"}
+        : {batchim:"double final", b1:"1st", b2:"2nd", moeum:"vowel", listen:"Listen", replay:"Replay"};
       const bw = lang==="ko" ? 74 : 120, bf = lang==="ko" ? 16 : 15;
+      const bw1 = lang==="ko" ? 56 : 42, bf1 = lang==="ko" ? 14.5 : 12.5;   /* 받침1·받침2 작은 말풍선 */
       const mw = lang==="ko" ? 60 : 72;
       const isDrop = d.type==="drop";
       const bcol = isDrop ? "var(--pink)" : "var(--orange)";
@@ -195,12 +196,23 @@
             {/* 음절 카드 A — 정사각 106×106, 여백 상하좌우 22 */}
             <rect x="40" y="70" width="106" height="106" rx="16" fill="#f7faf9" stroke="var(--line)" strokeWidth="1.5"/>
             <CSyl id={d.id+"-a"} cx={93} y={143} F={62} spec={d.s1}/>
-            {/* 받침 말풍선 (move=코랄 / drop=ㅎ 핑크) */}
-            <g className="av-callout">
-              <path d="M88 184 L93 174 L98 184 Z" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
-              <rect x={93-bw/2} y="188" width={bw} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
-              <text x="93" y={lang==="ko"?208:207} fontSize={bf} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.batchim}</text>
-            </g>
+            {/* 받침 말풍선 — dbl: 받침1(틸·유지)+받침2(코랄·이동) 두 개 / 기본: 한 개 */}
+            {d.dbl ? (
+              <g className="av-callout">
+                <path d="M75 184 L80 174 L85 184 Z" fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.5"/>
+                <rect x={66-bw1/2} y="188" width={bw1} height="28" rx="14" fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.5"/>
+                <text x="66" y="207" fontSize={bf1} textAnchor="middle" fill="var(--teal-dark)" style={{fontFamily:"var(--display)"}}>{T.b1}</text>
+                <path d="M101 184 L106 174 L111 184 Z" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <rect x={120-bw1/2} y="188" width={bw1} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <text x="120" y="207" fontSize={bf1} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.b2}</text>
+              </g>
+            ) : (
+              <g className="av-callout">
+                <path d="M88 184 L93 174 L98 184 Z" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <rect x={93-bw/2} y="188" width={bw} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <text x="93" y={lang==="ko"?208:207} fontSize={bf} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.batchim}</text>
+              </g>
+            )}
             {/* 음절 카드 B */}
             <rect x="176" y="70" width="106" height="106" rx="16" fill="#f7faf9" stroke="var(--line)" strokeWidth="1.5"/>
             <CSyl id={d.id+"-b"} cx={229} y={143} F={62} spec={d.s2}/>
@@ -223,6 +235,15 @@
               <CSyl id={d.id+"-r1"} cx={407} y={143} F={62} spec={d.res[0]}/>
               <CSyl id={d.id+"-r2"} cx={469} y={143} F={62} spec={d.res[1]}/>
               <text x="509" y="140" fontSize="60" textAnchor="middle" fill="var(--ink)" style={{fontFamily:"var(--display)"}}>]</text>
+              {/* dbl: 결과 쪽 말풍선 — [안] 아래 받침1, [즈] 위 받침2 */}
+              {d.dbl && <g>
+                <path d="M402 184 L407 174 L412 184 Z" fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.5"/>
+                <rect x={407-bw1/2} y="188" width={bw1} height="28" rx="14" fill="var(--teal-soft)" stroke="var(--teal)" strokeWidth="1.5"/>
+                <text x="407" y="207" fontSize={bf1} textAnchor="middle" fill="var(--teal-dark)" style={{fontFamily:"var(--display)"}}>{T.b1}</text>
+                <rect x={469-bw1/2} y="30" width={bw1} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <text x="469" y="49" fontSize={bf1} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.b2}</text>
+                <path d="M464 62 L469 72 L474 62 Z" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+              </g>}
               {/* 발음 듣기 버튼 — 공용 원형 ▶(34px), 상하좌우 여백 22 균등 */}
               <g style={{cursor:"pointer"}} onClick={()=>onPlay&&onPlay(d.t)} role="button" aria-label={T.listen}>
                 <circle cx="557" cy="123" r="17" fill="#fff" stroke="var(--line)" strokeWidth="1.5"/>
@@ -234,12 +255,12 @@
       );
     }
     /* 앉으: 앉(ㄴ 틸 유지 + ㅈ 코랄 이동) + 으(ㅇ 파랑 위) → [안즈] */
-    const EX_ANJEU = { id:"anjeu", type:"move", to:"top", t:66,
+    const EX_ANJEU = { id:"anjeu", type:"move", to:"top", dbl:true, t:66,
       s1:{ch:"앉", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55,x1:0.5},{c:"coral",y0:0.55,x0:0.5}]},
       s2:{ch:"으", parts:[{c:"blue",y1:0.5},{c:"ink",y0:0.5}]},
       res:[{ch:"안", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55}]}, {ch:"즈", parts:[{c:"coral",y1:0.5},{c:"ink",y0:0.5}]}] };
     /* 읽어: 읽(ㄹ 틸 + ㄱ 코랄) + 어(ㅇ 파랑 왼쪽) → [일거] */
-    const EX_ILGEO = { id:"ilgeo", type:"move", t:110,
+    const EX_ILGEO = { id:"ilgeo", type:"move", dbl:true, t:110,
       s1:{ch:"읽", parts:[{c:"ink",y1:0.52},{c:"teal",y0:0.52,x1:0.5},{c:"coral",y0:0.52,x0:0.5}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
       res:[{ch:"일", parts:[{c:"ink",y1:0.52},{c:"teal",y0:0.52}]}, {ch:"거", parts:[{c:"coral",x1:0.54},{c:"ink",x0:0.54}]}] };
