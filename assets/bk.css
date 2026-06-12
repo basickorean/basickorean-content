@@ -107,7 +107,7 @@
     .bk-root .formbox{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:16px 0 6px; background:var(--orange-soft); border:1px solid #f3b6b3; border-radius:14px; padding:12px 16px; }
     .bk-root .formbox .big{ font-family:var(--display); font-size:24px; color:var(--orange); }
     .bk-root .formbox .eq{ color:var(--muted); } .formbox .part { font-family:var(--display); font-size:18px; }
-    .bk-root .steps3{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px; }
+    .bk-root .steps3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-top:14px; } /* 카드 수(2~3)에 맞춰 균등 분할 */
     @media (max-width:640px){ .bk-root .steps3 { grid-template-columns:1fr; } }
     .bk-root .stepc{ background:var(--bg2); border:1px solid var(--line); border-radius:14px; padding:14px; }
     .bk-root .stepc .n{ width:22px; height:22px; border-radius:50%; background:var(--teal); color:#fff; font-weight:900; font-size:12.5px; display:inline-flex; align-items:center; justify-content:center; }
