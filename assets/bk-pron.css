@@ -1,6 +1,6 @@
-/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P002에서 추출)
+/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P003에서 추출)
    모든 규칙은 .bkp-root 범위. 예외: .confetti(body 직속 부착).
-   소스 오브 트루스: pronunciation-prototype/P002.html — 수정은 거기서, 이 파일은 재추출. */
+   소스 오브 트루스: pronunciation-prototype/P003.html — 수정은 거기서, 이 파일은 재추출. */
 .bkp-root{
       --bg:#ffffff; --bg2:#f3f7f6; --panel:#ffffff; --line:#e4eae8;
       --ink:#242a28; --muted:#6a736e;
@@ -99,6 +99,23 @@
 .bkp-root .anim-drop:not(.force) .ax-dropx{animation:none !important;opacity:1 !important;}
 .bkp-root .anim-drop:not(.force) .ax-arrow2{animation:none !important;stroke-dashoffset:0 !important;}
 .bkp-root .anim-drop:not(.force) .ax-head2{animation:none !important;opacity:1 !important;}
+}
+.bkp-root .pairrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media (max-width:560px){
+.bkp-root .pairrow{grid-template-columns:1fr;}
+}
+.bkp-root .paircell{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:center;}
+.bkp-root .paircell.tensecell{border-color:var(--orange);background:var(--orange-soft);}
+.bkp-root .pairsyl{font-family:var(--display);font-size:30px;color:var(--ink);background:var(--bg2);border:1.5px solid var(--line);border-radius:14px;padding:6px 22px;cursor:pointer;}
+.bkp-root .pairsyl.tense{color:#fff;background:var(--orange);border-color:var(--orange);}
+.bkp-root .pairsyl:hover{filter:brightness(.97);}
+.bkp-root .pairtip{font-size:13.5px;font-weight:700;color:var(--teal-dark);margin-top:8px;}
+.bkp-root .tensecell .pairtip{color:var(--orange);}
+.bkp-root .pairex{display:block;margin:4px auto 0;border:0;background:transparent;color:var(--muted);font-size:14px;cursor:pointer;font-family:var(--sans);}
+.bkp-root .pairex:hover{color:var(--teal-dark);}
+.bkp-root .ptable.tense td.jamo{width:88px;font-size:20px;white-space:nowrap;}
+@media (max-width:640px){
+.bkp-root .ptable.tense tr{grid-template-columns:74px 1fr 44px;}
 }
 .bkp-root table.ptable{border-collapse:collapse;width:100%;margin:6px 0 4px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.03);}
 .bkp-root .ptable th, .bkp-root .ptable td{border:1px solid #cfdcd8;padding:11px 10px;text-align:center;vertical-align:middle;}
