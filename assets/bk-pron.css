@@ -118,6 +118,7 @@
 .bkp-root .pairsyl .syltri{font-family:var(--sans);font-size:13px;margin-left:9px;color:var(--teal-dark);}
 .bkp-root .pairsyl.tense .syltri{color:#fff;opacity:.9;}
 .bkp-root .pairsyl.tense{color:#fff;background:var(--orange);border-color:var(--orange);}
+.bkp-root .pairwind{font-size:15px;line-height:1;margin:2px 0 6px;}
 .bkp-root .pairline{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:7px;font-size:15px;font-weight:500;color:var(--ink);font-family:var(--sans);}
 .bkp-root .pairline.sent{font-size:13.5px;font-weight:400;color:var(--muted);}
 .bkp-root .pairvid{border:1px solid var(--line);background:#fff;color:var(--teal-dark);border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;}

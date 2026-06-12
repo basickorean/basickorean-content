@@ -695,11 +695,13 @@
                   <div className="pairrow">
                   <div className="paircell">
                     <div className="pairsylrow"><button className="pairsyl" onClick={()=>speakKo(p.a, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.a}>{p.a}<span className="syltri">▶</span></button></div>
+                    <div className="pairwind">💨</div>
                     <div className="pairline">{p.wa}<button className="ptri" onClick={()=>speakKo(p.wa)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wa}>▶</button></div>
                     <div className="pairline sent">{p.ea}<button className="ptri" onClick={()=>speakKo(p.ea)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.ea}>▶</button></div>
                   </div>
                   <div className="paircell tensecell">
                     <div className="pairsylrow"><button className="pairsyl tense" onClick={()=>speakKo(p.b, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.b}>{p.b}<span className="syltri">▶</span></button></div>
+                    <div className="pairwind">🚫💨</div>
                     <div className="pairline">{p.wb}<button className="ptri" onClick={()=>speakKo(p.wb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wb}>▶</button></div>
                     <div className="pairline sent">{p.eb}<button className="ptri" onClick={()=>speakKo(p.eb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.eb}>▶</button></div>
                   </div>
