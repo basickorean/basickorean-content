@@ -176,7 +176,7 @@
 .bkp-root .ptable tr{display:grid;grid-template-columns:54px 1fr 44px;grid-template-areas:"jamo ex listen" "jamo ph listen";align-items:center;border-bottom:1px solid #cfdcd8;padding:9px 6px;}
 .bkp-root .ptable tr:last-child{border-bottom:0;}
 .bkp-root .ptable th, .bkp-root .ptable td{border:0;padding:2px 6px;}
-.bkp-root .ptable td.jamo{grid-area:jamo;width:auto;}
+.bkp-root .ptable td.jamo{grid-area:jamo;width:auto;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:1px solid #cfdcd8;margin-right:4px;}
 .bkp-root .ptable td.ex{grid-area:ex;}
 .bkp-root .ptable td.ph{grid-area:ph;text-align:left;white-space:normal;}
 .bkp-root .ptable td.listen{grid-area:listen;width:auto;}
