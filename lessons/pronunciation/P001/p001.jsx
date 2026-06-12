@@ -95,20 +95,34 @@
       return [text.slice(0,i), <span key="h" className={cls}>{key}</span>, text.slice(i+key.length)];
     }
 
+    /* 화면에 들어왔을 때 true — 애니메이션을 스크롤 도달 시점에 시작 (모바일에서 미리 끝나는 문제 방지) */
+    function useInView(ref){
+      const [on,setOn]=useState(false);
+      useEffect(()=>{
+        const el=ref.current; if(!el) return;
+        if(!window.IntersectionObserver){ setOn(true); return; }
+        const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ setOn(true); io.disconnect(); } }); },{threshold:0.35});
+        io.observe(el); return ()=>io.disconnect();
+      },[]);
+      return on;
+    }
+
     /* ===== 인트로 애니메이션: 받침이 ‘ㅇ’ 자리로 ===== */
     function AnimIntro({lang}){
       const [k,setK]=useState(0);
+      const wrapRef=useRef(null);
+      const inView=useInView(wrapRef);
       const reduce = typeof window!=="undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const T = lang==="ko"
         ? {title:"연음: 받침 + ‘ㅇ’ 모음", batchim:"받침", moeum:"모음", co1:"홑받침:", co2:"받침 1개", replay:"다시 보기"}
         : {title:"Linking: final consonant + ‘ㅇ’ vowel", batchim:["final","consonant"], moeum:"vowel", co1:"Single", co2:"final consonant", replay:"Replay"};
       const isArr = Array.isArray(T.batchim);
       return (
-        <div className="animwrap">
+        <div className="animwrap" ref={wrapRef}>
           <button className="replay" onClick={()=>setK(k+1)}>↻ {T.replay}</button>
           {/* 제목: SVG 밖 HTML 배지 — 길어도 자동 줄바꿈, 안 잘림 */}
           <div className="animtitle">{T.title}</div>
-          <svg key={k} className="anim-on" viewBox="0 90 520 260" role="img" aria-label={T.title}>
+          <svg key={k} className={inView?"anim-on":""} viewBox="0 90 520 260" role="img" aria-label={T.title}>
             {/* 빈 칸 (왼위) */}
             <rect className="av-empty" x="150" y="100" width="100" height="100" rx="16"/>
             {/* 모음 (오른위, 파랑) */}
@@ -161,6 +175,8 @@
     }
     function AnimExample({d,lang,onPlay}){
       const [k,setK]=useState(0);
+      const wrapRef=useRef(null);
+      const inView=useInView(wrapRef);
       const T = lang==="ko"
         ? {batchim:"받침", moeum:"모음", listen:"발음 듣기", replay:"다시 보기"}
         : {batchim:"final consonant", moeum:"vowel", listen:"Listen", replay:"Replay"};
@@ -170,9 +186,9 @@
       const bcol = isDrop ? "var(--pink)" : "var(--orange)";
       const bsoft = isDrop ? "#fbeaf0" : "var(--orange-soft)";
       return (
-        <div className="animwrap">
+        <div className="animwrap" ref={wrapRef}>
           <button className="replay" onClick={()=>setK(k+1)}>↻ {T.replay}</button>
-          <svg key={k} className={"anim-on exsvg"+(isDrop?" anim-drop":"")} viewBox="0 0 600 228" role="img">
+          <svg key={k} className={(inView?"anim-on ":"")+"exsvg"+(isDrop?" anim-drop":"")} viewBox="0 0 600 228" role="img">
             {/* 드래그 게임과 동일 규격 — 카드 106×118, 글자 62 (1:1 축척, max-width 600) */}
             {/* 음절 카드 A — 정사각 106×106, 여백 상하좌우 22 */}
             <rect x="40" y="70" width="106" height="106" rx="16" fill="#f7faf9" stroke="var(--line)" strokeWidth="1.5"/>
