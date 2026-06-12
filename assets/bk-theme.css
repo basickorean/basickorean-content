@@ -570,8 +570,8 @@ body.bk-homeready .blog-posts::before { content: none; }
   color: var(--bk-ink) !important;
 }
 
-/* 태그라인: 제목과 SNS 알약 사이 중간 위치 */
+/* 태그라인: 제목 바로 아래 붙이고 SNS와는 간격 */
 .widget.Header .subtitle, .blog-name .subtitle {
   text-align: center !important;
-  margin: 7px auto 7px;
+  margin: 2px auto 14px;
 }
