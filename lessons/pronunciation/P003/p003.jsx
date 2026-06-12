@@ -261,11 +261,11 @@
     ];
     /* 된소리 발음 비교 (예사소리 vs 된소리) — 예문은 영상의 것 */
     const PAIRS=[
-      {a:"가", b:"까", ea:"가로수길에 가다", eb:"껍질을 까다", t:184},
-      {a:"다", b:"따", ea:"마늘을 다지다", eb:"잘잘못을 따지다", t:243},
-      {a:"바", b:"빠", ea:"약을 바르다", eb:"비행기는 빠르다", t:279},
-      {a:"사", b:"싸", ea:"사과를 사다", eb:"사과가 싸다", t:315},
-      {a:"자", b:"짜", ea:"아이가 잠을 자다", eb:"소금이 짜다", t:349},
+      {a:"가", b:"까", wa:"가다", wb:"까다", ea:"가로수길에 가다", eb:"껍질을 까다", t:184},
+      {a:"다", b:"따", wa:"다지다", wb:"따지다", ea:"마늘을 다지다", eb:"잘잘못을 따지다", t:243},
+      {a:"바", b:"빠", wa:"바르다", wb:"빠르다", ea:"약을 바르다", eb:"비행기는 빠르다", t:279},
+      {a:"사", b:"싸", wa:"사다", wb:"싸다", ea:"사과를 사다", eb:"사과가 싸다", t:315},
+      {a:"자", b:"짜", wa:"자다", wb:"짜다", ea:"아이가 잠을 자다", eb:"소금이 짜다", t:349},
     ];
     /* steps: 차례로 눌러야 하는 글자. i=글자 위치, cho/jong=눌렀을 때 바뀌는 자모 인덱스(ㄲ1·ㄸ4·ㅆ10·ㅉ13 / ㄷ7),
        reg=결과 색칠 영역, color(기본 coral), hint=단계 안내. 마지막은 받침소리 변환 포함 도전 */
@@ -367,7 +367,7 @@
         prep1_link:["받침소리 7개를 처음 본다면 ",{a:{t:"한글 ‘받침소리 7개’ 강의",href:"https://www.basickorean.com/2018/10/03-01.html"}},"를 먼저 보세요."],
         prep2_l:"준비 ②", prep2_h:"된소리, 어떻게 발음할까?",
         prep2_intro:"입 앞에 손을 대고 비교해 보세요 — 예사소리는 바람이 나오고, 된소리는 바람 없이 목에 힘을 줘요.",
-        tipA:"바람이 나와요 · 편안하게", tipB:"바람 ✗ · 목에 힘 꽉!",
+        plainL:"예사소리", tenseL:"된소리", tipA:"바람이 나와요 · 편안하게", tipB:"바람 ✗ · 목에 힘 꽉!",
         viz_l:"소리 나는 원리", viz_h:"뒤 자음이 단단해져요",
         viz_note:"받침소리 [ㄱ·ㄷ·ㅂ]은 그대로, 바로 뒤 자음만 된소리로 바뀌어요.",
         table_l:"변화별 발음", table_h:"어떤 소리로 바뀔까?",
@@ -415,7 +415,7 @@
         prep1_link:["New to the 7 final sounds? See the ",{a:{t:"Hangul ‘7 final sounds’ lesson",href:"https://www.basickorean.com/2018/10/03-01.html"}}," (in Korean)."],
         prep2_l:"Prep ②", prep2_h:"How do tense sounds work?",
         prep2_intro:"Put your hand in front of your mouth — plain sounds release air; tense sounds release no air, with a tight throat.",
-        tipA:"air flows · relaxed", tipB:"no air · throat tight!",
+        plainL:"PLAIN", tenseL:"TENSE", tipA:"air flows · relaxed", tipB:"no air · throat tight!",
         viz_l:"How it works", viz_h:"The next consonant tenses up",
         viz_note:"The final sound [ㄱ·ㄷ·ㅂ] stays; only the following consonant becomes tense.",
         table_l:"By change", table_h:"Which sound does it become?",
@@ -689,15 +689,20 @@
               {PAIRS.map((p,i)=>(
                 <div className="pairrow" key={i}>
                   <div className="paircell">
-                    <button className="pairsyl" onClick={()=>speakKo(p.a, ()=>setClip(p.t))}>{p.a} ▶</button>
+                    <div className="pairhead">{t.plainL}</div>
+                    <div className="pairsyl">{p.a}</div>
                     <div className="pairtip">{t.tipA}</div>
-                    <button className="pairex" onClick={()=>speakKo(p.ea)}>{p.ea} ▶</button>
+                    <button className="pairex" onClick={()=>speakKo(p.wa)}>{p.wa}<span className="pxp">▶</span></button>
+                    <button className="pairex" onClick={()=>speakKo(p.ea)}>{p.ea}<span className="pxp">▶</span></button>
                   </div>
                   <div className="paircell tensecell">
-                    <button className="pairsyl tense" onClick={()=>speakKo(p.b, ()=>setClip(p.t))}>{p.b} ▶</button>
+                    <div className="pairhead">{t.tenseL}</div>
+                    <div className="pairsyl">{p.b}</div>
                     <div className="pairtip">{t.tipB}</div>
-                    <button className="pairex" onClick={()=>speakKo(p.eb)}>{p.eb} ▶</button>
+                    <button className="pairex" onClick={()=>speakKo(p.wb)}>{p.wb}<span className="pxp">▶</span></button>
+                    <button className="pairex" onClick={()=>speakKo(p.eb)}>{p.eb}<span className="pxp">▶</span></button>
                   </div>
+                  <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
                 </div>
               ))}
             </section>
