@@ -1,6 +1,6 @@
-/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P001에서 추출)
+/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P002에서 추출)
    모든 규칙은 .bkp-root 범위. 예외: .confetti(body 직속 부착).
-   소스 오브 트루스: pronunciation-prototype/P001.html — 수정은 거기서, 이 파일은 재추출. */
+   소스 오브 트루스: pronunciation-prototype/P002.html — 수정은 거기서, 이 파일은 재추출. */
 .bkp-root{
       --bg:#ffffff; --bg2:#f3f7f6; --panel:#ffffff; --line:#e4eae8;
       --ink:#242a28; --muted:#6a736e;
@@ -63,6 +63,7 @@
 .bkp-root .replay:hover{border-color:var(--blue);background:var(--blue-soft);}
 .bkp-root .av-empty{fill:var(--bg2);stroke:var(--line);stroke-width:2;}
 .bkp-root .av-batchim{fill:var(--orange);}
+.bkp-root .av-keep{fill:var(--teal);}
 .bkp-root .av-moeum{fill:var(--blue);}
 .bkp-root .av-t{font-family:var(--display);fill:#fff;}
 .bkp-root .animtitle{font-family:var(--display);color:var(--teal-dark);background:var(--teal-soft);border:1.5px solid var(--teal);border-radius:999px;padding:7px 18px;font-size:18px;text-align:center;max-width:90%;margin:6px auto 4px;line-height:1.3;}
