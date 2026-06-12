@@ -261,7 +261,7 @@
     const EX_ANJEU = { id:"anjeu", type:"move", to:"top", dbl:true, t:66,
       s1:{ch:"앉", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.45},{c:"coral",y0:0.50,x0:0.45,x1:0.70},{c:"coral",y0:0.56,x0:0.70}]},
       s2:{ch:"으", parts:[{c:"ink"},{c:"blue",y1:0.60}]},
-      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.58},{c:"teal",y0:0.70,x0:0.58,x1:0.82}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.52}]}] };
+      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.58},{c:"teal",y0:0.70,x0:0.58,x1:0.82}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.56}]}] };
     /* 읽어: 읽(ㄹ 틸 + ㄱ 코랄) + 어(ㅇ 파랑 왼쪽) → [일거] */
     const EX_ILGEO = { id:"ilgeo", type:"move", dbl:true, t:110,
       s1:{ch:"읽", parts:[{c:"ink"},{c:"teal",y0:0.48,x1:0.58},{c:"coral",y0:0.48,x0:0.58,x1:0.82},{c:"coral",y0:0.58,x0:0.82}]},
