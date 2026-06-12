@@ -1,15 +1,21 @@
 <!-- ============================================================
   Basic Korean — 한국어 발음 01 · 연음 (Linking)
-  Blogger 포스트 본문 (HTML 보기 모드에 전체 붙여넣기)
+  Blogger 포스트 본문 — 같은 내용을 한국어판·영어판 두 글에 붙여넣기
 
-  구조: 외부 파일 방식 — 본문은 이 껍데기뿐, 스타일·코드는 jsDelivr(@2ec7bfe)
-  업데이트 시: 새 커밋 해시로 아래 4개 URL의 @해시만 교체
-  주의: babel-standalone 런타임 컴파일(임시) — 사전 컴파일 전환 시 babel 줄 삭제,
-        p001.jsx → p001.js 로 교체
+  ◆ 두 글 발행 규칙 (언어는 URL로 자동 결정):
+    한국어판: 맞춤 퍼머링크  p001-linking      제목: 연음 (Linking) — 발음 01 | Basic Korean
+              라벨: Pronunciation, P001
+    영어판:   맞춤 퍼머링크  p001-linking-en   제목: Korean Linking (연음) — Pronunciation 01 | Basic Korean
+              라벨: Pronunciation-EN, P001
+    ※ 두 글을 같은 달에 발행할 것 (주소의 /YYYY/MM/이 같아야 토글·hreflang 연결됨)
+    ※ 본문은 두 글 모두 아래 내용 그대로 — 코드가 주소를 보고 언어를 정함
+
+  업데이트 시: 새 커밋 push 후 아래 @4eb7034 두 곳만 새 해시로 교체
+  babel-standalone 런타임 컴파일은 임시 — 사전 컴파일 전환 시 babel 줄 삭제, p001.jsx → p001.js
 ============================================================ -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@2ec7bfe/assets/bk-pron.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@4eb7034/assets/bk-pron.css"/>
 <div id="bk-lesson" class="bkp-root"></div>
 <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-<script type="text/babel" data-presets="react" src="https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@2ec7bfe/lessons/pronunciation/P001/p001.jsx"></script>
+<script type="text/babel" data-presets="react" src="https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@4eb7034/lessons/pronunciation/P001/p001.jsx"></script>
