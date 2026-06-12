@@ -39,6 +39,23 @@
       document.body.firstElementChild;
     if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(nav, anchor.nextSibling);
     else document.body.insertBefore(nav, document.body.firstChild);
+    footer();
+  }
+  /* 푸터 브랜드 줄 + SNS 링크 (모든 페이지) */
+  function footer() {
+    if (document.getElementById("bk-footer")) return;
+    var f = document.createElement("div");
+    f.id = "bk-footer";
+    f.innerHTML =
+      '<div class="bk-foot-brand">베이직 코리안 · Basic Korean</div>' +
+      '<p><a href="https://www.youtube.com/channel/UC7t6mMJtdVEWsVEFF5XDFNQ/">YouTube</a><span class="sep">·</span>' +
+      '<a href="https://www.instagram.com/hello.basickorean/">Instagram</a><span class="sep">·</span>' +
+      '<a href="https://www.buymeacoffee.com/basickorean">Buy me a coffee</a></p>';
+    var bottom = document.querySelector(".centered-bottom");
+    var attr = bottom && bottom.querySelector(".widget.Attribution");
+    if (attr && attr.parentNode) attr.parentNode.insertBefore(f, attr);
+    else if (bottom) bottom.appendChild(f);
+    else document.body.appendChild(f);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", build);
   else build();

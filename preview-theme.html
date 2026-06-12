@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>테마 v2 로컬 프리뷰 — Basic Korean</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/bk-theme.css">
+<style>
+  .preview-note{background:#fdf6e3;border-bottom:1px solid #f0dfae;color:#6e5716;font-size:12.5px;text-align:center;padding:6px;}
+  .ctc-in{max-width:968px;margin:0 auto;padding:18px 16px 0;}
+  main{max-width:968px;margin:0 auto;padding:0 16px;}
+  .widget.LinkList ul{list-style:none;display:flex;gap:8px;padding:10px 0 16px;margin:0;flex-wrap:wrap;}
+</style>
+<script>window.BK_HOME_FORCE = true;</script>
+</head>
+<body>
+<div class="preview-note">📐 로컬 프리뷰 — 실제 basickorean.com 피드로 홈 렌더러를 시험합니다 (Contempo 마크업 근사, 더블클릭으로 열기)</div>
+
+<div class="centered-top-container">
+  <div class="ctc-in">
+    <div class="widget Header">
+      <div class="blog-name">
+        <h1 class="title"><a href="https://www.basickorean.com/">Basic Korean</a></h1>
+        <p class="subtitle">베이직 코리안 Let's study Korean together!</p>
+      </div>
+    </div>
+    <div class="widget LinkList">
+      <ul>
+        <li><a href="https://www.youtube.com/channel/UC7t6mMJtdVEWsVEFF5XDFNQ/">Youtube</a></li>
+        <li><a href="https://www.instagram.com/hello.basickorean/">Instagram</a></li>
+        <li><a href="https://www.buymeacoffee.com/basickorean">Buy me a coffee</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="blog-posts">
+    <p style="padding:30px;color:#888;">(기본 피드 영역 — bk-home.js 렌더 성공 시 이 영역은 숨겨집니다. 이 글이 보이면 렌더 실패 = 폴백 동작 중)</p>
+  </div>
+</main>
+
+<div class="centered-bottom">
+  <div class="widget Attribution" style="text-align:center;padding:14px;color:#9aa39e;font-size:12px;">Powered by Blogger (프리뷰)</div>
+</div>
+
+<script>document.body.classList.add("bk-home");</script>
+<script src="assets/bk-nav.js"></script>
+<script src="assets/bk-home.js"></script>
+</body>
+</html>

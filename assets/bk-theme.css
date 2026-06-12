@@ -388,3 +388,157 @@ body.bk-home .blog-posts::before {
 .bg-photo, .bg-photo-overlay, .bg-photo-container { display: none !important; }
 .centered-top-container, .centered-top-placeholder { min-height: 0 !important; height: auto !important; }
 .widget.Header .header-image, .widget.Header .image-wrap { display: none !important; }
+
+
+/* ==========================================================================
+   v2-2 (2026-06-12) — 홈 렌더러(bk-home.js) 컴포넌트 · SNS 아이콘 · 푸터 브랜드
+   시안: theme-mockup-home.html
+   ========================================================================== */
+
+/* 렌더 성공 시에만 기본 피드 숨김 (JS 실패 시 기본 피드 그대로 보임) */
+body.bk-homeready .blog-posts { display: none !important; }
+body.bk-homeready .blog-posts::before { content: none; }
+
+#bk-home { margin: 4px 0 8px; }
+
+/* ---------- 카테고리 필 ---------- */
+.bk-pill {
+  display: inline-flex;
+  align-self: flex-start;
+  background: var(--bk-teal-soft);
+  color: var(--bk-teal-dark);
+  font-weight: 700;
+  font-size: 12.5px;
+  border-radius: 999px;
+  padding: 3px 12px;
+  letter-spacing: .04em;
+}
+.bk-pill.coral { background: var(--bk-coral-soft); color: var(--bk-coral); }
+.bk-pill.blue { background: #e7f0fa; color: #3b82c4; }
+.bk-pill.pink { background: #fbeaf0; color: #d56b86; }
+
+/* ---------- 추천(최신) 글 — 큰 카드 ---------- */
+.bk-feat {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  background: #fff;
+  border: 1px solid var(--bk-line);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(63, 167, 150, .10);
+  margin: 6px 0 10px;
+  text-decoration: none !important;
+  color: var(--bk-ink);
+  transition: border-color .12s;
+}
+.bk-feat:hover { border-color: var(--bk-teal); }
+.bk-fimg { display: block; aspect-ratio: 16 / 9; background: var(--bk-bg2); }
+.bk-fimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bk-fbody { padding: 24px 26px; display: flex; flex-direction: column; gap: 10px; justify-content: center; }
+.bk-feat h2 { font-family: var(--bk-display); font-weight: 400; font-size: 26px; margin: 0; line-height: 1.3; color: var(--bk-ink); }
+.bk-feat p { margin: 0; color: var(--bk-muted); font-size: 15px; }
+.bk-more { color: var(--bk-teal-dark); font-weight: 700; font-size: 13.5px; }
+@media (max-width: 680px) {
+  .bk-feat { grid-template-columns: 1fr; }
+  .bk-fbody { padding: 18px 20px 20px; }
+}
+
+/* ---------- 최근 강의 카드 그리드 ---------- */
+.bk-gridhead { font-family: var(--bk-display); font-size: 20px; color: var(--bk-teal-dark); margin: 26px 4px 12px; }
+.bk-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 860px) { .bk-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .bk-cards { grid-template-columns: 1fr; } }
+.bk-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--bk-line);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none !important;
+  color: var(--bk-ink);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .04);
+  transition: transform .15s, border-color .15s, box-shadow .15s;
+}
+.bk-card:hover { border-color: var(--bk-teal); transform: translateY(-3px); box-shadow: 0 10px 24px rgba(63, 167, 150, .14); }
+.bk-cimg { display: block; aspect-ratio: 16 / 9; background: var(--bk-bg2); }
+.bk-cimg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bk-cimg .bk-noimg, .bk-fimg .bk-noimg {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--bk-display);
+  font-size: 34px;
+  color: var(--bk-teal-dark);
+  background: linear-gradient(135deg, var(--bk-teal-soft), #e7f0fa);
+}
+.bk-cbody { display: block; padding: 14px 16px 16px; }
+.bk-card h3 { font-family: var(--bk-display); font-weight: 400; font-size: 18px; margin: 8px 0 6px; line-height: 1.35; }
+.bk-card p {
+  margin: 0;
+  color: var(--bk-muted);
+  font-size: 13.5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 전체 글 보기 */
+.bk-allwrap { text-align: center; margin: 22px 0 6px; }
+.bk-all {
+  display: inline-block;
+  border: 1px solid var(--bk-line);
+  background: #fff;
+  color: var(--bk-teal-dark) !important;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-weight: 700;
+  font-size: 13.5px;
+  text-decoration: none !important;
+}
+.bk-all:hover { border-color: var(--bk-teal); background: var(--bk-teal-soft); }
+
+/* ---------- SNS 링크 아이콘 (mask 방식 — 글자색을 따라감) ---------- */
+.widget.LinkList a[href*="youtube"], .widget.PageList a[href*="youtube"], #bk-footer a[href*="youtube"] {
+  --bk-ico: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M23 7.6a3 3 0 0 0-2.1-2.2C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.6 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.4a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.6zM9.8 15.1V8.9L15.9 12l-6.1 3.1z'/></svg>");
+}
+.widget.LinkList a[href*="instagram"], .widget.PageList a[href*="instagram"], #bk-footer a[href*="instagram"] {
+  --bk-ico: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'><rect x='2.5' y='2.5' width='19' height='19' rx='5.5'/><circle cx='12' cy='12' r='4.4'/><circle cx='17.6' cy='6.4' r='1.3' fill='black' stroke='none'/></svg>");
+}
+.widget.LinkList a[href*="buymeacoffee"], .widget.PageList a[href*="buymeacoffee"], #bk-footer a[href*="buymeacoffee"] {
+  --bk-ico: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M4.4 4h15.2a1 1 0 0 1 1 1.15l-.3 2A1 1 0 0 1 19.3 8H4.7a1 1 0 0 1-1-.85l-.3-2A1 1 0 0 1 4.4 4zM5.2 9.5h13.6l-1.5 10.2a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8L5.2 9.5zm4.1 2.6c-.5 1.5-.5 3 .1 4.4.2.5.9.5 1.1 0 .5-1.4.5-2.9-.1-4.4-.2-.5-.9-.5-1.1 0z'/></svg>");
+}
+.widget.LinkList a[href*="youtube"]::before, .widget.PageList a[href*="youtube"]::before, #bk-footer a[href*="youtube"]::before,
+.widget.LinkList a[href*="instagram"]::before, .widget.PageList a[href*="instagram"]::before, #bk-footer a[href*="instagram"]::before,
+.widget.LinkList a[href*="buymeacoffee"]::before, .widget.PageList a[href*="buymeacoffee"]::before, #bk-footer a[href*="buymeacoffee"]::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  background-color: currentColor;
+  -webkit-mask: var(--bk-ico) center / contain no-repeat;
+  mask: var(--bk-ico) center / contain no-repeat;
+}
+
+/* Buy me a coffee — 브랜드 노란 톤 (헤더 알약만) */
+.widget.LinkList a[href*="buymeacoffee"], .widget.PageList a[href*="buymeacoffee"] {
+  border-color: #f3d27a !important;
+  background: #fdf6e3 !important;
+  color: #8a6d1d !important;
+}
+.widget.LinkList a[href*="buymeacoffee"]:hover, .widget.PageList a[href*="buymeacoffee"]:hover {
+  border-color: #eec45e !important;
+  background: #fbedc7 !important;
+}
+
+/* ---------- 푸터 브랜드 줄 (bk-nav.js 삽입) ---------- */
+#bk-footer { text-align: center; padding: 26px 16px 6px; color: var(--bk-muted); font-size: 13.5px; }
+#bk-footer .bk-foot-brand { font-family: var(--bk-display); color: var(--bk-teal-dark); font-size: 18px; margin-bottom: 6px; }
+#bk-footer p { margin: 0; }
+#bk-footer a { color: var(--bk-teal-dark); font-weight: 700; text-decoration: none; }
+#bk-footer a:hover { text-decoration: underline; }
+#bk-footer .sep { margin: 0 7px; color: #c9d3cf; }
