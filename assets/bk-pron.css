@@ -89,10 +89,10 @@
 .bkp-root .anim-drop .ax-dropx{animation:avfade .3s 1.95s ease forwards;}
 .bkp-root .anim-drop .ax-result{animation:avfade .5s 2.7s ease forwards;}
 @media (prefers-reduced-motion: reduce){
-.bkp-root .anim-on .av-callout, .bkp-root .anim-on .av-callout2, .bkp-root .anim-on .av-head, .bkp-root .anim-on .ax-head, .bkp-root .anim-on .ax-result{animation:none !important;opacity:1 !important;}
-.bkp-root .anim-on .av-arrow, .bkp-root .anim-on .ax-arrow{animation:none !important;stroke-dashoffset:0 !important;}
-.bkp-root .anim-drop .ax-drop{animation:none !important;fill:#c2ccc8 !important;}
-.bkp-root .anim-drop .ax-dropx{animation:none !important;opacity:1 !important;}
+.bkp-root .anim-on:not(.force) .av-callout, .bkp-root .anim-on:not(.force) .av-callout2, .bkp-root .anim-on:not(.force) .av-head, .bkp-root .anim-on:not(.force) .ax-head, .bkp-root .anim-on:not(.force) .ax-result{animation:none !important;opacity:1 !important;}
+.bkp-root .anim-on:not(.force) .av-arrow, .bkp-root .anim-on:not(.force) .ax-arrow{animation:none !important;stroke-dashoffset:0 !important;}
+.bkp-root .anim-drop:not(.force) .ax-drop{animation:none !important;fill:#c2ccc8 !important;}
+.bkp-root .anim-drop:not(.force) .ax-dropx{animation:none !important;opacity:1 !important;}
 }
 .bkp-root table.ptable{border-collapse:collapse;width:100%;margin:6px 0 4px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.03);}
 .bkp-root .ptable th, .bkp-root .ptable td{border:1px solid #cfdcd8;padding:11px 10px;text-align:center;vertical-align:middle;}

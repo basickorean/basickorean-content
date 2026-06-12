@@ -122,7 +122,7 @@
           <button className="replay" onClick={()=>setK(k+1)}>↻ {T.replay}</button>
           {/* 제목: SVG 밖 HTML 배지 — 길어도 자동 줄바꿈, 안 잘림 */}
           <div className="animtitle">{T.title}</div>
-          <svg key={k} className={inView?"anim-on":""} viewBox="0 90 520 260" role="img" aria-label={T.title}>
+          <svg key={k} className={(inView?"anim-on":"")+(k>0?" force":"")} viewBox="0 90 520 260" role="img" aria-label={T.title}>
             {/* 빈 칸 (왼위) */}
             <rect className="av-empty" x="150" y="100" width="100" height="100" rx="16"/>
             {/* 모음 (오른위, 파랑) */}
@@ -188,7 +188,7 @@
       return (
         <div className="animwrap" ref={wrapRef}>
           <button className="replay" onClick={()=>setK(k+1)}>↻ {T.replay}</button>
-          <svg key={k} className={(inView?"anim-on ":"")+"exsvg"+(isDrop?" anim-drop":"")} viewBox="0 0 600 228" role="img">
+          <svg key={k} className={(inView?"anim-on ":"")+"exsvg"+(isDrop?" anim-drop":"")+(k>0?" force":"")} viewBox="0 0 600 228" role="img">
             {/* 드래그 게임과 동일 규격 — 카드 106×118, 글자 62 (1:1 축척, max-width 600) */}
             {/* 음절 카드 A — 정사각 106×106, 여백 상하좌우 22 */}
             <rect x="40" y="70" width="106" height="106" rx="16" fill="#f7faf9" stroke="var(--line)" strokeWidth="1.5"/>
