@@ -848,7 +848,12 @@
       className: "cul"
     }, t.concept_p1.map((line, i) => /*#__PURE__*/React.createElement("li", {
       key: i
-    }, rich(line))))), /*#__PURE__*/React.createElement("div", {
+    }, rich(line))))), t.flowHTML ? /*#__PURE__*/React.createElement("div", {
+      className: "cvis",
+      dangerouslySetInnerHTML: {
+        __html: t.flowHTML
+      }
+    }) : t.flow && /*#__PURE__*/React.createElement("div", {
       className: "flow"
     }, t.flow.map((nd, i) => /*#__PURE__*/React.createElement(React.Fragment, {
       key: i

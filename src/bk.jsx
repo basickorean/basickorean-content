@@ -438,14 +438,18 @@
             <h2 className="head">{t.concept_h}</h2>
             {t.prereq && <p className="prereq">📌 {t.prereq}</p>}
             <div className="concept-card"><ul className="cul">{t.concept_p1.map((line, i) => <li key={i}>{rich(line)}</li>)}</ul></div>
-            <div className="flow">
-              {t.flow.map((nd, i) => (
-                <React.Fragment key={i}>
-                  {i > 0 && <div className="arrow">→</div>}
-                  <div className="node"><div className="emoji">{nd[0]}</div><div className="t">{nd[1]}</div><div className="s">{nd[2]}</div></div>
-                </React.Fragment>
-              ))}
-            </div>
+            {t.flowHTML ? (
+              <div className="cvis" dangerouslySetInnerHTML={{ __html: t.flowHTML }} />
+            ) : t.flow && (
+              <div className="flow">
+                {t.flow.map((nd, i) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && <div className="arrow">→</div>}
+                    <div className="node"><div className="emoji">{nd[0]}</div><div className="t">{nd[1]}</div><div className="s">{nd[2]}</div></div>
+                  </React.Fragment>
+                ))}
+              </div>
+            )}
           </section>
 
           {/* 대화 속에서 보기 */}
