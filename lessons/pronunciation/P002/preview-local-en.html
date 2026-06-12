@@ -183,7 +183,7 @@
         ? {batchim:"겹받침", b1:"받침1", b2:"받침2", moeum:"모음", listen:"발음 듣기", replay:"다시 보기"}
         : {batchim:"double final", b1:"1st", b2:"2nd", moeum:"vowel", listen:"Listen", replay:"Replay"};
       const bw = lang==="ko" ? 74 : 120, bf = lang==="ko" ? 16 : 15;
-      const bw1 = lang==="ko" ? 56 : 42, bf1 = lang==="ko" ? 14.5 : 12.5;   /* 받침1·받침2 작은 말풍선 */
+      const bw1 = lang==="ko" ? 52 : 42, bf1 = lang==="ko" ? 14 : 12.5;   /* 받침1·받침2 작은 말풍선 */
       const mw = lang==="ko" ? 60 : 72;
       const isDrop = d.type==="drop";
       const bcol = isDrop ? "var(--pink)" : "var(--orange)";
@@ -204,11 +204,11 @@
             {d.dbl ? (
               <g className="av-callout">
                 <path d="M75 184 L80 174 L85 184 Z" fill={b1soft} stroke={b1col} strokeWidth="1.5"/>
-                <rect x={66-bw1/2} y="188" width={bw1} height="28" rx="14" fill={b1soft} stroke={b1col} strokeWidth="1.5"/>
-                <text x="66" y="207" fontSize={bf1} textAnchor="middle" fill={b1txt} style={{fontFamily:"var(--display)"}}>{T.b1}</text>
+                <rect x={64-bw1/2} y="188" width={bw1} height="28" rx="14" fill={b1soft} stroke={b1col} strokeWidth="1.5"/>
+                <text x="64" y="207" fontSize={bf1} textAnchor="middle" fill={b1txt} style={{fontFamily:"var(--display)"}}>{T.b1}</text>
                 <path d="M101 184 L106 174 L111 184 Z" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
-                <rect x={120-bw1/2} y="188" width={bw1} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
-                <text x="120" y="207" fontSize={bf1} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.b2}</text>
+                <rect x={122-bw1/2} y="188" width={bw1} height="28" rx="14" fill={bsoft} stroke={bcol} strokeWidth="1.5"/>
+                <text x="122" y="207" fontSize={bf1} textAnchor="middle" fill={bcol} style={{fontFamily:"var(--display)"}}>{T.b2}</text>
               </g>
             ) : (
               <g className="av-callout">
