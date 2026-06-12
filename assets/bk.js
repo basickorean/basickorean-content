@@ -428,7 +428,7 @@
     }, /*#__PURE__*/React.createElement("button", {
       className: "ptoggle",
       onClick: () => setShow(v => !v)
-    }, "\uD83D\uDD0A ", show ? t.dlgp_toggle[1] : t.dlgp_toggle[0]), /*#__PURE__*/React.createElement("p", {
+    }, show ? "\uD83D\uDC3E " + t.dlgp_toggle[1] : "\uD83D\uDC31 " + t.dlgp_toggle[0]), /*#__PURE__*/React.createElement("p", {
       className: "intro"
     }, t.dlgp_intro), t.dlgp_lines.map((ln, i) => /*#__PURE__*/React.createElement("div", {
       className: "bubble",
