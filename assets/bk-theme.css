@@ -277,20 +277,8 @@ body.bk-home .blog-posts::before {
   margin: 10px 8px 4px;
 }
 
-/* ---------- 홈 카드: 16:9 상단 썸네일 ---------- */
-body.bk-home .blog-posts .snippet-thumbnail {
-  float: none !important;
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 0 12px !important;
-}
-body.bk-home .blog-posts .snippet-thumbnail img {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 12px;
-}
+/* (16:9 풀폭 썸네일 시도는 Contempo 마크업과 충돌해 롤백 — 2026-06-12.
+   썸네일은 기본 플로트 + 둥근 모서리 유지) */
 
 /* ---------- 추천 게시물(FeaturedPost) — 큰 카드 (1차, 마크업 확인 후 정밀화) ---------- */
 .widget.FeaturedPost {
