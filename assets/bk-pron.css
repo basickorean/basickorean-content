@@ -173,7 +173,8 @@
 .bkp-root .ptable td.jamo{font-size:20px;}
 .bkp-root .ptable thead{display:none;}
 .bkp-root .ptable, .bkp-root .ptable tbody{display:block;}
-.bkp-root .ptable tr{display:grid;grid-template-columns:54px 1fr 44px;grid-template-areas:"jamo ex listen" "jamo ph listen";align-items:center;border-bottom:1px solid #cfdcd8;padding:9px 6px;}
+.bkp-root .ptable tr{display:grid;grid-template-columns:64px 1fr 44px;grid-template-areas:"jamo ex listen" "jamo ph listen";align-items:center;border-bottom:1px solid #cfdcd8;padding:9px 6px;}
+.bkp-root .ptable .tagm{white-space:normal;line-height:1.2;}
 .bkp-root .ptable tr:last-child{border-bottom:0;}
 .bkp-root .ptable th, .bkp-root .ptable td{border:0;padding:2px 6px;}
 .bkp-root .ptable td.jamo{grid-area:jamo;width:auto;align-self:stretch;display:flex;flex-direction:column;justify-content:center;border-right:1px solid #cfdcd8;margin-right:4px;}
