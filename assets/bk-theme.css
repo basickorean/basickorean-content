@@ -261,9 +261,14 @@ a:hover { color: var(--bk-teal); }
    추천 카드 · 16:9 썸네일 카드 · 푸터 인기 그리드 · 헤더 그라디언트
    ========================================================================== */
 
-/* ---------- 헤더: 틸 소프트 단색 + 둥근 로고 ---------- */
+/* ---------- 헤더: 틸 소프트 단색 + 둥근 로고, 화면 끝까지 풀블리드 ---------- */
+html, body { overflow-x: hidden; }
 .centered-top-container, .centered-top-placeholder {
   background: var(--bk-teal-soft) !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
 }
 .widget.Header img { border-radius: 50%; }
 
