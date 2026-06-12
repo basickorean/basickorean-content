@@ -565,7 +565,7 @@
           <div className="togglerow"><button className="ptoggle" onClick={()=>setShow(v=>!v)}>{show?"🐾 "+t.listen_toggle[1]:"🔍 "+t.listen_toggle[0]}</button></div>
           {LISTEN.map((ln,i)=>(
             <div className="pline" key={i}>
-              <button className="playbtn" onClick={()=>onPlay(ln.t)} title="▶">▶</button>
+              <button className="playbtn" onClick={()=>speakKo(ln.seg.map(s=>s.tx).join(""), ()=>onPlay(ln.t))} title="▶">▶</button>
               {ln.seg.map((s,j)=> s.pr
                 ? <span className="pw" key={j}>{s.tx}{show && <small className="pr">[{s.pr}]</small>}</span>
                 : <React.Fragment key={j}>{s.tx}</React.Fragment>)}
