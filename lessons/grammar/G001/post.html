@@ -110,7 +110,7 @@
           ["'은/는'은 ", { b: "명사 뒤" }, "에 붙어서, 앞에 오는 명사가 ", { b: "문장의 주제" }, "임을 나타내요."],
           ["명사 마지막 글자에 받침이 ", { b: "있으면 -은" }, ", 받침이 ", { b: "없으면 -는" }, "을 써요."]
         ],
-        flow: [["\uD83C\uDFF7\uFE0F", "명사", "사람\u00B7사물의 이름"], ["\uD83D\uDD0D", "받침 확인", "마지막 글자에 받침이 있어요?"], ["\uD83D\uDCCC", "은/는", "문장의 주제 표시"]],
+        flowHTML: '<div class="spot"><div class="sline"><span class="topic"><span class="tbub">주제!</span><span class="n">저</span><span class="p">는</span></span> 김미소예요.</div><div class="sline">제 <span class="topic"><span class="tbub">주제!</span><span class="n">직업</span><span class="p">은</span></span> 선생님이에요.</div></div><div class="fork"><div class="fnoun"><div class="w">명사</div><div class="q">마지막 글자에<br>받침이 있어요?</div></div><div class="branches"><div class="br"><span class="cond bo">받침 O</span><span class="farr">\u2192</span><span class="res"><span class="n">직업</span> + <span class="p">은</span><span class="eq">=</span><span class="n">직업</span><span class="p">은</span></span></div><div class="br"><span class="cond bx">받침 X</span><span class="farr">\u2192</span><span class="res"><span class="n">저</span> + <span class="p">는</span><span class="eq">=</span><span class="n">저</span><span class="p">는</span></span></div></div></div>',
         dlg_l: "대화 속에서 보기", dlg_h: "대화로 개념 이해하기",
         dialogs: [
           { tag: "받침 X \u00B7 저는", cls: "bx", intro: "먼저 받침이 없는 명사 '저' 예문이에요.",
@@ -198,7 +198,7 @@
           ["'은/는' attaches ", { b: "after a noun" }, " and marks that noun as the ", { b: "topic of the sentence" }, "."],
           ["If the noun's last syllable ", { b: "has a final consonant, use -은" }, "; if it ", { b: "has none, use -는" }, "."]
         ],
-        flow: [["\uD83C\uDFF7\uFE0F", "Noun", "a person or thing"], ["\uD83D\uDD0D", "Check 받침", "does the last syllable have one?"], ["\uD83D\uDCCC", "은/는", "marks the topic"]],
+        flowHTML: '<div class="spot"><div class="sline"><span class="topic"><span class="tbub">Topic!</span><span class="n">저</span><span class="p">는</span></span> 김미소예요.</div><div class="sline">제 <span class="topic"><span class="tbub">Topic!</span><span class="n">직업</span><span class="p">은</span></span> 선생님이에요.</div></div><div class="fork"><div class="fnoun"><div class="w">Noun</div><div class="q">Does the last syllable<br>have a final consonant?</div></div><div class="branches"><div class="br"><span class="cond bo">has 받침</span><span class="farr">\u2192</span><span class="res"><span class="n">직업</span> + <span class="p">은</span><span class="eq">=</span><span class="n">직업</span><span class="p">은</span></span></div><div class="br"><span class="cond bx">no 받침</span><span class="farr">\u2192</span><span class="res"><span class="n">저</span> + <span class="p">는</span><span class="eq">=</span><span class="n">저</span><span class="p">는</span></span></div></div></div>',
         dlg_l: "In Dialogue", dlg_h: "Understanding it through conversation",
         dialogs: [
           { tag: "받침 X \u00B7 저는", cls: "bx", intro: "First, the noun 저 (I), which has no final consonant.",

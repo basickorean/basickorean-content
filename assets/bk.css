@@ -74,6 +74,27 @@
     .bk-root .flow .node{ flex:1; min-width:130px; background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,.03); }
     .bk-root .flow .node .emoji{ font-size:26px; } .flow .node .t { font-weight:700; margin-top:6px; } .flow .node .s { font-size:12.5px; color:var(--muted); }
     .bk-root .flow .arrow{ align-self:center; color:var(--orange); font-size:22px; font-weight:900; }
+    /* 개념 커스텀 도식 (flowHTML) — 스포트라이트 + 갈림길 */
+    .bk-root .cvis{ display:flex; flex-direction:column; gap:12px; }
+    .bk-root .spot{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:48px 18px 22px; text-align:center; box-shadow:0 4px 14px rgba(0,0,0,.03); }
+    .bk-root .spot .sline{ font-family:var(--display); font-size:24px; line-height:1.5; }
+    .bk-root .spot .sline + .sline{ margin-top:46px; }
+    .bk-root .spot .topic{ position:relative; display:inline-block; }
+    .bk-root .spot .topic .n{ color:var(--teal); } .bk-root .spot .topic .p{ color:var(--orange); }
+    .bk-root .spot .tbub{ position:absolute; top:-38px; left:50%; transform:translateX(-50%); height:28px; line-height:28px; padding:0 12px; border-radius:14px; background:var(--orange); color:#fff; font-family:var(--display); font-size:16px; white-space:nowrap; }
+    .bk-root .spot .tbub::after{ content:""; position:absolute; top:calc(100% + 4px); left:50%; transform:translateX(-50%); border:5px solid transparent; border-top-color:var(--orange); border-bottom:0; }
+    .bk-root .fork{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; align-items:center; gap:16px; flex-wrap:wrap; box-shadow:0 4px 14px rgba(0,0,0,.03); }
+    .bk-root .fork .fnoun{ flex:0 0 auto; text-align:center; background:var(--panel2); border:1.5px solid var(--line); border-radius:16px; padding:16px 20px; }
+    .bk-root .fork .fnoun .w{ font-family:var(--display); font-size:20px; }
+    .bk-root .fork .fnoun .q{ font-size:13.5px; color:var(--muted); margin-top:4px; }
+    .bk-root .fork .branches{ flex:1; display:flex; flex-direction:column; gap:12px; min-width:240px; }
+    .bk-root .fork .br{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .bk-root .fork .cond{ height:28px; line-height:28px; padding:0 12px; border-radius:14px; font-size:13.5px; font-weight:700; white-space:nowrap; }
+    .bk-root .fork .cond.bo{ background:var(--orange-soft); color:var(--orange); }
+    .bk-root .fork .cond.bx{ background:var(--teal-soft); color:var(--teal-dark); }
+    .bk-root .fork .farr{ color:var(--orange); font-size:18px; font-weight:900; }
+    .bk-root .fork .res{ font-family:var(--display); font-size:20px; }
+    .bk-root .fork .res .n{ color:var(--teal); } .bk-root .fork .res .p{ color:var(--orange); } .bk-root .fork .res .eq{ color:var(--muted); font-size:16px; margin:0 2px; }
 
     .bk-root .dlg{ background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:20px; margin-bottom:18px; box-shadow:0 4px 18px rgba(63,167,150,.05); }
     .bk-root .dlg .tag{ float:right; font-size:12.5px; font-weight:700; padding:4px 11px; border-radius:999px; }
