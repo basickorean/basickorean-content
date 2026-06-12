@@ -118,18 +118,18 @@
     .bk-root .pp-link:hover{ text-decoration:underline; }
     /* sentence-practice flip cards */
     .bk-root .fcards{ display:flex; flex-direction:column; gap:12px; margin-top:6px; }
-    .bk-root .fcard{ perspective:1000px; cursor:pointer; height:150px; }
-    @media (max-width:640px){ .bk-root .fcard { height:190px; } }
-    .bk-root .fcard .finner{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+    .bk-root .fcard{ perspective:1000px; cursor:pointer; }
+    .bk-root .fcard .finner{ position:relative; display:grid; width:100%; transition:transform .5s; transform-style:preserve-3d; }
     .bk-root .fcard.on .finner{ transform:rotateY(180deg); }
-    .bk-root .fface{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
-      border:1px solid var(--line); border-radius:16px; padding:16px; background:#fff;
+    /* 높이 고정 대신 내용 기반(두 면 중 큰 쪽) — 최소 높이는 공용 결과 박스 규격 106px */
+    .bk-root .fface{ grid-area:1/1; min-height:106px; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      border:1px solid var(--line); border-radius:16px; padding:18px 16px; background:#fff;
       display:flex; flex-direction:column; justify-content:center; box-shadow:0 3px 12px rgba(0,0,0,.04); }
     .bk-root .fface p{ margin:0; font-size:16px; line-height:1.7; }
     .bk-root .ffront b{ color:var(--teal-dark); }
     .bk-root .fnum{ position:absolute; top:10px; left:14px; font-family:var(--display); color:var(--orange); font-size:15px; }
     .bk-root .fhint{ position:absolute; bottom:10px; right:14px; font-size:12.5px; color:var(--muted); }
-    .bk-root .fback{ transform:rotateY(180deg); background:var(--teal-soft); border-color:#c4e2db; }
+    .bk-root .fback{ transform:rotateY(180deg); background:var(--teal-soft); border-color:#c4e2db; padding-right:52px; } /* ▶ 버튼 자리 확보 */
     .bk-root .fback b{ color:var(--orange); font-family:var(--display); font-size:18px; }
     .bk-root .fback .fbr{ color:var(--muted); font-size:13.5px; margin-top:8px; }
     .bk-root .fback .ftr{ color:var(--muted); font-size:12.5px; margin-top:4px; }
