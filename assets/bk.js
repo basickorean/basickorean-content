@@ -306,7 +306,7 @@
     }, UI[lang].rule), /*#__PURE__*/React.createElement("div", {
       className: "v",
       style: {
-        fontSize: 14
+        fontSize: 13.5
       }
     }, B.rule(verb, lang))), /*#__PURE__*/React.createElement("span", {
       className: "arrow-s"

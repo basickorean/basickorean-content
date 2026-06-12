@@ -168,7 +168,7 @@
               <span className="arrow-s">→</span>
               <div className="step"><div className="k">{t.b_stem}</div><div className="v">{stem}</div></div>
               <span className="arrow-s">→</span>
-              <div className="step"><div className="k">{UI[lang].rule}</div><div className="v" style={{ fontSize: 14 }}>{B.rule(verb, lang)}</div></div>
+              <div className="step"><div className="k">{UI[lang].rule}</div><div className="v" style={{ fontSize: 13.5 }}>{B.rule(verb, lang)}</div></div>
               <span className="arrow-s">→</span>
               <div className="step" style={{ background: "var(--orange-soft)" }}><div className="k">{t.b_result}</div><div className="v">{out}</div></div>
             </div>
