@@ -269,16 +269,28 @@
     ];
     /* steps: 차례로 눌러야 하는 글자. i=글자 위치, cho/jong=눌렀을 때 바뀌는 자모 인덱스(ㄲ1·ㄸ4·ㅆ10·ㅉ13 / ㄷ7),
        reg=결과 색칠 영역, color(기본 coral), hint=단계 안내. 마지막은 받침소리 변환 포함 도전 */
+    /* 모든 단어 2단계: ① 받침소리 글자 찾기(틸) → ② 된소리 발음 찾기(코랄) */
+    const H1={ko:"① 받침소리 [ㄱ·ㄷ·ㅂ] 글자를 눌러 보세요.",en:"① Tap the syllable with a [ㄱ·ㄷ·ㅂ] final sound."};
+    const H2=(snd)=>({ko:"✓ 받침소리 ["+snd+"]! ② 이제 된소리가 되는 글자를 눌러 보세요.",en:"✓ Final sound ["+snd+"]! ② Now tap the letter that tenses."});
     const TAPS=[
-      {word:"학교", steps:[{i:1,cho:1, reg:[0,1,0,0.42]}]},
-      {word:"식당", steps:[{i:1,cho:4, reg:[0,0.62,0,0.5]}]},
-      {word:"입다", steps:[{i:1,cho:4, reg:[0,0.6,0,1]}]},
-      {word:"책상", steps:[{i:1,cho:10, reg:[0,0.62,0,0.52]}]},
+      {word:"학교", steps:[
+        {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
+        {i:1, cho:1, reg:[0,1,0,0.42], hint:H2("ㄱ")}]},
+      {word:"식당", steps:[
+        {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
+        {i:1, cho:4, reg:[0,0.62,0,0.5], hint:H2("ㄱ")}]},
+      {word:"입다", steps:[
+        {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
+        {i:1, cho:4, reg:[0,0.6,0,1], hint:H2("ㅂ")}]},
+      {word:"책상", steps:[
+        {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
+        {i:1, cho:10, reg:[0,0.62,0,0.52], hint:H2("ㄱ")}]},
       {word:"옷장", challenge:true,
         msg:{ko:"🎉 받침 ㅅ은 소리 [ㄷ] — 그래서 ㅈ이 [ㅉ]이 됐어요!",en:"🎉 Final ㅅ sounds [ㄷ] — so ㅈ tensed to [ㅉ]!"},
         steps:[
-          {i:0,jong:7, color:"teal", reg:[0,1,0.55,1], hint:{ko:"먼저! 받침 ㅅ을 눌러서 받침소리 [ㄷ]으로 바꿔 보세요.",en:"First! Tap the final ㅅ — it sounds [ㄷ]."}},
-          {i:1,cho:13, reg:[0,0.62,0,0.5]}]},
+          {i:0, jong:7, color:"teal", reg:[0,1,0.55,1],
+            hint:{ko:"① 받침소리 글자를 눌러 보세요 — 받침 ㅅ이 소리 [ㄷ]으로 바뀌어요!",en:"① Tap the final-sound syllable — ㅅ becomes the sound [ㄷ]!"}},
+          {i:1, cho:13, reg:[0,0.62,0,0.5], hint:H2("ㄷ")}]},
     ];
     function TapGame({lang}){
       const [wi,setWi]=useState(0);
@@ -308,7 +320,7 @@
       return (
         <div className="dragwrap">
           <div className="draghead">
-            <span>👆 {lang==="ko"?"눌러서 된소리로 바꿔 보세요!":"Your turn — tap to tense it!"}
+            <span>👆 {lang==="ko"?"받침소리 찾고, 된소리로 바꿔 보세요!":"Find the final sound, then tense it!"}
               {d.challenge && <span className="chal">{lang==="ko"?"도전!":"Challenge!"}</span>}</span>
             <span className="cnt">{wi+1} / {TAPS.length}</span>
           </div>
