@@ -259,22 +259,22 @@
     }
     /* 앉으: 앉(ㄴ 틸 유지 + ㅈ 코랄 이동) + 으(ㅇ 파랑 위) → [안즈] */
     const EX_ANJEU = { id:"anjeu", type:"move", to:"top", dbl:true, t:66,
-      s1:{ch:"앉", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55,x1:0.5},{c:"coral",y0:0.55,x0:0.5}]},
+      s1:{ch:"앉", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.5},{c:"coral",y0:0.50,x0:0.5}]},
       s2:{ch:"으", parts:[{c:"blue",y1:0.5},{c:"ink",y0:0.5}]},
-      res:[{ch:"안", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55}]}, {ch:"즈", parts:[{c:"coral",y1:0.5},{c:"ink",y0:0.5}]}] };
+      res:[{ch:"안", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"즈", parts:[{c:"coral",y1:0.5},{c:"ink",y0:0.5}]}] };
     /* 읽어: 읽(ㄹ 틸 + ㄱ 코랄) + 어(ㅇ 파랑 왼쪽) → [일거] */
     const EX_ILGEO = { id:"ilgeo", type:"move", dbl:true, t:110,
-      s1:{ch:"읽", parts:[{c:"ink",y1:0.52},{c:"teal",y0:0.52,x1:0.5},{c:"coral",y0:0.52,x0:0.5}]},
+      s1:{ch:"읽", parts:[{c:"ink",y1:0.48},{c:"teal",y0:0.48,x1:0.5},{c:"coral",y0:0.48,x0:0.5}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"일", parts:[{c:"ink",y1:0.52},{c:"teal",y0:0.52}]}, {ch:"거", parts:[{c:"coral",x1:0.54},{c:"ink",x0:0.54}]}] };
+      res:[{ch:"일", parts:[{c:"ink",y1:0.48},{c:"teal",y0:0.48}]}, {ch:"거", parts:[{c:"coral",x1:0.54},{c:"ink",x0:0.54}]}] };
     /* 없어(예외① ㅅ→ㅆ): 없(ㅂ 틸 + ㅅ 코랄) + 어 → [업써] */
     const EX_EOPSEO = { id:"eopseo", type:"move", dbl:true, res2lab:{ko:"받침2: ㅅ→[ㅆ]",en:"2nd: ㅅ→[ㅆ]"}, t:197,
-      s1:{ch:"없", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55,x1:0.5},{c:"coral",y0:0.55,x0:0.5}]},
+      s1:{ch:"없", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.5},{c:"coral",y0:0.50,x0:0.5}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"업", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55}]}, {ch:"써", parts:[{c:"coral",x1:0.5},{c:"ink",x0:0.5}]}] };
+      res:[{ch:"업", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"써", parts:[{c:"coral",x1:0.62},{c:"ink",x0:0.62}]}] };
     /* 많이(예외② ㅎ 탈락 후 연음): 많(ㄴ 코랄 + ㅎ 핑크 탈락) + 이 → [마니] */
     const EX_MANI = { id:"mani", type:"drop", dbl:true, resTop1:true, t:285, dropX:108, dropY:158,
-      s1:{ch:"많", parts:[{c:"ink",y1:0.55},{c:"teal",y0:0.55,x1:0.5},{c:"pink",y0:0.55,x0:0.5,cls:"ax-drop"}]},
+      s1:{ch:"많", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.5},{c:"pink",y0:0.50,x0:0.5,cls:"ax-drop"}]},
       s2:{ch:"이", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
       res:[{ch:"마"}, {ch:"니", parts:[{c:"teal",x1:0.56},{c:"ink",x0:0.56}]}] };
 
