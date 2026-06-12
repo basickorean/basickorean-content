@@ -588,3 +588,17 @@ body.bk-homeready .blog-posts::before { content: none; }
 /* Contempo 헤더 기본 세로 패딩 압축 + 내부 블록 여백 제거 */
 .widget.Header .header-widget { padding: 10px 0 0 !important; }
 .widget.Header .header-widget > div { margin: 0 !important; padding: 0 !important; }
+
+
+/* ==========================================================================
+   v2-6 (2026-06-12) — 강의 페이지(본문에 #bk-lesson 존재)
+   블로거 제목·대표 이미지·소개 문단은 강의 자체 히어로와 중복 → 화면에서만 숨김
+   (HTML에는 남겨 둠: 대표 이미지 = 홈 카드 썸네일·og 이미지, 소개 문단 = 검색엔진용 본문 텍스트)
+   ========================================================================== */
+body.bk-lessonpage .post-title { display: none !important; }
+body.bk-lessonpage .post-body > img { display: none !important; }
+body.bk-lessonpage .post-body > p { display: none !important; }
+/* :has 지원 브라우저는 JS 로드 전에도 즉시 적용 (깜빡임 방지) */
+body:has(#bk-lesson) .post-title { display: none !important; }
+.post-body:has(#bk-lesson) > img { display: none !important; }
+.post-body:has(#bk-lesson) > p { display: none !important; }

@@ -20,6 +20,8 @@
     /* 홈 전용 스타일 키 (예: '최근 강의' 섹션 제목) */
     var path = window.location.pathname;
     if (path === "/" || path === "" || path === "/index.html") document.body.classList.add("bk-home");
+    /* 강의 페이지 표시 (블로거 제목·대표 이미지·소개 문단 숨김용) */
+    if (document.getElementById("bk-lesson")) document.body.classList.add("bk-lessonpage");
     if (document.getElementById("bk-nav")) return;
     var nav = document.createElement("nav");
     nav.id = "bk-nav";

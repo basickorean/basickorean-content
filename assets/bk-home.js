@@ -83,7 +83,7 @@
     return '<a class="bk-card" href="' + esc(p.url) + '">' +
       '<span class="bk-cimg">' + imgHtml(p) + "</span>" +
       '<span class="bk-cbody"><span class="bk-pill ' + p.cls + '">' + esc(p.pill) + "</span>" +
-      "<h3>" + esc(p.title) + "</h3><p>" + esc(p.snip) + "</p></span></a>";
+      "<h3>" + esc(p.title) + "</h3></span></a>";
   }
   function render(json) {
     var entries = (json && json.feed && json.feed.entry) || [];
@@ -97,7 +97,7 @@
       '<a class="bk-feat" href="' + esc(feat.url) + '">' +
       '<span class="bk-fimg">' + imgHtml(feat) + "</span>" +
       '<span class="bk-fbody"><span class="bk-pill ' + feat.cls + '">' + esc(feat.pill) + "</span>" +
-      "<h2>" + esc(feat.title) + "</h2><p>" + esc(feat.snip) + "</p>" +
+      "<h2>" + esc(feat.title) + "</h2>" +
       '<span class="bk-more">강의 보기 →</span></span></a>';
     if (rest.length) {
       html += '<div class="bk-gridhead">● 최근 강의</div><div class="bk-cards">';
