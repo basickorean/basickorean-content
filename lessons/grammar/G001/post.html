@@ -78,8 +78,10 @@
       split: function (form) { return [form.slice(0, -1), form.slice(-1)]; } },
     checker: checkEunNeun,
     prules: {
-      yon: { ko: { name: "연음 (Linking)", sub: "받침이 다음 모음 자리로 옮겨 가서 발음돼요." },
-             en: { name: "Linking (연음)", sub: "The final consonant moves over to the next vowel." } }
+      yon: { ko: { name: "연음 (Linking)", sub: "받침이 다음 모음 자리로 옮겨 가서 발음돼요.",
+                   link: { href: "https://www.basickorean.com/2026/06/p001-linking.html", label: "연음 발음 강의 보기" } },
+             en: { name: "Linking (연음)", sub: "The final consonant moves over to the next vowel.",
+                   link: { href: "https://www.basickorean.com/2026/06/p001-linking-en.html", label: "Open the Linking lesson" } } }
     },
     next: [
       /* TODO: 포스트/페이지 발행 후 href 를 실제 URL로 바꾸고 주석을 해제하세요.

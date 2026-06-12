@@ -467,7 +467,12 @@
       className: "pp-sub"
     }, PR[sel.ru][lang].sub), /*#__PURE__*/React.createElement("p", {
       className: "pp-note"
-    }, sel.nt))));
+    }, sel.nt), PR[sel.ru][lang].link && /*#__PURE__*/React.createElement("a", {
+      className: "pp-link",
+      href: PR[sel.ru][lang].link.href,
+      target: "_blank",
+      rel: "noreferrer"
+    }, PR[sel.ru][lang].link.label, " →"))));
   }
 
   /* ---------- ⑧ 나만의 문장 만들기 ---------- */

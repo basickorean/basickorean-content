@@ -255,6 +255,11 @@
               <div className="pp-big">{sel.tx} <span className="arr">→</span> <span className="ph">[{sel.pr}]</span></div>
               <p className="pp-sub">{PR[sel.ru][lang].sub}</p>
               <p className="pp-note">{sel.nt}</p>
+              {PR[sel.ru][lang].link && (
+                <a className="pp-link" href={PR[sel.ru][lang].link.href} target="_blank" rel="noreferrer">
+                  {PR[sel.ru][lang].link.label} →
+                </a>
+              )}
             </div>
           </React.Fragment>
         )}
