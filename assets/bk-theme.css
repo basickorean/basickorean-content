@@ -402,10 +402,15 @@ body.bk-home .blog-posts::before {
    시안: theme-mockup-home.html
    ========================================================================== */
 
-/* 렌더 성공 시에만 기본 피드 숨김 (JS 실패 시 기본 피드 그대로 보임) */
+/* 깜빡임 방지: bk-home.js가 첫 페인트 전에 html에 .bk-listpage 부여 → 기본 피드 즉시 숨김
+   (렌더 실패 시 JS가 클래스를 떼어 기본 피드 복구) */
+html.bk-listpage .blog-posts,
+html.bk-listpage .status-msg-wrap, html.bk-listpage .status-msg-body,
+html.bk-listpage #blog-pager, html.bk-listpage .blog-pager { display: none !important; }
+html.bk-listpage .blog-posts::before { content: none; }
+/* 렌더 성공 후에도 동일 유지 */
 body.bk-homeready .blog-posts { display: none !important; }
 body.bk-homeready .blog-posts::before { content: none; }
-/* 라벨/전체 페이지: "라벨이 X인 게시물 표시" 안내줄·페이지네이션도 숨김 */
 body.bk-homeready .status-msg-wrap, body.bk-homeready .status-msg-body,
 body.bk-homeready #blog-pager, body.bk-homeready .blog-pager { display: none !important; }
 

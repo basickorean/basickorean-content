@@ -21,6 +21,15 @@
   var isAll = path === "/search" || path === "/search/";
   if (!isHome && !label && !isAll) return;
 
+  /* 깜빡임 방지: 첫 페인트 전에 기본 피드 숨김 (이 파일은 defer 없이 head에서 즉시 실행)
+     렌더 실패·지연 시 클래스를 떼어 기본 피드로 복구 — 안전 폴백 유지 */
+  document.documentElement.classList.add("bk-listpage");
+  var rendered = false;
+  function unhide() {
+    if (!rendered) document.documentElement.classList.remove("bk-listpage");
+  }
+  setTimeout(unhide, 8000);
+
   var BATCH = isHome ? 7 : 12; /* 홈: 추천 1 + 그리드 6 */
   var start = 1, total = 0, shown = 0;
 
@@ -139,10 +148,15 @@
     }
   }
   function render(json) {
+    /* 본문(body)이 아직 파싱 중이면 끝난 뒤 다시 시도 */
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", function () { render(json); });
+      return;
+    }
     var f = json && json.feed;
     var entries = (f && f.entry) || [];
     if (f && f.openSearch$totalResults) total = parseInt(f.openSearch$totalResults.$t, 10) || 0;
-    if (!entries.length && shown === 0) return; /* 폴백: 기본 피드 유지 */
+    if (!entries.length && shown === 0) { unhide(); return; } /* 폴백: 기본 피드 복구 */
 
     var posts = [];
     for (var i = 0; i < entries.length; i++) posts.push(parse(entries[i]));
@@ -162,6 +176,7 @@
     for (var j = 0; j < posts.length; j++) cardsHtml += card(posts[j]);
     grid.insertAdjacentHTML("beforeend", cardsHtml);
 
+    rendered = true;
     shown += entries.length;
     start += entries.length;
     updateMore();
@@ -172,8 +187,8 @@
     var s = document.createElement("script");
     s.src = feedUrl();
     s.async = true;
+    s.onerror = unhide;
     (document.head || document.body).appendChild(s);
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", load);
-  else load();
+  load(); /* 즉시 요청 — 파싱과 병렬로 데이터 수신 */
 })();
