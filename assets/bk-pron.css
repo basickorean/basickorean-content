@@ -170,12 +170,21 @@
 @media (max-width:640px){
 .bkp-root .ptable td.ex{font-size:13.5px;}
 .bkp-root .ptable td.ph{font-size:16px;}
-.bkp-root .ptable td.jamo{font-size:20px;width:60px;}
-.bkp-root .ptable th, .bkp-root .ptable td{padding:8px 6px;}
+.bkp-root .ptable td.jamo{font-size:20px;}
+.bkp-root .ptable thead{display:none;}
+.bkp-root .ptable, .bkp-root .ptable tbody{display:block;}
+.bkp-root .ptable tr{display:grid;grid-template-columns:54px 1fr 44px;grid-template-areas:"jamo ex listen" "jamo ph listen";align-items:center;border-bottom:1px solid #cfdcd8;padding:9px 6px;}
+.bkp-root .ptable tr:last-child{border-bottom:0;}
+.bkp-root .ptable th, .bkp-root .ptable td{border:0;padding:2px 6px;}
+.bkp-root .ptable td.jamo{grid-area:jamo;width:auto;}
+.bkp-root .ptable td.ex{grid-area:ex;}
+.bkp-root .ptable td.ph{grid-area:ph;text-align:left;white-space:normal;}
+.bkp-root .ptable td.listen{grid-area:listen;width:auto;}
 }
 .bkp-root .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;}
 @media (max-width:640px){
-.bkp-root .tablewrap .ptable{min-width:540px;}
+.bkp-root .tablewrap{overflow:visible;}
+.bkp-root .tablewrap .ptable{min-width:0;}
 }
 .bkp-root .leg{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:12.5px;color:var(--muted);}
 .bkp-root .leg span{display:inline-flex;align-items:center;gap:5px;}
@@ -190,7 +199,8 @@
 .bkp-root .io input:focus{border-color:var(--blue);}
 .bkp-root .muted{color:var(--muted);font-size:13.5px;}
 .bkp-root .dlg{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px;box-shadow:0 4px 18px rgba(59,130,196,.05);}
-.bkp-root .ptoggle{float:right;border:1px solid var(--line);background:#fff;color:var(--blue);border-radius:999px;padding:4px 13px;font-size:12.5px;font-weight:700;cursor:pointer;min-width:128px;text-align:center;}
+.bkp-root .ptoggle{border:1px solid var(--line);background:#fff;color:var(--blue);border-radius:999px;padding:4px 13px;font-size:12.5px;font-weight:700;cursor:pointer;min-width:128px;text-align:center;}
+.bkp-root .togglerow{display:flex;justify-content:flex-end;margin:0 0 8px;}
 .bkp-root .ptoggle:hover{border-color:var(--blue);background:var(--blue-soft);}
 .bkp-root .pline{background:var(--bg2);border-radius:14px;padding:12px 14px;margin:8px 0;font-size:16px;}
 .bkp-root .pw{display:inline-block;vertical-align:top;text-align:center;}

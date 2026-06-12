@@ -106,17 +106,9 @@
       return [text.slice(0,i), <span key="h" className={cls}>{key}</span>, text.slice(i+key.length)];
     }
 
-    /* 화면에 들어왔을 때 true — 애니메이션을 스크롤 도달 시점에 시작 (모바일에서 미리 끝나는 문제 방지) */
-    function useInView(ref){
-      const [on,setOn]=useState(false);
-      useEffect(()=>{
-        const el=ref.current; if(!el) return;
-        if(!window.IntersectionObserver){ setOn(true); return; }
-        const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ setOn(true); io.disconnect(); } }); },{threshold:0.35});
-        io.observe(el); return ()=>io.disconnect();
-      },[]);
-      return on;
-    }
+    /* 애니메이션은 로드 즉시 시작 — 스크롤 트리거(IntersectionObserver)는 빠른 스크롤을
+       못 따라와 롤백 (2026-06-12). 놓치면 '다시 보기'로 재생. .force 리플레이 로직은 유지 */
+    function useInView(ref){ return true; }
 
     /* ===== 인트로 애니메이션: 받침이 ‘ㅇ’ 자리로 ===== */
     function AnimIntro({lang}){
@@ -521,8 +513,8 @@
       const [reps,setReps]=useState({});   // 문장별 따라 읽은 횟수 (0~3)
       return (
         <div className="dlg">
-          <button className="ptoggle" onClick={()=>setShow(v=>!v)}>{show?"🐾 "+t.listen_toggle[1]:"🔍 "+t.listen_toggle[0]}</button>
           <p className="muted" style={{marginTop:0}}>{t.listen_intro}</p>
+          <div className="togglerow"><button className="ptoggle" onClick={()=>setShow(v=>!v)}>{show?"🐾 "+t.listen_toggle[1]:"🔍 "+t.listen_toggle[0]}</button></div>
           {LISTEN.map((ln,i)=>(
             <div className="pline" key={i}>
               <button className="playbtn" onClick={()=>onPlay(ln.t)} title="▶">▶</button>
@@ -730,8 +722,8 @@
             <section className="sec">
               <div className="label"><span className="stepn">{num()}</span>{t.table_l}</div>
               <h2 className="head">{t.table_h}</h2>
-              <button className="ptoggle" onClick={()=>setShowPh(v=>!v)}>{showPh?"🐾 "+t.listen_toggle[1]:"🔍 "+t.listen_toggle[0]}</button>
               <p className="muted" style={{marginTop:0}}>{t.table_intro}</p>
+              <div className="togglerow"><button className="ptoggle" onClick={()=>setShowPh(v=>!v)}>{showPh?"🐾 "+t.listen_toggle[1]:"🔍 "+t.listen_toggle[0]}</button></div>
               <div className="tablewrap">
               <table className="ptable">
                 <thead><tr><th>{t.th[0]}</th><th>{t.th[1]}</th><th>{t.th[2]}</th><th>{lang==="ko"?"듣기":"Listen"}</th></tr></thead>
