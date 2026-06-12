@@ -291,6 +291,38 @@
           {i:0,jong:7, color:"teal", reg:[0,1,0.55,1], hint:{ko:"먼저! 받침 ㅅ을 눌러서 받침소리 [ㄷ]으로 바꿔 보세요.",en:"First! Tap the final ㅅ — it sounds [ㄷ]."}},
           {i:1,cho:13, reg:[0,0.62,0,0.5]}]},
     ];
+    /* 된소리 비교 — 탭으로 한 쌍씩 (2026-06-12 중구난방 정리) */
+    function TensePairs({lang,onClip}){
+      const [pi,setPi]=useState(0);
+      const p=PAIRS[pi];
+      const L=(tx)=>(lang==="ko"?"발음 듣기 ":"Listen ")+tx;
+      return (
+        <div>
+          <div className="pairtabs">
+            {PAIRS.map((q,i)=>(
+              <button key={i} className={"pairtab"+(i===pi?" on":"")} onClick={()=>setPi(i)}>{q.a}·{q.b}</button>
+            ))}
+          </div>
+          <div style={{textAlign:"center",margin:"0 0 12px"}}>
+            <button className="pairvid" onClick={()=>onClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
+          </div>
+          <div className="pairrow">
+            <div className="paircell">
+              <div className="pairsylrow"><span className="pairsyl">{p.a}</span>
+                <button className="tplay" onClick={()=>speakKo(p.a, ()=>onClip(p.t))} aria-label={L(p.a)}>▶</button></div>
+              <div className="pairline">{p.wa}<button className="tplay" onClick={()=>speakKo(p.wa)} aria-label={L(p.wa)}>▶</button></div>
+              <div className="pairline">{p.ea}<button className="tplay" onClick={()=>speakKo(p.ea)} aria-label={L(p.ea)}>▶</button></div>
+            </div>
+            <div className="paircell tensecell">
+              <div className="pairsylrow"><span className="pairsyl tense">{p.b}</span>
+                <button className="tplay" onClick={()=>speakKo(p.b, ()=>onClip(p.t))} aria-label={L(p.b)}>▶</button></div>
+              <div className="pairline">{p.wb}<button className="tplay" onClick={()=>speakKo(p.wb)} aria-label={L(p.wb)}>▶</button></div>
+              <div className="pairline">{p.eb}<button className="tplay" onClick={()=>speakKo(p.eb)} aria-label={L(p.eb)}>▶</button></div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     function TapGame({lang}){
       const [wi,setWi]=useState(0);
       const [done,setDone]=useState(0);        // 완료한 step 수
@@ -697,23 +729,7 @@
               <div className="label"><span className="stepn">{num()}</span>{t.prep2_l}</div>
               <h2 className="head">{t.prep2_h}</h2>
               <p className="muted" style={{marginTop:0}}>{t.prep2_intro}</p>
-              {PAIRS.map((p,i)=>(
-                <div className="pairrow" key={i}>
-                  <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
-                  <div className="paircell">
-                    <div className="pairsylrow"><span className="pairsyl">{p.a}</span>
-                      <button className="tplay" onClick={()=>speakKo(p.a, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.a}>▶</button></div>
-                    <div className="pairline">{p.wa}<button className="tplay" onClick={()=>speakKo(p.wa)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wa}>▶</button></div>
-                    <div className="pairline">{p.ea}<button className="tplay" onClick={()=>speakKo(p.ea)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.ea}>▶</button></div>
-                  </div>
-                  <div className="paircell tensecell">
-                    <div className="pairsylrow"><span className="pairsyl tense">{p.b}</span>
-                      <button className="tplay" onClick={()=>speakKo(p.b, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.b}>▶</button></div>
-                    <div className="pairline">{p.wb}<button className="tplay" onClick={()=>speakKo(p.wb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wb}>▶</button></div>
-                    <div className="pairline">{p.eb}<button className="tplay" onClick={()=>speakKo(p.eb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.eb}>▶</button></div>
-                  </div>
-                </div>
-              ))}
+              <TensePairs lang={lang} onClip={setClip} />
             </section>
 
             {/* 소리 나는 원리 */}

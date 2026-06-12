@@ -106,6 +106,10 @@
 }
 .bkp-root .paircell{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:center;}
 .bkp-root .paircell.tensecell{border-color:var(--orange);background:var(--orange-soft);}
+.bkp-root .pairtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;}
+.bkp-root .pairtab{font-family:var(--display);font-size:16px;color:var(--muted);background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 16px;cursor:pointer;}
+.bkp-root .pairtab.on{color:#fff;background:var(--teal);border-color:var(--teal);}
+.bkp-root .pairtab:hover:not(.on){border-color:var(--teal);}
 .bkp-root .pairsylrow{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;}
 .bkp-root .pairsyl{display:inline-block;font-family:var(--display);font-size:30px;color:var(--ink);background:var(--bg2);border:1.5px solid var(--line);border-radius:14px;padding:6px 22px;}
 .bkp-root .pairsyl.tense{color:#fff;background:var(--orange);border-color:var(--orange);}
