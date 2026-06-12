@@ -556,8 +556,8 @@ body.bk-homeready .blog-posts::before { content: none; }
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  padding-left: 0;
-  margin-top: 4px;
+  padding: 0;
+  margin: 4px 0 0;
 }
 
 /* 브랜드 타이틀: 밑줄 제거 + 단색 */
