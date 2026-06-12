@@ -261,22 +261,22 @@
     const EX_ANJEU = { id:"anjeu", type:"move", to:"top", dbl:true, t:66,
       s1:{ch:"앉", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.45},{c:"coral",y0:0.50,x0:0.45}]},
       s2:{ch:"으", parts:[{c:"ink"},{c:"blue",y1:0.60}]},
-      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.66}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.60}]}] };
+      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.72}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.60}]}] };
     /* 읽어: 읽(ㄹ 틸 + ㄱ 코랄) + 어(ㅇ 파랑 왼쪽) → [일거] */
     const EX_ILGEO = { id:"ilgeo", type:"move", dbl:true, t:110,
-      s1:{ch:"읽", parts:[{c:"ink"},{c:"teal",y0:0.48,x1:0.55},{c:"coral",y0:0.48,x0:0.55}]},
+      s1:{ch:"읽", parts:[{c:"ink"},{c:"teal",y0:0.48,x1:0.58},{c:"coral",y0:0.48,x0:0.58}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
       res:[{ch:"일", parts:[{c:"ink",y1:0.48},{c:"teal",y0:0.48}]}, {ch:"거", parts:[{c:"coral",x1:0.54},{c:"ink",x0:0.54}]}] };
     /* 없어(예외① ㅅ→ㅆ): 없(ㅂ 틸 + ㅅ 코랄) + 어 → [업써] */
     const EX_EOPSEO = { id:"eopseo", type:"move", dbl:true, res2lab:{ko:"받침2: ㅅ→[ㅆ]",en:"2nd: ㅅ→[ㅆ]"}, t:197,
-      s1:{ch:"없", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.55},{c:"coral",y0:0.50,x0:0.55}]},
+      s1:{ch:"없", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.58},{c:"coral",y0:0.50,x0:0.58}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"업", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"써", parts:[{c:"ink"},{c:"coral",x1:0.70}]}] };
+      res:[{ch:"업", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"써", parts:[{c:"ink"},{c:"coral",x1:0.62},{c:"coral",x0:0.62,x1:0.74,y0:0.5}]}] };
     /* 많이(예외② ㅎ 탈락 후 연음): 많(ㄴ 코랄 + ㅎ 핑크 탈락) + 이 → [마니] */
     const EX_MANI = { id:"mani", type:"drop", dbl:true, resTop1:true, t:285, dropX:108, dropY:158,
       s1:{ch:"많", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.5},{c:"pink",y0:0.50,x0:0.5,cls:"ax-drop"}]},
       s2:{ch:"이", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"마"}, {ch:"니", parts:[{c:"ink"},{c:"teal",x1:0.62}]}] };
+      res:[{ch:"마"}, {ch:"니", parts:[{c:"ink"},{c:"teal",x1:0.66}]}] };
 
     /* ===== 받침 드래그 게임 — 받침을 직접 ‘ㅇ’ 자리로 옮겨 보기 ===== */
     /* HTML용 자모 부분 색칠 (완성형 N겹 + clip — bk-jamo.js와 같은 방식·보정값) */
@@ -303,16 +303,16 @@
       {word:"값을", chips:[{j:"ㅅ",as:"ㅆ",from:0,to:1,rem:17, reg:[0.55,1,0.50,1]}],
         msg:{ko:"🎉 옮겨 간 ㅅ은 [ㅆ]으로 소리 나요!",en:"🎉 The moved ㅅ is pronounced [ㅆ]!"}},
       {word:"않아", challenge:true,
-        chips:[{j:"ㅎ",from:0,to:1,drop:true,rem:4, reg:[0.55,1,0.50,1]},
-               {j:"ㄴ",from:0,to:1,rem:0, color:"teal", reg:[0,0.5,0.50,1], after:0, off:{right:"auto",left:-22}}],
+        chips:[{j:"ㅎ",from:0,to:1,drop:true,rem:4, reg:[0.52,1,0.50,1]},
+               {j:"ㄴ",from:0,to:1,rem:0, color:"teal", reg:[0,0.56,0.50,1], after:0, off:{right:"auto",left:-22}}],
         msg:{ko:"🎉 ㅎ이 탈락하고, 남은 ㄴ이 연음됐어요!",en:"🎉 ㅎ dropped, then the remaining ㄴ linked!"}},
     ];
     const CHO_OF={"ㄱ":0,"ㄲ":1,"ㄴ":2,"ㄷ":3,"ㄹ":5,"ㅁ":6,"ㅂ":7,"ㅅ":9,"ㅆ":10,"ㅈ":12,"ㅊ":14,"ㅋ":15,"ㅌ":16,"ㅍ":17,"ㅎ":18};
     const V_TOP={8:1,12:1,13:1,17:1,18:1};   // ㅗㅛㅜㅠㅡ — ㅇ이 글자 위쪽에 있는 모음
     /* 글자별 색 영역 보정값 (없으면 기본값) — 겹받침 카드는 chips[].reg 사각형 사용 */
-    const REG_BAT={};
+    const REG_BAT={"안":[0,0.72,0.50,1]};   /* ㅎ 탈락 후 않→안: ㄴ이 넓어짐 */
     const REG_ON={"이":[0,0.56,0,1],"어":[0,0.56,0,1],"기":[0,0.56,0,1],"아":[0,0.54,0,1],
-                  "을":[0,1,0,0.34],"쓸":[0,1,0,0.38],"나":[0,0.62,0,1],"머":[0,0.58,0,1],"버":[0,0.56,0,1],"타":[0,0.56,0,1]};
+                  "을":[0,1,0,0.34],"쓸":[0,1,0,0.38],"나":[0,0.62,0,1],"머":[0,0.64,0,1],"버":[0,0.62,0,1],"타":[0,0.56,0,1]};
     /* placed 상태에 따라 카드 i의 글자·색을 계산 (한글 조합 엔진 재사용) */
     function sylView(word,chips,placed,i){
       const d0=dec(word[i]); let cho=d0.cho, jong=d0.jong;
@@ -323,7 +323,7 @@
       /* r이 사각형 1개 또는 여러 개(대각선 자모용 — ㅅ 등) 모두 지원 */
       const push=(color,r)=>{ if(Array.isArray(r[0])) r.forEach(rr=>parts.push({color,r:rr})); else parts.push({color,r}); };
       chips.forEach((c,k)=>{
-        if(c.from===i&&!placed[k]) push(c.drop?"pink":(c.color||"orange"), c.reg||REG_BAT[ch]||[0,1,0.55,1]);
+        if(c.from===i&&!placed[k]) push(c.drop?"pink":(c.color||"orange"), (ch!==word[i]&&REG_BAT[ch])||c.reg||REG_BAT[ch]||[0,1,0.55,1]);
         if(c.to===i&&!placed[k])  push("blue", onR);
         if(c.to===i&&placed[k]&&!c.drop) push(c.color||"orange", onR);
       });
