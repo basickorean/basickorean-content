@@ -1,6 +1,6 @@
-/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P001에서 추출, 2026-06-12)
-   모든 규칙은 .bkp-root 범위. 예외: .confetti(축하 효과, body 직속 부착).
-   소스 오브 트루스: pronunciation-prototype/P001.html — 거기서 수정 후 재추출. */
+/* bk-pron.css — Basic Korean 발음 강의 공용 스타일 (P001에서 추출)
+   모든 규칙은 .bkp-root 범위. 예외: .confetti(body 직속 부착).
+   소스 오브 트루스: pronunciation-prototype/P001.html — 수정은 거기서, 이 파일은 재추출. */
 .bkp-root{
       --bg:#ffffff; --bg2:#f3f7f6; --panel:#ffffff; --line:#e4eae8;
       --ink:#242a28; --muted:#6a736e;
@@ -181,6 +181,7 @@
 .bkp-root .leg span{display:inline-flex;align-items:center;gap:5px;}
 .bkp-root .dot{width:11px;height:11px;border-radius:50%;display:inline-block;}
 .bkp-root .callout{background:linear-gradient(135deg,var(--orange-soft),var(--blue-soft));border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-size:16px;margin-bottom:14px;}
+.bkp-root .callout a{color:var(--teal-dark);font-weight:700;}
 .bkp-root .callout b{color:var(--orange);}
 .bkp-root .callout .ph{color:var(--blue);font-family:var(--display);}
 .bkp-root .panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 4px 18px rgba(59,130,196,.05);}

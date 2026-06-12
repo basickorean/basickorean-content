@@ -1,7 +1,5 @@
-/* p001.jsx — 한국어 발음 01 · 연음 (Blogger 포스트용)
-   소스 오브 트루스: pronunciation-prototype/P001.html (개발은 거기서, 발행 시 재추출)
-   로드: babel-standalone이 런타임 컴파일 (임시 — npm 가능해지면 사전 컴파일로 전환)
-   필요: bk-pron.css + React 18 + ReactDOM + babel-standalone, 컨테이너 <div id="bk-lesson" class="bkp-root"> */
+/* p001.jsx — Blogger 포스트용 (소스: pronunciation-prototype/P001.html)
+   babel-standalone 런타임 컴파일(임시). 필요: bk-pron.css + React18 + <div id="bk-lesson" class="bkp-root"> */
 
     const { useState, useEffect, useRef } = React;
     const VIDEO_ID = "oI9wswL_i5c";
@@ -84,6 +82,7 @@
       return parts.map((p,i)=>{
         if(typeof p==="string") return <React.Fragment key={i}>{p}</React.Fragment>;
         if(p.br!==undefined) return <br key={i}/>;
+        if(p.a!==undefined) return <a key={i} href={p.a.href} target="_blank" rel="noreferrer">{p.a.t}</a>;
         if(p.b!==undefined) return <b key={i}>{p.b}</b>;
         if(p.ph!==undefined) return <span key={i} className="ph">{p.ph}</span>;
         return null;
@@ -389,7 +388,7 @@
         note_l:"주의", note_h:"꼭 기억할 두 가지",
         notes:[
           ["①  ",{b:"받침 + 모음"},": 받침 뒤에 모음이 오면 받침은 ",{b:"그대로"}," 발음해요.",{br:1},
-           "※ ",{b:"받침 + 자음"},": 받침 뒤에 자음이 오면 받침은 ",{ph:"[받침소리 7개]"},"로 바꿔서 발음해요 — 한글 ‘받침소리 7개’ 강의에서 배워요. (강의 준비 중)"],
+           "※ ",{b:"받침 + 자음"},": 받침 뒤에 자음이 오면 받침은 ",{ph:"[받침소리 7개]"},"로 바꿔서 발음해요 — ",{a:{t:"한글 ‘받침소리 7개’ 강의",href:"https://www.basickorean.com/2018/10/03-01.html"}},"에서 배워요."],
           ["②  받침 ",{b:"‘ㅎ’은 모음 앞에서 탈락"},"해요 — ‘좋아’ → ",{ph:"[조아]"},", ‘낳아요’ → ",{ph:"[나아요]"},"."],
         ],
         listen_l:"듣고 따라 하기", listen_h:"문장으로 연습하기",
@@ -430,7 +429,7 @@
         note_l:"Watch out", note_h:"Two things to remember",
         notes:[
           ["①  ",{b:"Final consonant + vowel"},": before a vowel, the final consonant is pronounced ",{b:"as-is"},".",{br:1},
-           "※ ",{b:"Final consonant + consonant"},": before a consonant, it changes to one of the ",{ph:"[7 final sounds]"}," — see the Hangul ‘7 final sounds’ lesson. (coming soon)"],
+           "※ ",{b:"Final consonant + consonant"},": before a consonant, it changes to one of the ",{ph:"[7 final sounds]"}," — see the ",{a:{t:"Hangul ‘7 final sounds’ lesson",href:"https://www.basickorean.com/2018/10/03-01.html"}}," (in Korean)."],
           ["②  Final ",{b:"‘ㅎ’ drops before a vowel"}," — ‘좋아’ → ",{ph:"[조아]"},", ‘낳아요’ → ",{ph:"[나아요]"},"."],
         ],
         listen_l:"Listen & repeat", listen_h:"Practice with sentences",
@@ -616,7 +615,7 @@
       let n=0; const num=()=>++n;
       return (
         <React.Fragment>
-          {/* 블로그 스킨이 로고·내비를 제공하므로 토글만 본문 상단에 */}
+          {/* 블로그 스킨이 로고·내비 제공 — 토글만 본문 상단에 */}
           <div className="wrap" style={{display:"flex",justifyContent:"flex-end",paddingTop:14}}>
             <div className="langtoggle">
               <button className={lang==="ko"?"on":""} onClick={()=>pick("ko")}>{t.langA}</button>
@@ -786,7 +785,6 @@
           </div>
 
           <MiniPlayer sec={clip} onClose={()=>setClip(null)} label={lang==="ko"?"영상에서 듣기":"Listen in the video"} />
-
         </React.Fragment>
       );
     }
