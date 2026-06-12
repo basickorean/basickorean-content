@@ -270,22 +270,22 @@
     }
     /* 앉으: 앉(ㄴ 틸 유지 + ㅈ 코랄 이동) + 으(ㅇ 파랑 위) → [안즈] */
     const EX_ANJEU = { id:"anjeu", type:"move", to:"top", dbl:true, t:66,
-      s1:{ch:"앉", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.45},{c:"coral",y0:0.50,x0:0.45}]},
+      s1:{ch:"앉", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.45},{c:"coral",y0:0.50,x0:0.45,x1:0.70},{c:"coral",y0:0.62,x0:0.70}]},
       s2:{ch:"으", parts:[{c:"ink"},{c:"blue",y1:0.60}]},
-      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.72}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.60}]}] };
+      res:[{ch:"안", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.58},{c:"teal",y0:0.70,x0:0.58,x1:0.74}]}, {ch:"즈", parts:[{c:"ink"},{c:"coral",y1:0.60}]}] };
     /* 읽어: 읽(ㄹ 틸 + ㄱ 코랄) + 어(ㅇ 파랑 왼쪽) → [일거] */
     const EX_ILGEO = { id:"ilgeo", type:"move", dbl:true, t:110,
-      s1:{ch:"읽", parts:[{c:"ink"},{c:"teal",y0:0.48,x1:0.58},{c:"coral",y0:0.48,x0:0.58}]},
+      s1:{ch:"읽", parts:[{c:"ink"},{c:"teal",y0:0.48,x1:0.58},{c:"coral",y0:0.48,x0:0.62,x1:0.82},{c:"coral",y0:0.62,x0:0.82}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
       res:[{ch:"일", parts:[{c:"ink",y1:0.48},{c:"teal",y0:0.48}]}, {ch:"거", parts:[{c:"coral",x1:0.54},{c:"ink",x0:0.54}]}] };
     /* 없어(예외① ㅅ→ㅆ): 없(ㅂ 틸 + ㅅ 코랄) + 어 → [업써] */
     const EX_EOPSEO = { id:"eopseo", type:"move", dbl:true, res2lab:{ko:"받침2: ㅅ→[ㅆ]",en:"2nd: ㅅ→[ㅆ]"}, t:197,
       s1:{ch:"없", parts:[{c:"ink"},{c:"teal",y0:0.50,x1:0.58},{c:"coral",y0:0.50,x0:0.58}]},
       s2:{ch:"어", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
-      res:[{ch:"업", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"써", parts:[{c:"ink"},{c:"coral",x1:0.62},{c:"coral",x0:0.62,x1:0.74,y0:0.5}]}] };
+      res:[{ch:"업", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50}]}, {ch:"써", parts:[{c:"ink"},{c:"coral",x1:0.62},{c:"coral",x0:0.62,x1:0.70,y0:0.60}]}] };
     /* 많이(예외② ㅎ 탈락 후 연음): 많(ㄴ 코랄 + ㅎ 핑크 탈락) + 이 → [마니] */
     const EX_MANI = { id:"mani", type:"drop", dbl:true, resTop1:true, t:285, dropX:108, dropY:158,
-      s1:{ch:"많", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.5},{c:"pink",y0:0.50,x0:0.5,cls:"ax-drop"}]},
+      s1:{ch:"많", parts:[{c:"ink",y1:0.50},{c:"teal",y0:0.50,x1:0.45},{c:"pink",y0:0.50,x0:0.5,cls:"ax-drop"}]},
       s2:{ch:"이", parts:[{c:"blue",x1:0.56},{c:"ink",x0:0.56}]},
       res:[{ch:"마"}, {ch:"니", parts:[{c:"ink"},{c:"teal",x1:0.66}]}] };
 
