@@ -690,14 +690,16 @@
                 <div className="pairrow" key={i}>
                   <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
                   <div className="paircell">
-                    <button className="pairsyl" onClick={()=>speakKo(p.a, ()=>setClip(p.t))}>{p.a} ▶</button>
-                    <button className="pairex" onClick={()=>speakKo(p.wa)}>{p.wa} ▶</button>
-                    <button className="pairex" onClick={()=>speakKo(p.ea)}>{p.ea} ▶</button>
+                    <div className="pairsylrow"><span className="pairsyl">{p.a}</span>
+                      <button className="tplay" onClick={()=>speakKo(p.a, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.a}>▶</button></div>
+                    <div className="pairline">{p.wa}<button className="tplay" onClick={()=>speakKo(p.wa)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wa}>▶</button></div>
+                    <div className="pairline">{p.ea}<button className="tplay" onClick={()=>speakKo(p.ea)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.ea}>▶</button></div>
                   </div>
                   <div className="paircell tensecell">
-                    <button className="pairsyl tense" onClick={()=>speakKo(p.b, ()=>setClip(p.t))}>{p.b} ▶</button>
-                    <button className="pairex" onClick={()=>speakKo(p.wb)}>{p.wb} ▶</button>
-                    <button className="pairex" onClick={()=>speakKo(p.eb)}>{p.eb} ▶</button>
+                    <div className="pairsylrow"><span className="pairsyl tense">{p.b}</span>
+                      <button className="tplay" onClick={()=>speakKo(p.b, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.b}>▶</button></div>
+                    <div className="pairline">{p.wb}<button className="tplay" onClick={()=>speakKo(p.wb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wb}>▶</button></div>
+                    <div className="pairline">{p.eb}<button className="tplay" onClick={()=>speakKo(p.eb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.eb}>▶</button></div>
                   </div>
                 </div>
               ))}
