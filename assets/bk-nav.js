@@ -17,6 +17,9 @@
       p.split("/search/label/")[1] === href.split("/search/label/")[1];
   }
   function build() {
+    /* 홈 전용 스타일 키 (예: '최근 강의' 섹션 제목) */
+    var path = window.location.pathname;
+    if (path === "/" || path === "" || path === "/index.html") document.body.classList.add("bk-home");
     if (document.getElementById("bk-nav")) return;
     var nav = document.createElement("nav");
     nav.id = "bk-nav";
