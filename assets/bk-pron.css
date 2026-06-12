@@ -71,8 +71,8 @@
 .bkp-root .ax-batchim{font-family:var(--display);fill:var(--orange);}
 .bkp-root .ax-onset{font-family:var(--display);fill:var(--blue);}
 .bkp-root .ax-cot-b{font-family:var(--display);fill:var(--blue);}
-.bkp-root .av-arrow, .bkp-root .ax-arrow, .bkp-root .av-head, .bkp-root .ax-head{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
-.bkp-root .ax-arrow, .bkp-root .ax-head{stroke-width:4;}
+.bkp-root .av-arrow, .bkp-root .ax-arrow, .bkp-root .av-head, .bkp-root .ax-head, .bkp-root .ax-arrow2, .bkp-root .ax-head2{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
+.bkp-root .ax-arrow, .bkp-root .ax-head, .bkp-root .ax-arrow2, .bkp-root .ax-head2{stroke-width:4;}
 .bkp-root .av-callout{opacity:0;}
 .bkp-root .av-cot{font-family:var(--display);fill:var(--orange);}
 @keyframes avfade{to{opacity:1;}}
@@ -88,12 +88,16 @@
 .bkp-root .ax-dropx{opacity:0;}
 .bkp-root .anim-drop .ax-drop{animation:graydrop .45s 1.9s ease forwards;}
 .bkp-root .anim-drop .ax-dropx{animation:avfade .3s 1.95s ease forwards;}
-.bkp-root .anim-drop .ax-result{animation:avfade .5s 2.7s ease forwards;}
+.bkp-root .anim-drop .ax-arrow2{stroke-dasharray:340;stroke-dashoffset:340;animation:avdraw .8s 2.6s ease forwards;}
+.bkp-root .anim-drop .ax-head2{opacity:0;animation:avfade .25s 3.4s ease forwards;}
+.bkp-root .anim-drop .ax-result{animation:avfade .5s 3.7s ease forwards;}
 @media (prefers-reduced-motion: reduce){
 .bkp-root .anim-on:not(.force) .av-callout, .bkp-root .anim-on:not(.force) .av-callout2, .bkp-root .anim-on:not(.force) .av-head, .bkp-root .anim-on:not(.force) .ax-head, .bkp-root .anim-on:not(.force) .ax-result{animation:none !important;opacity:1 !important;}
 .bkp-root .anim-on:not(.force) .av-arrow, .bkp-root .anim-on:not(.force) .ax-arrow{animation:none !important;stroke-dashoffset:0 !important;}
 .bkp-root .anim-drop:not(.force) .ax-drop{animation:none !important;fill:#c2ccc8 !important;}
 .bkp-root .anim-drop:not(.force) .ax-dropx{animation:none !important;opacity:1 !important;}
+.bkp-root .anim-drop:not(.force) .ax-arrow2{animation:none !important;stroke-dashoffset:0 !important;}
+.bkp-root .anim-drop:not(.force) .ax-head2{animation:none !important;opacity:1 !important;}
 }
 .bkp-root table.ptable{border-collapse:collapse;width:100%;margin:6px 0 4px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.03);}
 .bkp-root .ptable th, .bkp-root .ptable td{border:1px solid #cfdcd8;padding:11px 10px;text-align:center;vertical-align:middle;}
