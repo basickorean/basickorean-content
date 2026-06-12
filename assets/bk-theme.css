@@ -542,3 +542,40 @@ body.bk-homeready .blog-posts::before { content: none; }
 #bk-footer a { color: var(--bk-teal-dark); font-weight: 700; text-decoration: none; }
 #bk-footer a:hover { text-decoration: underline; }
 #bk-footer .sep { margin: 0 7px; color: #c9d3cf; }
+
+
+/* ==========================================================================
+   v2-3 (2026-06-12) — 헤더 가운데 정렬 + 브랜드 타이틀 리파인
+   ========================================================================== */
+
+/* 헤더 내용 가운데 정렬 (제목·태그라인·SNS 알약) */
+.widget.Header, .blog-name { text-align: center !important; }
+.widget.Header .title, .blog-name .title { justify-content: center; }
+.widget.LinkList ul, .widget.PageList ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  padding-left: 0;
+  margin-top: 4px;
+}
+
+/* 브랜드 타이틀: 밑줄 제거 + 틸→파랑 그라디언트 글자 + 코랄 마침표 포인트 */
+.widget.Header .title, .blog-name .title { font-size: clamp(24px, 5vw, 32px) !important; }
+.widget.Header .title a, .blog-name .title a {
+  text-decoration: none !important;
+  border-bottom: 0 !important;
+  font-weight: 700;
+  letter-spacing: .09em;
+  background: linear-gradient(110deg, var(--bk-teal-dark) 20%, #3b82c4 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+}
+.widget.Header .title a::after, .blog-name .title a::after {
+  content: ".";
+  color: var(--bk-coral);
+  -webkit-text-fill-color: var(--bk-coral);
+  font-weight: 700;
+}
