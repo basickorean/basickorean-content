@@ -587,8 +587,21 @@
     }
 
     function App(){
-      const [lang,setLang]=useState(()=>{try{return localStorage.getItem("bk_lang")||"ko";}catch(e){return "ko";}});
-      const pick=(v)=>{setLang(v); try{localStorage.setItem("bk_lang",v);}catch(e){}};
+      /* 언어 = URL 규칙: ...-en.html이면 영어판. 토글은 상대편 글로 이동 */
+      const IS_EN = /-en\.html$/.test(window.location.pathname);
+      const [lang] = useState(IS_EN ? "en" : "ko");
+      const pick = (v)=>{ const en = v==="en"; if(en===IS_EN) return;
+        const path = window.location.pathname;
+        window.location.href = en ? path.replace(/\.html$/,"-en.html") : path.replace(/-en\.html$/,".html"); };
+      useEffect(()=>{  /* hreflang 주입 — KO/EN 글을 같은 내용의 언어판으로 연결 */
+        const path = window.location.pathname; if(!/\.html$/.test(path)) return;
+        const ko = path.replace(/-en\.html$/,".html"), en = ko.replace(/\.html$/,"-en.html");
+        [["ko",ko],["en",en],["x-default",ko]].forEach(([hl,href])=>{
+          if(document.querySelector('link[rel="alternate"][hreflang="'+hl+'"]')) return;
+          const l=document.createElement("link"); l.rel="alternate"; l.hreflang=hl;
+          l.href=window.location.origin+href; document.head.appendChild(l);
+        });
+      },[]);
       const [clip,setClip]=useState(null);
       const [showPh,setShowPh]=useState(true);      // 받침표: 발음 열 보기/숨기기
       /* 학습 완료·최고 기록 (G203과 동일 패턴) */
