@@ -304,7 +304,7 @@
         msg:{ko:"🎉 옮겨 간 ㅅ은 [ㅆ]으로 소리 나요!",en:"🎉 The moved ㅅ is pronounced [ㅆ]!"}},
       {word:"않아", challenge:true,
         chips:[{j:"ㅎ",from:0,to:1,drop:true,rem:4, reg:[0.52,1,0.50,1], off:{right:-34,bottom:-26}},
-               {j:"ㄴ",from:0,to:1,rem:0, color:"teal", reg:[0,0.56,0.50,1], after:0, off:{right:"auto",left:-34,bottom:-26}}],
+               {j:"ㄴ",from:0,to:1,rem:0, color:"teal", reg:[[0,0.46,0.50,1],[0.44,0.58,0.74,1]], after:0, off:{right:"auto",left:-34,bottom:-26}}],
         msg:{ko:"🎉 ㅎ이 탈락하고, 남은 ㄴ이 연음됐어요!",en:"🎉 ㅎ dropped, then the remaining ㄴ linked!"}},
     ];
     const CHO_OF={"ㄱ":0,"ㄲ":1,"ㄴ":2,"ㄷ":3,"ㄹ":5,"ㅁ":6,"ㅂ":7,"ㅅ":9,"ㅆ":10,"ㅈ":12,"ㅊ":14,"ㅋ":15,"ㅌ":16,"ㅍ":17,"ㅎ":18};
