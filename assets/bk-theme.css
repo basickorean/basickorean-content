@@ -383,3 +383,8 @@ body.bk-home .blog-posts::before {
   flex: none;
   background: url("https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@4ca1de4/assets/bklogo.jpg") center/cover no-repeat;
 }
+
+/* ---------- 헤더 배경 이미지 무력화 — 가젯에 이미지가 있어도 거대 배경 안 나오게 ---------- */
+.bg-photo, .bg-photo-overlay, .bg-photo-container { display: none !important; }
+.centered-top-container, .centered-top-placeholder { min-height: 0 !important; height: auto !important; }
+.widget.Header .header-image, .widget.Header .image-wrap { display: none !important; }
