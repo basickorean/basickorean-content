@@ -1,0 +1,286 @@
+<!-- ============================================================
+  Basic Korean — 한국어 문법 01 · N-은/는
+  Blogger 포스트 본문 (HTML 보기 모드에 전체 붙여넣기)
+
+  필요 조건(테마 head, 1회 설치 — README 참고):
+    fonts(Jua/Noto Sans KR/Quicksand) + bk.css + React 18 + bk.js
+
+  발행 전 TODO:
+    1) BK_LESSON.next 의 href — G002 포스트 URL 입력 후 주석 해제
+    2) BK_LESSON.toolUrl — 활용 도구 페이지 URL (비워 두면 배너 숨김)
+============================================================ -->
+<div id="bk-lesson"></div>
+
+<script>
+(function () {
+  var H = function () { return window.BK.hangul; };
+
+  /* ---- 활용 엔진: N-은/는 (명사 + 조사) ---- */
+  function conjugate(noun) {
+    var h = H();
+    var n = noun.trim();
+    if (!n) return null;
+    var last = h.decompose(n[n.length - 1]);
+    if (!last) return null;
+    return last.jong === 0 ? n + "는" : n + "은";   /* 받침 X: +는 / 받침 O: +은 */
+  }
+  function batchimRule(noun, lang) {
+    var h = H();
+    var n = noun.trim(); var last = h.decompose(n[n.length - 1]); if (!last) return "\u2014";
+    if (last.jong === 0) return lang === "ko" ? "받침 없음 \u2192 는" : "no 받침 \u2192 는";
+    return lang === "ko" ? "받침 있음 \u2192 은" : "has 받침 \u2192 은";
+  }
+  /* ---- 나만의 문장 검사 (N+은/는 형태만 확인) ---- */
+  function checkEunNeun(s) {
+    var h = H();
+    var m = (s || "").match(/([가-힣]+)(은|는)(?![가-힣])/);
+    if (!m) return { st: "none" };
+    var noun = m[1], p = m[2];
+    var d = h.decompose(noun[noun.length - 1]);
+    if (!d) return { st: "none" };
+    var correct = d.jong === 0 ? "는" : "은";
+    if (p === correct) return { st: "ok", form: noun + p };
+    return { st: "almost", form: noun + p };
+  }
+
+  /* ---- 결합정보 / 복습 테이블 (명사=틸, 조사=코랄) ---- */
+  var CONJ_KO = '<table class="conjtable"><thead><tr><th>받침 <span class="pk">O</span></th><th>받침 <span class="pk">X</span></th></tr></thead><tbody><tr><td class="end">-은</td><td class="end">-는</td></tr><tr><td class="eg"><span class="stem">학생</span> + <span class="add">은</span><br>\u2192 <span class="res"><span class="stem">학생</span>은</span></td><td class="eg"><span class="stem">가수</span> + <span class="add">는</span><br>\u2192 <span class="res"><span class="stem">가수</span>는</span></td></tr><tr><td class="eg"><span class="stem">직업</span> + <span class="add">은</span><br>\u2192 <span class="res"><span class="stem">직업</span>은</span></td><td class="eg"><span class="stem">저</span> + <span class="add">는</span><br>\u2192 <span class="res"><span class="stem">저</span>는</span></td></tr></tbody></table>';
+  var CONJ_EN = CONJ_KO.split("받침 <span").join("Final consonant <span");
+  var REV_KO = '<table class="revtable"><thead><tr><th>받침 O</th><th>받침 X</th></tr></thead><tbody><tr><td><span class="f">-은</span><span class="e">학생은 \u00B7 직업은</span></td><td><span class="f">-는</span><span class="e">가수는 \u00B7 저는</span></td></tr></tbody></table>';
+  var REV_EN = '<table class="revtable"><thead><tr><th>Final consonant O</th><th>Final consonant X</th></tr></thead><tbody><tr><td><span class="f">-은</span><span class="e">학생은 \u00B7 직업은</span></td><td><span class="f">-는</span><span class="e">가수는 \u00B7 저는</span></td></tr></tbody></table>';
+
+  /* ---- 퀴즈 1부: 단어 활용 (강의 연습 1) ---- */
+  var PART1 = [
+    { base: "이름", gloss: { ko: "n. 이름 \u00B7 받침 O", en: "n. name \u00B7 has 받침" }, options: ["이름은", "이름는"], answer: 0, nuance: "bo", explain: { ko: "이름 \u2014 '름'에 받침 ㅁ이 있어요. 이름 + 은 \u2192 이름은.", en: "이름 \u2014 름 has the final consonant ㅁ. 이름 + 은 \u2192 이름은." } },
+    { base: "학생", gloss: { ko: "n. 학생 \u00B7 받침 O", en: "n. student \u00B7 has 받침" }, options: ["학생은", "학생는"], answer: 0, nuance: "bo", explain: { ko: "학생 \u2014 '생'에 받침 ㅇ이 있어요. 학생 + 은 \u2192 학생은.", en: "학생 \u2014 생 has the final consonant ㅇ. 학생 + 은 \u2192 학생은." } },
+    { base: "가수", gloss: { ko: "n. 가수 \u00B7 받침 X", en: "n. singer \u00B7 no 받침" }, options: ["가수은", "가수는"], answer: 1, nuance: "bx", explain: { ko: "가수 \u2014 '수'에 받침이 없어요. 가수 + 는 \u2192 가수는.", en: "가수 \u2014 수 has no final consonant. 가수 + 는 \u2192 가수는." } },
+    { base: "배우", gloss: { ko: "n. 배우 \u00B7 받침 X", en: "n. actor \u00B7 no 받침" }, options: ["배우은", "배우는"], answer: 1, nuance: "bx", explain: { ko: "배우 \u2014 '우'에 받침이 없어요. 배우 + 는 \u2192 배우는.", en: "배우 \u2014 우 has no final consonant. 배우 + 는 \u2192 배우는." } }
+  ];
+  /* ---- 퀴즈 2부: 문장 완성 (Korean Grammar Quiz 01 PDF) ---- */
+  var PART2 = [
+    { sent: ["", " 대학생입니다."], base: "저", en: "I am a university student.", options: ["저은", "저는"], answer: 1, nuance: "bx", explain: { ko: "저 \u2014 받침이 없어요. 저 + 는 \u2192 저는.", en: "저 (no 받침) + 는 \u2192 저는." } },
+    { sent: ["제 ", " 7월 5일입니다."], base: "생일", en: "My birthday is the 5th of July.", options: ["생일은", "생일는"], answer: 0, nuance: "bo", explain: { ko: "생일 \u2014 '일'에 받침 ㄹ이 있어요. 생일 + 은 \u2192 생일은.", en: "생일 (has 받침 ㄹ) + 은 \u2192 생일은." } },
+    { sent: ["", " 선생님이에요."], base: "미소 씨", en: "Miso is a teacher.", options: ["미소 씨은", "미소 씨는"], answer: 1, nuance: "bx", explain: { ko: "씨 \u2014 받침이 없어요. 미소 씨 + 는 \u2192 미소 씨는.", en: "씨 (no 받침) + 는 \u2192 미소 씨는." } },
+    { sent: ["제 ", " 13살이에요."], base: "동생", en: "My younger brother/sister is 13 years old.", options: ["동생은", "동생는"], answer: 0, nuance: "bo", explain: { ko: "동생 \u2014 '생'에 받침 ㅇ이 있어요. 동생 + 은 \u2192 동생은.", en: "동생 (has 받침 ㅇ) + 은 \u2192 동생은." } },
+    { sent: ["우리 ", " 예뻐요."], base: "엄마", en: "My mother is pretty.", options: ["엄마은", "엄마는"], answer: 1, nuance: "bx", explain: { ko: "엄마 \u2014 '마'에 받침이 없어요. 엄마 + 는 \u2192 엄마는.", en: "엄마 (no 받침) + 는 \u2192 엄마는." } },
+    { sent: ["", " 금요일입니다."], base: "오늘", en: "Today is Friday.", options: ["오늘은", "오늘는"], answer: 0, nuance: "bo", explain: { ko: "오늘 \u2014 '늘'에 받침 ㄹ이 있어요. 오늘 + 은 \u2192 오늘은.", en: "오늘 (has 받침 ㄹ) + 은 \u2192 오늘은." } }
+  ];
+
+  window.BK_LESSON = {
+    id: "G001",
+    videoId: "X6P1wU-Rbo8",
+    logoUrl: "https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@main/assets/bklogo.jpg",
+    toolUrl: "",   /* TODO: 활용 도구 Blogger 페이지 URL \u2014 채우면 배너가 나타남 */
+    heroHTML: '<span class="pos">N</span><span class="morph">-은/는</span>',
+    tables: { conj: { ko: CONJ_KO, en: CONJ_EN }, rev: { ko: REV_KO, en: REV_EN } },
+    quiz: { part1: PART1, part2: PART2 },
+    builder: { verbs: ["직업", "이름", "가수", "배우", "저", "오늘"], def: "직업", conjugate: conjugate, rule: batchimRule,
+      split: function (form) { return [form.slice(0, -1), form.slice(-1)]; } },
+    checker: checkEunNeun,
+    prules: {
+      yon: { ko: { name: "연음 (Linking)", sub: "받침이 다음 모음 자리로 옮겨 가서 발음돼요." },
+             en: { name: "Linking (연음)", sub: "The final consonant moves over to the next vowel." } }
+    },
+    next: [
+      /* TODO: 포스트/페이지 발행 후 href 를 실제 URL로 바꾸고 주석을 해제하세요.
+      { href: "G002-포스트-URL",
+        nk: { ko: "다음 강의 \u00B7 한국어 문법 02", en: "NEXT \u00B7 KOREAN GRAMMAR 02" },
+        npHTML: '<span class="v">N</span><span class="m">-이에요/예요</span>',
+        ng: { ko: "명사로 문장 끝내기 \u2014 ~이에요/예요", en: "Ending a sentence with a noun \u2014 이에요/예요" },
+        na: { ko: "강의 보기 \u2192", en: "Open lesson \u2192" } },
+      { href: "활용도구-페이지-URL", newTab: true,
+        nk: { ko: "무료 도구", en: "FREE TOOL" },
+        npHTML: '<span class="v">한국어</span> <span class="m">활용 도구</span>',
+        ng: { ko: "동사 하나로 12가지 활용형을 한 번에", en: "Type one verb, see 12 forms at once" },
+        na: { ko: "활용해 보기 \u2192", en: "Try it \u2192" } }
+      */
+    ],
+
+    ct: {
+      ko: {
+        langA: "한글", langB: "EN",
+        kicker: "한국어 문법 01 \u00B7 Korean Grammar",
+        heroEx: "\u201C저는 김미소예요. 제 직업은 선생님이에요.\u201D",
+        heroSub: "\u2014 명사 뒤에 붙어서 그 명사가 문장의 주제임을 나타낼 때",
+        concept_l: "개념", concept_h: "문장의 주제를 표시하는 조사",
+        prereq: "사전 지식: 받침 \u2014 글자 아래에 있는 자음이에요. 받침이 무엇인지 알면 충분해요.",
+        concept_p1: [
+          ["'은/는'은 ", { b: "명사 뒤" }, "에 붙어서, 앞에 오는 명사가 ", { b: "문장의 주제" }, "임을 나타내요."],
+          ["명사 마지막 글자에 받침이 ", { b: "있으면 -은" }, ", 받침이 ", { b: "없으면 -는" }, "을 써요."]
+        ],
+        flow: [["\uD83C\uDFF7\uFE0F", "명사", "사람\u00B7사물의 이름"], ["\uD83D\uDD0D", "받침 확인", "마지막 글자에 받침이 있어요?"], ["\uD83D\uDCCC", "은/는", "문장의 주제 표시"]],
+        dlg_l: "대화 속에서 보기", dlg_h: "대화로 개념 이해하기",
+        dialogs: [
+          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "먼저 받침이 없는 명사 '저' 예문이에요.",
+            lines: [
+              { who: "미소", ko: ["이름이 뭐예요?"], t: 376 },
+              { who: "나나", ko: [{ b: "저는" }, " 나나예요."], t: 390 },
+              { who: "나나", ko: ["제 ", { b: "이름은" }, " 나나예요."], t: 394 }
+            ],
+            form: ["저는", "=", "저 (받침 X)", "+", "-는"],
+            steps: [
+              { k: "명사", cls: "act", v: ["명사 ", { b: "저" }, " \u2014 나를 가리키는 말."] },
+              { k: "받침 확인", cls: "keep", v: ["마지막 글자 '저' \u2014 ", { b: "받침 없음" }, "."] },
+              { k: "은/는 선택", cls: "next", v: ["받침이 없으니 ", { b: "-는" }, " \u2192 저는."] }
+            ],
+            take: ["\u2192 명사 마지막 글자에 ", { b: "받침이 없으면" }, " ", { b: "-는" }, "을 써요. (저 \u2192 저는, 가수 \u2192 가수는)"] },
+          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "이번에는 받침이 있는 명사 '직업' 예문이에요.",
+            lines: [
+              { who: "미소", ko: ["직업이 뭐예요?"], t: 421 },
+              { who: "나나", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], t: 435 },
+              { who: "나나", ko: [{ b: "저는" }, " 선생님이에요."], t: 440 }
+            ],
+            form: ["직업은", "=", "직업 (받침 O)", "+", "-은"],
+            steps: [
+              { k: "명사", cls: "act", v: ["명사 ", { b: "직업" }, " \u2014 하는 일."] },
+              { k: "받침 확인", cls: "keep", v: ["마지막 글자 '업' \u2014 ", { b: "받침 ㅂ 있음" }, "."] },
+              { k: "은/는 선택", cls: "next", v: ["받침이 있으니 ", { b: "-은" }, " \u2192 직업은."] }
+            ],
+            take: ["\u2192 명사 마지막 글자에 ", { b: "받침이 있으면" }, " ", { b: "-은" }, "을 써요. (직업 \u2192 직업은, 학생 \u2192 학생은)"] }
+        ],
+        conj_l: "결합정보", conj_h: "",
+        conj_combine: "명사 뒤에 사용합니다.",
+        builder_l: "활용 만들기", builder_h: "직접 만들어 보기",
+        builder_hint: "명사를 고르거나 입력하면 '은/는' 형태가 실시간으로 만들어져요.",
+        builder_invalid: "한글 명사를 입력하세요 (예: 직업).",
+        builder_note: "\u203B 받침 있음 \u2192 은 \u00B7 받침 없음 \u2192 는.",
+        b_base: "입력", b_stem: "명사", b_result: "결과",
+        tool_text: ["모든 활용형을 한 번에 보고 싶나요? ", "활용 도구 열기"],
+        sent_l: "연습 \u00B7 Practice", sent_h: "문장으로 활용하기",
+        sent_hint: "먼저 소리 내어 문장을 완성해 보고, 카드를 눌러 정답을 확인하세요.",
+        sent_tap: "탭해서 정답 보기",
+        sent_items: [
+          { q: [{ b: "(저)" }, " 박민영이에요."], a: [{ b: "저는" }, " 박민영이에요."], br: "저 + 는", t: 268 },
+          { q: ["제 ", { b: "(직업)" }, " 배우예요."], a: ["제 ", { b: "직업은" }, " 배우예요."], br: "직업 + 은", t: 287 },
+          { q: ["제 ", { b: "(이름)" }, " 다니엘이에요."], a: ["제 ", { b: "이름은" }, " 다니엘이에요."], br: "이름 + 은", t: 310 },
+          { q: [{ b: "(다니엘 씨)" }, " 학생이에요."], a: [{ b: "다니엘 씨는" }, " 학생이에요."], br: "씨 + 는", t: 332 }
+        ],
+        dlgp_l: "대화 연습 \u00B7 발음", dlgp_h: "실전 대화로 연습하기",
+        dlgp_intro: "발음을 신경 쓰면서 듣고, 따라 읽어 보세요.",
+        dlgp_toggle: ["발음 보기", "발음 숨기기"],
+        dlgp_lines: [
+          { who: "미소", t: 376, seg: [{ tx: "이름이", pr: "이르미", ru: "yon", nt: "받침 ㅁ + 이 \u2192 [이르미]" }, " 뭐예요?"] },
+          { who: "나나", t: 390, seg: [{ tx: "저는", b: 1 }, " 나나예요. 제 ", { tx: "이름은", pr: "이르믄", ru: "yon", nt: "받침 ㅁ + 은 \u2192 [이르믄]" }, " 나나예요."] },
+          { who: "미소", t: 421, seg: [{ tx: "직업이", pr: "지거비", ru: "yon", nt: "받침 ㅂ + 이 \u2192 [지거비]" }, " 뭐예요?"] },
+          { who: "나나", t: 435, seg: ["제 ", { tx: "직업은", pr: "지거븐", ru: "yon", nt: "받침 ㅂ + 은 \u2192 [지거븐]" }, " ", { tx: "선생님이에요", pr: "선생니미에요", ru: "yon", nt: "받침 ㅁ + 이 \u2192 [니미]" }, "."] },
+          { who: "나나", t: 440, seg: [{ tx: "저는", b: 1 }, " 선생님이에요."] }
+        ],
+        dlgp_note: [{ b: "저는" }, " (저 + 는) \u00B7 ", { b: "직업은" }, " (직업 + 은) \u2014 받침에 따라 은/는이 달라져요. 발음은 [지거븐], [선생니미에요]처럼 받침이 모음으로 이어져요."],
+        quiz_l: "퀴즈", quiz_h: "퀴즈로 확인하기",
+        quiz_intro: ["'N-은/는' 공식 퀴즈예요. 보기를 눌러 정답을 확인하세요. ", "(출처: Basic Korean \u2014 Korean Grammar Quiz 01)"],
+        qpart1: "문제 1) 알맞은 형태를 고르세요", qpart2: "문제 2) 문장을 완성하세요",
+        retry: "다시 풀기",
+        ms_l: "이제 여러분 차례", ms_h: "나만의 문장 만들기",
+        ms_hint: "'은/는'을 넣어 나만의 문장을 만들어 보세요. 직접 쓰면 더 오래 기억돼요!",
+        ms_ph: "예: 저는 학생이에요.",
+        ms_btn: "확인하기",
+        ms_ok: ["문법 형태 OK! '", "'를 잘 만들었어요. (이 검사는 은/는 형태만 확인해요 \u2014 문장 전체는 소리 내어 읽으며 점검해 보세요!)"],
+        ms_almost: ["거의 다 왔어요 \u2014 '", "' 부분을 확인해 보세요. (받침 O \u2192 은 \u00B7 받침 X \u2192 는)"],
+        ms_none: "문장에 'N+은/는'이 아직 없어요. 예: 저는 학생이에요.",
+        review_l: "복습", review_h: "오늘 배운 것",
+        review: [
+          [{ b: "N-은/는" }, " \u2014 명사 뒤에 붙어서 명사가 ", { b: "문장의 주제" }, "임을 나타내요. 받침 O \u2192 ", { b: "-은" }, " \u00B7 받침 X \u2192 ", { b: "-는" }, "."]
+        ],
+        next_l: "다음 학습",
+        video_l: "영상", video_h: "강의 영상으로 복습",
+        footer_sub: "한국어 문법 01 \u00B7 N-은/는"
+      },
+      en: {
+        langA: "한글", langB: "EN",
+        kicker: "Korean Grammar 01",
+        heroEx: "\u201C저는 김미소예요. 제 직업은 선생님이에요.\u201D",
+        heroSub: "I am Kim Miso. My occupation is a teacher.",
+        concept_l: "Concept", concept_h: "The topic-marking particle",
+        prereq: "Good to know first: 받침 (final consonant) \u2014 the consonant written at the bottom of a syllable.",
+        concept_p1: [
+          ["'은/는' attaches ", { b: "after a noun" }, " and marks that noun as the ", { b: "topic of the sentence" }, "."],
+          ["If the noun's last syllable ", { b: "has a final consonant, use -은" }, "; if it ", { b: "has none, use -는" }, "."]
+        ],
+        flow: [["\uD83C\uDFF7\uFE0F", "Noun", "a person or thing"], ["\uD83D\uDD0D", "Check 받침", "does the last syllable have one?"], ["\uD83D\uDCCC", "은/는", "marks the topic"]],
+        dlg_l: "In Dialogue", dlg_h: "Understanding it through conversation",
+        dialogs: [
+          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "First, the noun 저 (I), which has no final consonant.",
+            lines: [
+              { who: "Miso", ko: ["이름이 뭐예요?"], en: "What is your name?", t: 376 },
+              { who: "Nana", ko: [{ b: "저는" }, " 나나예요."], en: "I am Nana.", t: 390 },
+              { who: "Nana", ko: ["제 ", { b: "이름은" }, " 나나예요."], en: "My name is Nana.", t: 394 }
+            ],
+            form: ["저는", "=", "저 (no 받침)", "+", "-는"],
+            steps: [
+              { k: "The noun", cls: "act", v: ["The noun ", { b: "저" }, " \u2014 'I'."] },
+              { k: "Check 받침", cls: "keep", v: ["Last syllable 저 \u2014 ", { b: "no final consonant" }, "."] },
+              { k: "Pick 은/는", cls: "next", v: ["No 받침, so ", { b: "-는" }, " \u2192 저는."] }
+            ],
+            take: ["\u2192 If the noun's last syllable ", { b: "has no final consonant" }, ", use ", { b: "-는" }, ". (저 \u2192 저는, 가수 \u2192 가수는)"] },
+          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "Now the noun 직업 (occupation), which has a final consonant.",
+            lines: [
+              { who: "Miso", ko: ["직업이 뭐예요?"], en: "What is your occupation?", t: 421 },
+              { who: "Nana", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], en: "My occupation is a teacher.", t: 435 },
+              { who: "Nana", ko: [{ b: "저는" }, " 선생님이에요."], en: "I am a teacher.", t: 440 }
+            ],
+            form: ["직업은", "=", "직업 (has 받침)", "+", "-은"],
+            steps: [
+              { k: "The noun", cls: "act", v: ["The noun ", { b: "직업" }, " \u2014 'occupation'."] },
+              { k: "Check 받침", cls: "keep", v: ["Last syllable 업 \u2014 ", { b: "final consonant ㅂ" }, "."] },
+              { k: "Pick 은/는", cls: "next", v: ["Has 받침, so ", { b: "-은" }, " \u2192 직업은."] }
+            ],
+            take: ["\u2192 If the noun's last syllable ", { b: "has a final consonant" }, ", use ", { b: "-은" }, ". (직업 \u2192 직업은, 학생 \u2192 학생은)"] }
+        ],
+        conj_l: "Conjugation", conj_h: "",
+        conj_combine: "Used after nouns.",
+        builder_l: "Builder", builder_h: "Build it yourself",
+        builder_hint: "Pick or type a noun and the '은/는' form updates live.",
+        builder_invalid: "Enter a Korean noun (e.g. 직업).",
+        builder_note: "\u203B has 받침 \u2192 은 \u00B7 no 받침 \u2192 는.",
+        b_base: "Input", b_stem: "Noun", b_result: "Result",
+        tool_text: ["Want to see every form at once? ", "Open the Conjugator"],
+        sent_l: "Practice", sent_h: "Use it in sentences",
+        sent_hint: "Say the full sentence out loud first, then tap the card to check.",
+        sent_tap: "Tap to reveal",
+        sent_items: [
+          { q: [{ b: "(저)" }, " 박민영이에요."], a: [{ b: "저는" }, " 박민영이에요."], br: "저 + 는", tr: "I am Bak Minyoung.", t: 268 },
+          { q: ["제 ", { b: "(직업)" }, " 배우예요."], a: ["제 ", { b: "직업은" }, " 배우예요."], br: "직업 + 은", tr: "My occupation is an actor.", t: 287 },
+          { q: ["제 ", { b: "(이름)" }, " 다니엘이에요."], a: ["제 ", { b: "이름은" }, " 다니엘이에요."], br: "이름 + 은", tr: "My name is Daniel.", t: 310 },
+          { q: [{ b: "(다니엘 씨)" }, " 학생이에요."], a: [{ b: "다니엘 씨는" }, " 학생이에요."], br: "씨 + 는", tr: "Daniel is a student.", t: 332 }
+        ],
+        dlgp_l: "Dialogue Practice \u00B7 Pronunciation", dlgp_h: "Practice with a real dialogue",
+        dlgp_intro: "Listen and read along, paying attention to the pronunciation.",
+        dlgp_toggle: ["Show pronunciation", "Hide pronunciation"],
+        dlgp_lines: [
+          { who: "Miso", t: 376, en: "What is your name?",
+            seg: [{ tx: "이름이", pr: "이르미", ru: "yon", nt: "final ㅁ + 이 \u2192 [이르미]" }, " 뭐예요?"] },
+          { who: "Nana", t: 390, en: "I am Nana. My name is Nana.",
+            seg: [{ tx: "저는", b: 1 }, " 나나예요. 제 ", { tx: "이름은", pr: "이르믄", ru: "yon", nt: "final ㅁ + 은 \u2192 [이르믄]" }, " 나나예요."] },
+          { who: "Miso", t: 421, en: "What is your occupation?",
+            seg: [{ tx: "직업이", pr: "지거비", ru: "yon", nt: "final ㅂ + 이 \u2192 [지거비]" }, " 뭐예요?"] },
+          { who: "Nana", t: 435, en: "My occupation is a teacher.",
+            seg: ["제 ", { tx: "직업은", pr: "지거븐", ru: "yon", nt: "final ㅂ + 은 \u2192 [지거븐]" }, " ", { tx: "선생님이에요", pr: "선생니미에요", ru: "yon", nt: "final ㅁ + 이 \u2192 [니미]" }, "."] },
+          { who: "Nana", t: 440, en: "I am a teacher.",
+            seg: [{ tx: "저는", b: 1 }, " 선생님이에요."] }
+        ],
+        dlgp_note: [{ b: "저는" }, " (저 + 는) \u00B7 ", { b: "직업은" }, " (직업 + 은) \u2014 the particle changes with the 받침. In speech the final consonant links to the next vowel: [지거븐], [선생니미에요]."],
+        quiz_l: "Quiz", quiz_h: "Check yourself with a quiz",
+        quiz_intro: ["The official 'N-은/는' quiz. Tap an option to check your answer. ", "(Source: Basic Korean \u2014 Korean Grammar Quiz 01)"],
+        qpart1: "Q1) Choose the correct form", qpart2: "Q2) Complete the sentence",
+        retry: "Try again",
+        ms_l: "Your turn", ms_h: "Make your own sentence",
+        ms_hint: "Write your own sentence using '은/는'. Producing it yourself locks it in!",
+        ms_ph: "e.g. 저는 학생이에요.",
+        ms_btn: "Check",
+        ms_ok: ["Pattern looks right: '", "'! (This only checks the 은/는 form \u2014 read the full sentence aloud to double-check.)"],
+        ms_almost: ["Almost \u2014 check the particle in '", "'. (has 받침 \u2192 은 \u00B7 no 받침 \u2192 는)"],
+        ms_none: "Your sentence doesn't include 'N+은/는' yet. e.g. 저는 학생이에요.",
+        review_l: "Review", review_h: "What we learned",
+        review: [
+          [{ b: "N-은/는" }, " \u2014 attaches after a noun and marks it as the ", { b: "topic of the sentence" }, ". has 받침 \u2192 ", { b: "-은" }, " \u00B7 no 받침 \u2192 ", { b: "-는" }, "."]
+        ],
+        next_l: "Keep learning",
+        video_l: "Video", video_h: "Review with the lecture video",
+        footer_sub: "Korean Grammar 01 \u00B7 N-은/는"
+      }
+    }
+  };
+
+  if (window.BK && window.BK.render) window.BK.render();
+})();
+</script>
