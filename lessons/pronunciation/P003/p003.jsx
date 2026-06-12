@@ -271,52 +271,63 @@
        reg=결과 색칠 영역, color(기본 coral), hint=단계 안내. 마지막은 받침소리 변환 포함 도전 */
     /* 모든 단어 2단계: ① 받침소리 글자 찾기(틸) → ② 된소리 발음 찾기(코랄) */
     const H1={ko:"① 받침소리 [ㄱ·ㄷ·ㅂ] 글자를 눌러 보세요.",en:"① Tap the syllable with a [ㄱ·ㄷ·ㅂ] final sound."};
-    const H2=(snd)=>({ko:"✓ 받침소리 ["+snd+"]! ② 이제 된소리가 되는 글자를 눌러 보세요.",en:"✓ Final sound ["+snd+"]! ② Now tap the letter that tenses."});
+    const H2=(snd)=>({ko:"✓ 받침소리 ["+snd+"]! ② 이제 ["+snd+"]과 만나는 첫소리 글자를 눌러 보세요.",en:"✓ Final sound ["+snd+"]! ② Now tap the onset that meets ["+snd+"]."});
     const TAPS=[
       {word:"학교", steps:[
         {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
-        {i:1, cho:1, reg:[0,1,0,0.42], hint:H2("ㄱ")}]},
+        {i:1, cho:1, regOn:[0,1,0,0.4], reg:[0,1,0,0.42], hint:H2("ㄱ")}]},
       {word:"식당", steps:[
         {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
-        {i:1, cho:4, reg:[0,0.62,0,0.5], hint:H2("ㄱ")}]},
+        {i:1, cho:4, regOn:[0,0.6,0,0.5], reg:[0,0.62,0,0.5], hint:H2("ㄱ")}]},
       {word:"입다", steps:[
         {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
-        {i:1, cho:4, reg:[0,0.6,0,1], hint:H2("ㅂ")}]},
+        {i:1, cho:4, regOn:[0,0.55,0,1], reg:[0,0.6,0,1], hint:H2("ㅂ")}]},
       {word:"책상", steps:[
         {i:0, color:"teal", reg:[0,1,0.55,1], hint:H1},
-        {i:1, cho:10, reg:[0,0.62,0,0.52], hint:H2("ㄱ")}]},
+        {i:1, cho:10, regOn:[0,0.6,0,0.5], reg:[0,0.62,0,0.52], hint:H2("ㄱ")}]},
       {word:"옷장", challenge:true,
         msg:{ko:"🎉 받침 ㅅ은 소리 [ㄷ] — 그래서 ㅈ이 [ㅉ]이 됐어요!",en:"🎉 Final ㅅ sounds [ㄷ] — so ㅈ tensed to [ㅉ]!"},
         steps:[
           {i:0, jong:7, color:"teal", reg:[0,1,0.55,1],
             hint:{ko:"① 받침소리 글자를 눌러 보세요 — 받침 ㅅ이 소리 [ㄷ]으로 바뀌어요!",en:"① Tap the final-sound syllable — ㅅ becomes the sound [ㄷ]!"}},
-          {i:1, cho:13, reg:[0,0.62,0,0.5], hint:H2("ㄷ")}]},
+          {i:1, cho:13, regOn:[0,0.6,0,0.5], reg:[0,0.62,0,0.5], hint:H2("ㄷ")}]},
     ];
     function TapGame({lang}){
       const [wi,setWi]=useState(0);
       const [done,setDone]=useState(0);        // 완료한 step 수
+      const [merged,setMerged]=useState(false);// 만남 후 변신 완료
       const [miss,setMiss]=useState(false);    // 잘못 누름
+      const timer=useRef(null);
       const d=TAPS[wi];
       const syls=[...d.word];
-      const solved=done>=d.steps.length;
+      const meeting=done>=d.steps.length && !merged;   // 💥 두 소리가 만나는 중
+      const solved=done>=d.steps.length && merged;
       const cur=d.steps[done];
-      /* 현재 상태의 글자·색 (완료된 step만 반영) */
+      /* 현재 상태의 글자·색 — 변신 단계(cho)는 만남(파랑) → 변신(코랄) 2박자 */
       const view=(i)=>{
         const d0=dec(syls[i]); let cho=d0.cho, jong=d0.jong; const parts=[];
         d.steps.forEach((st,k)=>{ if(k<done && st.i===i){
-          if(st.cho!==undefined) cho=st.cho;
-          if(st.jong!==undefined) jong=st.jong;
-          parts.push({color:st.color||"orange", r:st.reg}); } });
+          if(st.cho!==undefined){           /* 변신 단계 */
+            if(merged){ cho=st.cho; parts.push({color:st.color||"orange", r:st.reg}); }
+            else parts.push({color:"blue", r:st.regOn||st.reg});   /* 첫소리 표시 */
+          } else {
+            if(st.jong!==undefined) jong=st.jong;
+            parts.push({color:st.color||"orange", r:st.reg});
+          } } });
         return {ch:comp(cho,d0.jung,jong), parts};
       };
-      const tap=(i)=>{ if(solved) return;
-        if(cur && cur.i===i){ setDone(done+1); setMiss(false); }
+      useEffect(()=>()=>{ if(timer.current) clearTimeout(timer.current); },[]);
+      const tap=(i)=>{ if(solved||meeting) return;
+        if(cur && cur.i===i){
+          const nd=done+1; setDone(nd); setMiss(false);
+          if(nd>=d.steps.length){ timer.current=setTimeout(()=>setMerged(true), 900); }
+        }
         else setMiss(true); };
       const resWord=syls.map((sy,i)=>{ const d0=dec(sy); let cho=d0.cho, jong=d0.jong;
         d.steps.forEach(st=>{ if(st.i===i){ if(st.cho!==undefined) cho=st.cho; if(st.jong!==undefined) jong=st.jong; } });
         return comp(cho,d0.jung,jong); }).join("");
-      const next=()=>{ setWi((wi+1)%TAPS.length); setDone(0); setMiss(false); };
-      const prev=()=>{ if(wi>0){ setWi(wi-1); setDone(0); setMiss(false); } };
+      const next=()=>{ if(timer.current) clearTimeout(timer.current); setWi((wi+1)%TAPS.length); setDone(0); setMerged(false); setMiss(false); };
+      const prev=()=>{ if(wi>0){ if(timer.current) clearTimeout(timer.current); setWi(wi-1); setDone(0); setMerged(false); setMiss(false); } };
       return (
         <div className="dragwrap">
           <div className="draghead">
@@ -333,6 +344,7 @@
                     aria-label={(lang==="ko"?"글자 ":"syllable ")+v.ch}>
                     <HSyl ch={v.ch} parts={v.parts}/>
                   </div>
+                  {meeting && d.steps[d.steps.length-1].i===i && <span className="meetfx">💥</span>}
                 </div>
               );
             })}
@@ -350,8 +362,10 @@
                   <button className="cta" onClick={next}>{wi<TAPS.length-1
                     ? (lang==="ko"?"다음 단어 →":"Next word →")
                     : (lang==="ko"?"처음부터 다시 ↻":"Start over ↻")}</button></p>
-              : <p className="dhint">{miss
-                  ? (lang==="ko"?"❌ 거기가 아니에요 — 받침소리 [ㄱ·ㄷ·ㅂ] 바로 뒤 글자를 찾아 보세요!":"❌ Not that one — find the letter right after a [ㄱ·ㄷ·ㅂ] final sound!")
+              : <p className="dhint">{meeting
+                  ? (lang==="ko"?"💥 받침소리와 첫소리가 만났어요 — 된소리로 변신!":"💥 The sounds met — tensing up!")
+                  : miss
+                  ? (lang==="ko"?"❌ 거기가 아니에요 — 다시 찾아 보세요!":"❌ Not that one — try again!")
                   : (cur&&cur.hint)
                     ? cur.hint[lang]
                     : (lang==="ko"?"된소리로 바뀌는 글자를 눌러 보세요.":"Tap the letter that becomes tense.")}</p>}

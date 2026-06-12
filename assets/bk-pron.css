@@ -110,6 +110,7 @@
 }
 .bkp-root .paircell{background:#f7faf9;border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-align:center;}
 .bkp-root .paircell.tensecell{border-color:var(--orange);background:var(--orange-soft);}
+.bkp-root .meetfx{position:absolute;left:-15px;top:50%;transform:translate(-50%,-50%);font-size:26px;z-index:6;animation:avfade .25s ease;}
 .bkp-root .ptri{border:0;background:transparent;color:var(--teal-dark);cursor:pointer;font-size:14px;padding:2px 5px;line-height:1;}
 .bkp-root .ptri:hover{color:var(--teal);}
 .bkp-root .pairsylrow{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;}
