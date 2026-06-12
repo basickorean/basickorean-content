@@ -381,5 +381,5 @@ body.bk-home .blog-posts::before {
   height: 48px;
   border-radius: 50%;
   flex: none;
-  background: url("https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@main/assets/bklogo.jpg") center/cover no-repeat;
+  background: url("https://cdn.jsdelivr.net/gh/basickorean/basickorean-content@4ca1de4/assets/bklogo.jpg") center/cover no-repeat;
 }
