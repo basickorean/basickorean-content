@@ -698,17 +698,22 @@
               <h2 className="head">{t.prep2_h}</h2>
               <p className="muted" style={{marginTop:0}}>{t.prep2_intro}</p>
               {PAIRS.map((p,i)=>(
-                <div className="pairrow" key={i}>
-                  <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?("영상에서 ‘"+p.a+" / "+p.b+"’ 비교 듣기"):("Hear ‘"+p.a+" / "+p.b+"’ in the video")}</button>
+                <div className="pairpanel" key={i}>
+                  <div className="pairpanelhead">
+                    <span className="pairtitle">{p.a}<span className="vs">vs</span>{p.b}</span>
+                    <button className="pairvid" onClick={()=>setClip(p.t)}>🎬 {lang==="ko"?"영상에서 비교 듣기":"Compare in the video"}</button>
+                  </div>
+                  <div className="pairrow">
                   <div className="paircell">
                     <div className="pairsylrow"><button className="pairsyl" onClick={()=>speakKo(p.a, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.a}>{p.a}<span className="syltri">▶</span></button></div>
                     <div className="pairline">{p.wa}<button className="ptri" onClick={()=>speakKo(p.wa)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wa}>▶</button></div>
-                    <div className="pairline">{p.ea}<button className="ptri" onClick={()=>speakKo(p.ea)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.ea}>▶</button></div>
+                    <div className="pairline sent">{p.ea}<button className="ptri" onClick={()=>speakKo(p.ea)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.ea}>▶</button></div>
                   </div>
                   <div className="paircell tensecell">
                     <div className="pairsylrow"><button className="pairsyl tense" onClick={()=>speakKo(p.b, ()=>setClip(p.t))} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.b}>{p.b}<span className="syltri">▶</span></button></div>
                     <div className="pairline">{p.wb}<button className="ptri" onClick={()=>speakKo(p.wb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.wb}>▶</button></div>
-                    <div className="pairline">{p.eb}<button className="ptri" onClick={()=>speakKo(p.eb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.eb}>▶</button></div>
+                    <div className="pairline sent">{p.eb}<button className="ptri" onClick={()=>speakKo(p.eb)} aria-label={(lang==="ko"?"발음 듣기 ":"Listen ")+p.eb}>▶</button></div>
+                  </div>
                   </div>
                 </div>
               ))}
