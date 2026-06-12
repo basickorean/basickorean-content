@@ -304,7 +304,7 @@
         msg:{ko:"🎉 옮겨 간 ㅅ은 [ㅆ]으로 소리 나요!",en:"🎉 The moved ㅅ is pronounced [ㅆ]!"}},
       {word:"않아", challenge:true,
         chips:[{j:"ㅎ",from:0,to:1,drop:true,rem:4, reg:[0.52,1,0.55,1]},
-               {j:"ㄴ",from:0,to:1,rem:0, reg:[0,0.62,0.52,1], after:0, off:{right:"auto",left:-22}}],
+               {j:"ㄴ",from:0,to:1,rem:0, color:"teal", reg:[0,0.62,0.52,1], after:0, off:{right:"auto",left:-22}}],
         msg:{ko:"🎉 ㅎ이 탈락하고, 남은 ㄴ이 연음됐어요!",en:"🎉 ㅎ dropped, then the remaining ㄴ linked!"}},
     ];
     const CHO_OF={"ㄱ":0,"ㄲ":1,"ㄴ":2,"ㄷ":3,"ㄹ":5,"ㅁ":6,"ㅂ":7,"ㅅ":9,"ㅆ":10,"ㅈ":12,"ㅊ":14,"ㅋ":15,"ㅌ":16,"ㅍ":17,"ㅎ":18};
@@ -323,9 +323,9 @@
       /* r이 사각형 1개 또는 여러 개(대각선 자모용 — ㅅ 등) 모두 지원 */
       const push=(color,r)=>{ if(Array.isArray(r[0])) r.forEach(rr=>parts.push({color,r:rr})); else parts.push({color,r}); };
       chips.forEach((c,k)=>{
-        if(c.from===i&&!placed[k]) push(c.drop?"pink":"orange", c.reg||REG_BAT[ch]||[0,1,0.55,1]);
+        if(c.from===i&&!placed[k]) push(c.drop?"pink":(c.color||"orange"), c.reg||REG_BAT[ch]||[0,1,0.55,1]);
         if(c.to===i&&!placed[k])  push("blue", onR);
-        if(c.to===i&&placed[k]&&!c.drop) push("orange", onR);
+        if(c.to===i&&placed[k]&&!c.drop) push(c.color||"orange", onR);
       });
       return {ch,parts};
     }
@@ -388,7 +388,7 @@
                       pos&&pos.k===k?{transform:"translate("+pos.x+"px,"+pos.y+"px)"}:null,
                       locked?{opacity:.4,cursor:"default"}:null);
                     return <div key={k} ref={el=>chipRefs.current[k]=el}
-                      className={"dchip"+(c.drop?" pink":"")+(sel===k?" sel":"")+((!pos||pos.k!==k)&&sel!==k&&!locked?" idle":"")}
+                      className={"dchip"+(c.drop?" pink":(c.color?" "+c.color:""))+(sel===k?" sel":"")+((!pos||pos.k!==k)&&sel!==k&&!locked?" idle":"")}
                       style={st}
                       onPointerDown={locked?undefined:down(k)} onPointerMove={move} onPointerUp={up}
                       role="button" aria-label={(lang==="ko"?"받침 ":"final consonant ")+c.j}>{c.j}</div>;
