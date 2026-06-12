@@ -261,9 +261,9 @@ a:hover { color: var(--bk-teal); }
    추천 카드 · 16:9 썸네일 카드 · 푸터 인기 그리드 · 헤더 그라디언트
    ========================================================================== */
 
-/* ---------- 헤더: 틸→파랑 그라디언트 + 둥근 로고 ---------- */
+/* ---------- 헤더: 틸 소프트 단색 + 둥근 로고 ---------- */
 .centered-top-container, .centered-top-placeholder {
-  background: linear-gradient(135deg, var(--bk-teal-soft), #e7f0fa) !important;
+  background: var(--bk-teal-soft) !important;
 }
 .widget.Header img { border-radius: 50%; }
 
@@ -370,12 +370,12 @@ body.bk-home .blog-posts::before {
 }
 
 /* ---------- 헤더 로고 — 제목 왼쪽에 원형 로고 (CSS 삽입, 헤더 가젯엔 이미지 없음) ---------- */
-.widget.Header .title, .blog-name .title {
+.widget.Header h1, .widget.Header .title, .blog-name .title {
   display: inline-flex !important;
   align-items: center;
   gap: 12px;
 }
-.widget.Header .title::before, .blog-name .title::before {
+.widget.Header h1::before, .widget.Header .title::before, .blog-name .title::before {
   content: "";
   width: 48px;
   height: 48px;
