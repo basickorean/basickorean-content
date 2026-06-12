@@ -560,9 +560,13 @@ body.bk-homeready .blog-posts::before { content: none; }
   margin: 4px 0 0;
 }
 
-/* 브랜드 타이틀: 밑줄 제거 + 단색 */
-.widget.Header .title, .blog-name .title { font-size: clamp(24px, 5vw, 32px) !important; }
-.widget.Header .title a, .blog-name .title a {
+/* 브랜드 타이틀: 밑줄 제거 + 단색 (Contempo 실제 마크업 h1/p 포함) */
+.widget.Header h1, .widget.Header .title, .blog-name .title {
+  font-size: clamp(24px, 5vw, 32px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.widget.Header h1 a, .widget.Header .title a, .blog-name .title a {
   text-decoration: none !important;
   border-bottom: 0 !important;
   font-weight: 700;
@@ -571,8 +575,12 @@ body.bk-homeready .blog-posts::before { content: none; }
 }
 
 /* 태그라인: 제목과 한 세트로 묶고, SNS와는 넉넉한 간격 */
-.widget.Header .title, .blog-name .title { margin-bottom: 0 !important; }
-.widget.Header .subtitle, .blog-name .subtitle {
+.widget.Header .subtitle, .blog-name .subtitle, .widget.Header .header-widget p {
   text-align: center !important;
-  margin: 0 auto 18px;
+  margin: 4px auto 18px;
+  color: var(--bk-muted) !important;
+  font-family: var(--bk-sans) !important;
+  font-size: 14px !important;
 }
+/* Contempo 헤더 기본 세로 패딩 압축 */
+.widget.Header .header-widget { padding: 10px 0 0 !important; }
