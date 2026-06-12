@@ -1,17 +1,28 @@
-/* Basic Korean — 홈 렌더러 (bk-home.js)
-   홈(첫 페이지)에서만: Blogger 피드(JSONP)를 읽어
-   [추천 큰 카드 + 최근 강의 카드 그리드]를 그리고 기본 피드를 숨깁니다.
+/* Basic Korean — 목록 렌더러 (bk-home.js)
+   홈 · 라벨 페이지(/search/label/X) · 전체 글(/search)에서
+   Blogger 피드(JSONP)를 읽어 카드 그리드를 그리고 기본 피드를 숨깁니다.
+   - 홈: 추천 큰 카드 1 + 최근 강의 그리드 6 + "전체 글 보기"
+   - 라벨/전체: 카드 12개씩 + "더 보기" 버튼
    실패 시 아무것도 하지 않아 기본 피드가 그대로 보입니다 (안전 폴백).
    시안: theme-mockup-home.html (2026-06-12) */
 (function () {
   "use strict";
-  var path = window.location.pathname;
-  var isHome = !!window.BK_HOME_FORCE ||
-    ((path === "/" || path === "" || path === "/index.html") &&
-      window.location.search.indexOf("updated-max") === -1);
-  if (!isHome) return;
+  var loc = window.location;
+  var path = loc.pathname;
+  var FORCE = !!window.BK_HOME_FORCE;
 
-  var MAX = 7; /* 추천 1 + 그리드 6 */
+  /* 검색 결과(?q=)·과거 페이지(updated-max)는 기본 피드 유지 */
+  if (!FORCE && (loc.search.indexOf("updated-max") > -1 || loc.search.indexOf("q=") > -1)) return;
+
+  var isHome = FORCE || path === "/" || path === "" || path === "/index.html";
+  var label = "";
+  var m = /^\/search\/label\/([^/]+)\/?$/.exec(path);
+  if (m) label = decodeURIComponent(m[1]);
+  var isAll = path === "/search" || path === "/search/";
+  if (!isHome && !label && !isAll) return;
+
+  var BATCH = isHome ? 7 : 12; /* 홈: 추천 1 + 그리드 6 */
+  var start = 1, total = 0, shown = 0;
 
   var CATS = [
     { key: "Pronunciation", ko: "발음", en: "PRONUNCIATION", cls: "blue" },
@@ -19,6 +30,11 @@
     { key: "Vocabulary", ko: "어휘", en: "VOCABULARY", cls: "teal" },
     { key: "Hangul", ko: "한글", en: "HANGUL", cls: "pink" }
   ];
+  var LABEL_KO = {
+    Hangul: "한글 강의", Grammar: "문법 강의", Vocabulary: "어휘 강의",
+    Pronunciation: "발음 강의", "Pronunciation-EN": "발음 강의 · EN",
+    "in Korean": "한국어 글", "in English": "English Posts"
+  };
 
   function esc(s) {
     return String(s == null ? "" : s)
@@ -31,8 +47,8 @@
       .replace(/=s\d{2,4}(-c)?[-\w]*$/, "=w640-h360-c");
   }
   function firstImg(html) {
-    var m = /<img[^>]+src=["']([^"']+)["']/i.exec(html || "");
-    return m ? m[1] : "";
+    var mm = /<img[^>]+src=["']([^"']+)["']/i.exec(html || "");
+    return mm ? mm[1] : "";
   }
   function parse(entry) {
     var labels = [], i;
@@ -63,15 +79,10 @@
       if (thumb.indexOf("//") === 0) thumb = "https:" + thumb;
     }
 
-    var snip = entry.summary ? entry.summary.$t :
-      (entry.content ? entry.content.$t.replace(/<[^>]*>/g, " ") : "");
-    snip = snip.replace(/\s+/g, " ").trim();
-    if (snip.length > 120) snip = snip.slice(0, 120) + "…";
-
     return {
       title: (entry.title.$t || "").replace(/\s*\|\s*Basic Korean\s*$/, ""),
       url: url, pill: pill, cls: cat ? cat.cls : "teal",
-      thumb: thumb, snip: snip, ph: code || (cat ? cat.ko : "Basic Korean")
+      thumb: thumb, ph: code || (cat ? cat.ko : "Basic Korean")
     };
   }
   function imgHtml(p) {
@@ -85,40 +96,81 @@
       '<span class="bk-cbody"><span class="bk-pill ' + p.cls + '">' + esc(p.pill) + "</span>" +
       "<h3>" + esc(p.title) + "</h3></span></a>";
   }
-  function render(json) {
-    var entries = (json && json.feed && json.feed.entry) || [];
-    if (!entries.length) return;
-    if (document.getElementById("bk-home")) return;
-    var posts = [];
-    for (var i = 0; i < entries.length; i++) posts.push(parse(entries[i]));
-    var feat = posts[0], rest = posts.slice(1);
-
-    var html =
-      '<a class="bk-feat" href="' + esc(feat.url) + '">' +
-      '<span class="bk-fimg">' + imgHtml(feat) + "</span>" +
-      '<span class="bk-fbody"><span class="bk-pill ' + feat.cls + '">' + esc(feat.pill) + "</span>" +
-      "<h2>" + esc(feat.title) + "</h2>" +
+  function featHtml(p) {
+    return '<a class="bk-feat" href="' + esc(p.url) + '">' +
+      '<span class="bk-fimg">' + imgHtml(p) + "</span>" +
+      '<span class="bk-fbody"><span class="bk-pill ' + p.cls + '">' + esc(p.pill) + "</span>" +
+      "<h2>" + esc(p.title) + "</h2>" +
       '<span class="bk-more">강의 보기 →</span></span></a>';
-    if (rest.length) {
-      html += '<div class="bk-gridhead">● 최근 강의</div><div class="bk-cards">';
-      for (var j = 0; j < rest.length; j++) html += card(rest[j]);
-      html += "</div>";
-    }
-    html += '<div class="bk-allwrap"><a class="bk-all" href="/search">전체 글 보기 →</a></div>';
+  }
+  function headTitle() {
+    if (isHome) return "● 최근 강의";
+    if (label) return "● " + (LABEL_KO[label] || label);
+    return "● 전체 글";
+  }
+  function feedUrl() {
+    var base = "https://www.basickorean.com/feeds/posts/default";
+    if (label) base += "/-/" + encodeURIComponent(label);
+    return base + "?alt=json-in-script&start-index=" + start + "&max-results=" + BATCH + "&callback=__bkHome";
+  }
 
-    var box = document.createElement("div");
+  var box = null;
+  function ensureBox() {
+    if (box) return;
+    box = document.createElement("div");
     box.id = "bk-home";
-    box.innerHTML = html;
     var feedEl = document.querySelector(".blog-posts");
     if (feedEl && feedEl.parentNode) feedEl.parentNode.insertBefore(box, feedEl);
     else document.body.appendChild(box);
-    document.body.classList.add("bk-homeready");
+  }
+  function updateMore() {
+    var wrap = document.getElementById("bk-morewrap");
+    if (!wrap) return;
+    if (isHome) {
+      wrap.innerHTML = '<a class="bk-all" href="/search">전체 글 보기 →</a>';
+      return;
+    }
+    if (shown < total) {
+      wrap.innerHTML = '<a class="bk-all" href="#" id="bk-morebtn">더 보기 (' + shown + "/" + total + ")</a>";
+      var btn = document.getElementById("bk-morebtn");
+      btn.onclick = function (e) { e.preventDefault(); btn.textContent = "불러오는 중…"; load(); };
+    } else {
+      wrap.innerHTML = "";
+    }
+  }
+  function render(json) {
+    var f = json && json.feed;
+    var entries = (f && f.entry) || [];
+    if (f && f.openSearch$totalResults) total = parseInt(f.openSearch$totalResults.$t, 10) || 0;
+    if (!entries.length && shown === 0) return; /* 폴백: 기본 피드 유지 */
+
+    var posts = [];
+    for (var i = 0; i < entries.length; i++) posts.push(parse(entries[i]));
+
+    ensureBox();
+    if (shown === 0) {
+      var html = "";
+      if (isHome && posts.length) html += featHtml(posts.shift());
+      html += '<div class="bk-gridhead">' + esc(headTitle()) + "</div>" +
+        '<div class="bk-cards" id="bk-grid"></div>' +
+        '<div class="bk-allwrap" id="bk-morewrap"></div>';
+      box.innerHTML = html;
+      document.body.classList.add("bk-homeready");
+    }
+    var grid = document.getElementById("bk-grid");
+    var cardsHtml = "";
+    for (var j = 0; j < posts.length; j++) cardsHtml += card(posts[j]);
+    grid.insertAdjacentHTML("beforeend", cardsHtml);
+
+    shown += entries.length;
+    start += entries.length;
+    updateMore();
   }
 
   window.__bkHome = render;
   function load() {
     var s = document.createElement("script");
-    s.src = "https://www.basickorean.com/feeds/posts/default?alt=json-in-script&max-results=" + MAX + "&callback=__bkHome";
+    s.src = feedUrl();
     s.async = true;
     (document.head || document.body).appendChild(s);
   }
