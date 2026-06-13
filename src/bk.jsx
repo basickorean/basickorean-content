@@ -128,6 +128,7 @@
           <span className="part">{d.form[2]}</span><span className="eq">{d.form[3]}</span>
           <span className="part" style={{ color: "var(--orange)" }}>{d.form[4]}</span>
         </div>
+        {d.formNote && <div className="formnote">{rich(d.formNote)}</div>}
         <div className="steps3">
           {d.steps.map((s, i) => (
             <div className="stepc" key={i}>
@@ -137,7 +138,7 @@
             </div>
           ))}
         </div>
-        <div className="takeaway">{rich(d.take)}</div>
+        {d.take && <div className="takeaway">{rich(d.take)}</div>}
       </div>
     );
   }

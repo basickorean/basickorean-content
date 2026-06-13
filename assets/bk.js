@@ -227,7 +227,9 @@
       style: {
         color: "var(--orange)"
       }
-    }, d.form[4])), /*#__PURE__*/React.createElement("div", {
+    }, d.form[4])), d.formNote && /*#__PURE__*/React.createElement("div", {
+      className: "formnote"
+    }, rich(d.formNote)), /*#__PURE__*/React.createElement("div", {
       className: "steps3"
     }, d.steps.map((s, i) => /*#__PURE__*/React.createElement("div", {
       className: "stepc",
@@ -238,7 +240,7 @@
       className: "k " + s.cls
     }, s.k), /*#__PURE__*/React.createElement("div", {
       className: "v"
-    }, rich(s.v))))), /*#__PURE__*/React.createElement("div", {
+    }, rich(s.v))))), d.take && /*#__PURE__*/React.createElement("div", {
       className: "takeaway"
     }, rich(d.take)));
   }

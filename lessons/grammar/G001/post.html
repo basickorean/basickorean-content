@@ -113,30 +113,26 @@
         flowHTML: '<div class="spot"><div class="sline"><span class="topic"><span class="tbub">주제!</span><span class="n">저</span><span class="p">는</span></span> 김미소예요.</div><div class="sline">제 <span class="topic"><span class="tbub">주제!</span><span class="n">직업</span><span class="p">은</span></span> 선생님이에요.</div></div><div class="fork"><div class="fnoun"><div class="w">명사</div><div class="q">마지막 글자에<br>받침이 있어요?</div></div><div class="branches"><div class="br"><span class="cond bo">받침 O</span><span class="farr">\u2192</span><span class="res"><span class="n">직업</span> + <span class="p">은</span><span class="eq">=</span><span class="n">직업</span><span class="p">은</span></span></div><div class="br"><span class="cond bx">받침 X</span><span class="farr">\u2192</span><span class="res"><span class="n">저</span> + <span class="p">는</span><span class="eq">=</span><span class="n">저</span><span class="p">는</span></span></div></div></div>',
         dlg_l: "대화 속에서 보기", dlg_h: "대화로 개념 이해하기",
         dialogs: [
-          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "먼저 받침이 없는 명사 '저' 예문이에요.",
+          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "자기 이름을 소개하는 문장이에요.",
             lines: [
-              { who: "미소", ko: ["이름이 뭐예요?"], t: 376 },
-              { who: "나나", ko: [{ b: "저는" }, " 나나예요."], t: 390 },
-              { who: "나나", ko: ["제 ", { b: "이름은" }, " 나나예요."], t: 394 }
+              { who: "미소", ko: [{ b: "저는" }, " 김미소예요."], t: 19 }
             ],
             form: ["저는", "=", "저 (받침 X)", "+", "-는"],
+            formNote: ["\u2192 명사 마지막 글자에 ", { b: "받침이 없으면" }, " ", { b: "-는" }, "을 써요. (저 \u2192 저는, 가수 \u2192 가수는)"],
             steps: [
               { k: "결합", cls: "act", v: ["대명사 ", { b: "저" }, " 뒤에 ", { b: "-는" }, "이 결합한 형태예요. (저 + 는 \u2192 ", { b: "저는" }, ")"] },
               { k: "주제", cls: "keep", v: ["'는' 앞에 있는 ", { b: "저" }, "가 이 문장의 ", { b: "주제" }, "임을 나타내요."] }
-            ],
-            take: ["\u2192 명사 마지막 글자에 ", { b: "받침이 없으면" }, " ", { b: "-는" }, "을 써요. (저 \u2192 저는, 가수 \u2192 가수는)"] },
-          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "이번에는 받침이 있는 명사 '직업' 예문이에요.",
+            ] },
+          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "이번에는 직업을 소개하는 문장이에요.",
             lines: [
-              { who: "미소", ko: ["직업이 뭐예요?"], t: 421 },
-              { who: "나나", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], t: 435 },
-              { who: "나나", ko: [{ b: "저는" }, " 선생님이에요."], t: 440 }
+              { who: "미소", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], t: 26 }
             ],
             form: ["직업은", "=", "직업 (받침 O)", "+", "-은"],
+            formNote: ["\u2192 명사 마지막 글자에 ", { b: "받침이 있으면" }, " ", { b: "-은" }, "을 써요. (직업 \u2192 직업은, 학생 \u2192 학생은)"],
             steps: [
               { k: "결합", cls: "act", v: ["명사 ", { b: "직업" }, " 뒤에 ", { b: "-은" }, "이 결합한 형태예요. (직업 + 은 \u2192 ", { b: "직업은" }, ")"] },
               { k: "주제", cls: "keep", v: ["'은' 앞에 있는 ", { b: "직업" }, "이 이 문장의 ", { b: "주제" }, "임을 나타내요."] }
-            ],
-            take: ["\u2192 명사 마지막 글자에 ", { b: "받침이 있으면" }, " ", { b: "-은" }, "을 써요. (직업 \u2192 직업은, 학생 \u2192 학생은)"] }
+            ] }
         ],
         conj_l: "결합정보", conj_h: "",
         conj_combine: "명사 뒤에 사용합니다.",
@@ -199,30 +195,26 @@
         flowHTML: '<div class="spot"><div class="sline"><span class="topic"><span class="tbub">Topic!</span><span class="n">저</span><span class="p">는</span></span> 김미소예요.</div><div class="sline">제 <span class="topic"><span class="tbub">Topic!</span><span class="n">직업</span><span class="p">은</span></span> 선생님이에요.</div></div><div class="fork"><div class="fnoun"><div class="w">Noun</div><div class="q">Does the last syllable<br>have a final consonant?</div></div><div class="branches"><div class="br"><span class="cond bo">has 받침</span><span class="farr">\u2192</span><span class="res"><span class="n">직업</span> + <span class="p">은</span><span class="eq">=</span><span class="n">직업</span><span class="p">은</span></span></div><div class="br"><span class="cond bx">no 받침</span><span class="farr">\u2192</span><span class="res"><span class="n">저</span> + <span class="p">는</span><span class="eq">=</span><span class="n">저</span><span class="p">는</span></span></div></div></div>',
         dlg_l: "In Dialogue", dlg_h: "Understanding it through conversation",
         dialogs: [
-          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "First, the noun 저 (I), which has no final consonant.",
+          { tag: "받침 X \u00B7 저는", cls: "bx", intro: "A sentence introducing your name.",
             lines: [
-              { who: "Miso", ko: ["이름이 뭐예요?"], en: "What is your name?", t: 376 },
-              { who: "Nana", ko: [{ b: "저는" }, " 나나예요."], en: "I am Nana.", t: 390 },
-              { who: "Nana", ko: ["제 ", { b: "이름은" }, " 나나예요."], en: "My name is Nana.", t: 394 }
+              { who: "Miso", ko: [{ b: "저는" }, " 김미소예요."], en: "I am Kim Miso.", t: 19 }
             ],
             form: ["저는", "=", "저 (no 받침)", "+", "-는"],
+            formNote: ["\u2192 If the noun's last syllable ", { b: "has no final consonant" }, ", use ", { b: "-는" }, ". (저 \u2192 저는, 가수 \u2192 가수는)"],
             steps: [
               { k: "Combination", cls: "act", v: ["The pronoun ", { b: "저" }, " (I) + ", { b: "-는" }, " \u2192 ", { b: "저는" }, "."] },
               { k: "Topic", cls: "keep", v: [{ b: "저" }, " before '는' is the ", { b: "topic" }, " of this sentence."] }
-            ],
-            take: ["\u2192 If the noun's last syllable ", { b: "has no final consonant" }, ", use ", { b: "-는" }, ". (저 \u2192 저는, 가수 \u2192 가수는)"] },
-          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "Now the noun 직업 (occupation), which has a final consonant.",
+            ] },
+          { tag: "받침 O \u00B7 직업은", cls: "bo", intro: "Now a sentence introducing your occupation.",
             lines: [
-              { who: "Miso", ko: ["직업이 뭐예요?"], en: "What is your occupation?", t: 421 },
-              { who: "Nana", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], en: "My occupation is a teacher.", t: 435 },
-              { who: "Nana", ko: [{ b: "저는" }, " 선생님이에요."], en: "I am a teacher.", t: 440 }
+              { who: "Miso", ko: ["제 ", { b: "직업은" }, " 선생님이에요."], en: "My occupation is a teacher.", t: 26 }
             ],
             form: ["직업은", "=", "직업 (has 받침)", "+", "-은"],
+            formNote: ["\u2192 If the noun's last syllable ", { b: "has a final consonant" }, ", use ", { b: "-은" }, ". (직업 \u2192 직업은, 학생 \u2192 학생은)"],
             steps: [
               { k: "Combination", cls: "act", v: ["The noun ", { b: "직업" }, " (occupation) + ", { b: "-은" }, " \u2192 ", { b: "직업은" }, "."] },
               { k: "Topic", cls: "keep", v: [{ b: "직업" }, " before '은' is the ", { b: "topic" }, " of this sentence."] }
-            ],
-            take: ["\u2192 If the noun's last syllable ", { b: "has a final consonant" }, ", use ", { b: "-은" }, ". (직업 \u2192 직업은, 학생 \u2192 학생은)"] }
+            ] }
         ],
         conj_l: "Conjugation", conj_h: "",
         conj_combine: "Used after nouns.",
